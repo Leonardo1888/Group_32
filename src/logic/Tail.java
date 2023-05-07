@@ -1,7 +1,8 @@
 package logic;
 
-// EMPTY, CAT, BOOK, GAME, FRAME, TROPHEY, PLANT
+// NOTFILLABLE (IN BOOKSHELF), EMPTY, CAT, BOOK, GAME, FRAME, TROPHEY, PLANT
 public enum Tail {
+	N,
 	E,
 	C,	
 	B,

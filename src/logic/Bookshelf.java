@@ -1,31 +1,24 @@
 package logic;
 
-public class Bookshelf extends Matrix {
-	private int ROW = 5;
-	private int COL = 6;
+public class Bookshelf implements Matrix {
+	private int row = 5;
+	private int col = 6;
+	
 	private Tail[][] shelf;
 
-	public Bookshelf() {
-		shelf = new Tail[ROW][COL];
-		for(int i = 0; i < (ROW-1); i++) {	
-			for(int j = 0; j < COL; j++) {
+	public Bookshelf() {	
+		this.shelf = new Tail[row][col];
+		for(int i = 0; i < (row); i++) {	
+			for(int j = 0; j < col; j++) {
 				shelf[i][j] = Tail.E;
+				if(i == (row-1)) 
+					shelf[i][j] = Tail.N;
 			}
 		}
 	}
 	
 	public void printBoard() {
-		System.out.println();
-		for (int i = 0; i < this.ROW; i++) {
-			for (int j = 0; j < this.COL; j++) {
-				System.out.print(this.shelf[i][j] + " ");
-			}
-			System.out.println();
-		}
+		Matrix.printMatrix(shelf, row, col);
 	}
-	
-	
-	
-	
 
 }
