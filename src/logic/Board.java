@@ -2,18 +2,23 @@ package logic;
 
 import java.util.Random;
 
-public class Board {
-	private int ROW = 9;
-	private int COL = 9;
-	private Tail[][] board;
-	private int[] tailCount;
+public class Board extends Matrix {
+	private int row;
+    private int col;
+    private Tail[][] board;
 	private int nPlayers;
-
+	private int[] tailCount;
+	
 	public Board(int nPlayers) {
+		super(9, 9);
 		this.nPlayers = nPlayers;
-		board = new Tail[ROW][COL];
-		this.tailCount = new int[Tail.values().length];
-		fillBoard(board);
+		if (checkNPlayers(nPlayers)) {
+			Tail[][] board = getMatrix();
+			this.tailCount = new int[Tail.values().length];
+			fillBoard(board);
+		} else {
+			System.exit(0);
+		}
 	}
 
 	public void fillBoard(Tail board[][]) {
@@ -39,7 +44,7 @@ public class Board {
 
 		}
 
-		boolean[][] fillable = new boolean[ROW][COL];
+		boolean[][] fillable = new boolean[row][col];
 		// set true cells you can't fill
 		for (int i = 0; i < notFillable.length; i++) {
 			int row = notFillable[i][0]; // take x
@@ -48,8 +53,8 @@ public class Board {
 		}
 
 		Random random = new Random();
-		for (int i = 0; i < this.ROW; i++) {
-			for (int j = 0; j < this.COL; j++) {
+		for (int i = 0; i < this.row; i++) {
+			for (int j = 0; j < this.col; j++) {
 				int tailIndex = random.nextInt((Tail.values().length - 1)) + 1;
 				Tail tail = Tail.values()[tailIndex];
 				if (tail != Tail.E && this.tailCount[tailIndex] < 22) {
@@ -64,12 +69,15 @@ public class Board {
 	}
 
 	public void printBoard() {
-		for (int i = 0; i < this.ROW; i++) {
-			for (int j = 0; j < this.COL; j++) {
-				System.out.print(this.board[i][j] + " ");
-			}
-			System.out.println();
+		printMatrix();
+	}
+
+	public boolean checkNPlayers(int nPlayers) {
+		if(nPlayers < 2 || nPlayers > 4) {
+			System.out.println("ERROR! Invalid number of players: (" + this.nPlayers +"). Number of player must be between 2 and 4.\n");
+			return false;
 		}
+		return true;
 	}
 
 }

@@ -5,9 +5,17 @@ import logic.*;
 public class Main {
 
 	public static void main(String[] args) {
-		int nPlayers = 4;
-		Board board = new Board(nPlayers);
+		final int NPLAYERS = 2;
+		Board board = new Board(NPLAYERS);
 		board.printBoard();
+		
+		Bookshelf shelf1 = new Bookshelf();
+		Player Player1 	 = new Player(1, "Leonardo", shelf1);
+		
+		Bookshelf shelf2 = new Bookshelf();
+		Player Player2 	 = new Player(2, "Pietro", shelf2);
+		
+		shelf1.printBoard();
 	}
 
 }
