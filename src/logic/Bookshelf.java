@@ -1,8 +1,8 @@
 package logic;
 
 public class Bookshelf implements Matrix {
-	private int row = 5;
-	private int col = 6;
+	private int row = 6;
+	private int col = 5;
 	
 	private Tail[][] shelf;
 
@@ -20,5 +20,5 @@ public class Bookshelf implements Matrix {
 	public void printBoard() {
 		Matrix.printMatrix(shelf, row, col);
 	}
-
+	
 }
