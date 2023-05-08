@@ -1,8 +1,8 @@
 package logic;
 
-// NOTFILLABLE (IN BOOKSHELF), EMPTY, CAT, BOOK, GAME, FRAME, TROPHEY, PLANT
+// X = FILLABLE (IN BOOKSHELF), EMPTY, CAT, BOOK, GAME, FRAME, TROPHEY, PLANT
 public enum Tail {
-	N,
+	X,
 	E,
 	C,	
 	B,

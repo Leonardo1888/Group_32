@@ -12,7 +12,7 @@ public class Bookshelf implements Matrix {
 			for(int j = 0; j < col; j++) {
 				shelf[i][j] = Tail.E;
 				if(i == (row-1)) 
-					shelf[i][j] = Tail.N;
+					shelf[i][j] = Tail.X;
 			}
 		}
 	}
