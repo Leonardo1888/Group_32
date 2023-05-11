@@ -1,6 +1,6 @@
 package logic;
 
-// X = FILLABLE (IN BOOKSHELF), EMPTY, CAT, BOOK, GAME, FRAME, TROPHEY, PLANT
+// X = FILLABLE (IN BOOKSHELF), EMPTY, CAT, BOOK, GAME, FRAME, TROPHEY, PLANT, SAME, DIFFERENT
 public enum Tail {
 	X,
 	E,
@@ -9,5 +9,7 @@ public enum Tail {
 	G,
 	F,
 	T,
-	P
+	P,
+	S,	//used in CommonGoals
+	D	//=
 }

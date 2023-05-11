@@ -13,4 +13,8 @@ public class Player {
 		this.shelf = shelf;
 		this.personalGoal = personalGoal;
 	}
+	
+	public String getUsername() {
+		return this.username;
+	}
 }

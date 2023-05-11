@@ -3,9 +3,11 @@ package logic;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CommonGoals implements Matrix {
-	private int commonGoal1;
-	private int commonGoal2;
+public class CommonGoals implements Matrix {	//this class generates an object that contains 2 cards
+	private int commonGoal1;	
+	private int commonGoal2;	//int for random choice
+	private Tail[][] commonGoalCard1;
+	private Tail[][] commonGoalCard2;	//matrix card that contains the tail arrangement
 	
 	public CommonGoals() {
 		Random random = new Random();
@@ -14,6 +16,161 @@ public class CommonGoals implements Matrix {
 		while(this.commonGoal2 == this.commonGoal1) {
 			this.commonGoal2 = ThreadLocalRandom.current().nextInt(1, 12 + 1);
 		}
+		System.out.println("\n" + commonGoal1 + ".");
+		commonGoalCard1 = generateCommonGoalCard(this.commonGoal1);
+		System.out.println("\n" + getInfo(commonGoal1));
+		System.out.println("\n" + commonGoal2 + ".");
+		commonGoalCard2 = generateCommonGoalCard(this.commonGoal2);
+		System.out.println("\n" + getInfo(commonGoal2));
+	}
+	
+	public Tail[][] generateCommonGoalCard(int index){
+		Tail[][] commonGoalCard;
+		int row = 0;
+		int col = 0;
+		commonGoalCard = new Tail[row][col];
+		switch(index) {
+			case 1:
+				row = 2;
+				col = 1;
+				commonGoalCard = new Tail[row][col];
+				for(int i = 0; i < row; i++) {
+					commonGoalCard[i][0] = Tail.S;
+				}
+				Matrix.printMatrix(commonGoalCard, row, col);
+				System.out.println("\nx6");
+				return commonGoalCard;
+			case 2:
+				row = 4;
+				col = 1;
+				commonGoalCard = new Tail[row][col];
+				for(int i = 0; i < row; i++) {
+					commonGoalCard[i][0] = Tail.S;
+				}
+				Matrix.printMatrix(commonGoalCard, row, col);
+				System.out.println("\nx4");
+				return commonGoalCard;
+			case 3:
+				row = 6;
+				col = 5;
+				commonGoalCard = new Tail[row][col];
+				commonGoalCard = Matrix.FillWithE(commonGoalCard, row, col);
+				commonGoalCard[0][0] = Tail.S;
+				commonGoalCard[0][4] = Tail.S;
+				commonGoalCard[5][0] = Tail.S;
+				commonGoalCard[5][4] = Tail.S;
+				Matrix.printMatrix(commonGoalCard, row, col);
+				return commonGoalCard;
+			case 4:
+				row = 2;
+				col = 2;
+				commonGoalCard = new Tail[row][col];
+				for(int i = 0; i < row; i++) {
+					for(int j = 0; j < col; j++) {
+						commonGoalCard[i][j] = Tail.S;
+					}
+				}
+				Matrix.printMatrix(commonGoalCard, row, col);
+				System.out.println("\nx2");
+				return commonGoalCard;
+			case 5:
+				row = 6;
+				col = 1;
+				commonGoalCard = new Tail[row][col];
+				for(int i = 0; i < row; i++) {
+					commonGoalCard[i][0] = Tail.X;
+				}
+				Matrix.printMatrix(commonGoalCard, row, col);
+				System.out.println("\nx3, max 3 different");
+				return commonGoalCard;
+			case 6:
+				row = 3;
+				col = 3;
+				commonGoalCard = new Tail[row][col];
+				for(int i = 0; i < row; i++) {
+					for(int j = 0; j < col; j++) {
+						commonGoalCard[i][j] = Tail.S;
+					}
+				}
+				commonGoalCard[0][1] = Tail.E;
+				Matrix.printMatrix(commonGoalCard, row, col);
+				return commonGoalCard;
+			case 7:
+				row = 5;
+				col = 5;
+				commonGoalCard = new Tail[row][col];
+				commonGoalCard = Matrix.FillWithE(commonGoalCard, row, col);
+				for(int i = 0; i < row; i++) {
+					for(int j = 0; j < col; j++) {
+						if(i == j) {
+							commonGoalCard[i][j] = Tail.S;
+						}
+					}
+				}
+				Matrix.printMatrix(commonGoalCard, row, col);
+				return commonGoalCard;
+			case 8:
+				row = 1;
+				col = 5;
+				commonGoalCard = new Tail[row][col];
+				for(int j = 0; j < col; j++) {
+					commonGoalCard[0][j] = Tail.X;				
+				}
+				Matrix.printMatrix(commonGoalCard, row, col);
+				System.out.println("\nx4, max 3 different");
+				return commonGoalCard;
+			case 9:
+				row = 6;
+				col = 1;
+				commonGoalCard = new Tail[row][col];
+				for(int i = 0; i < row; i++) {
+					commonGoalCard[i][0] = Tail.D;
+				}
+				Matrix.printMatrix(commonGoalCard, row, col);
+				System.out.println("\nx2");
+				return commonGoalCard;
+			case 10:
+				row = 1;
+				col = 5;
+				commonGoalCard = new Tail[row][col];
+				for(int j = 0; j < col; j++) {
+					commonGoalCard[0][j] = Tail.D;				
+				}
+				Matrix.printMatrix(commonGoalCard, row, col);
+				System.out.println("\nx2");
+				return commonGoalCard;
+			case 11:
+				row = 3;
+				col = 3;
+				commonGoalCard = new Tail[row][col];
+				commonGoalCard = Matrix.FillWithE(commonGoalCard, row, col);
+				int cont = 1;
+				for(int i = 0; i < row; i++) {
+					for(int j = 0; j < col; j++) {
+						if(cont % 2 != 0) {
+							commonGoalCard[i][j] = Tail.S;
+						}
+						cont++;
+					}
+				}
+				Matrix.printMatrix(commonGoalCard, row, col);
+				return commonGoalCard;
+			case 12:
+				row = 5;
+				col = 5;
+				commonGoalCard = new Tail[row][col];
+				commonGoalCard = Matrix.FillWithE(commonGoalCard, row, col);
+				for(int i = row-1; i >= 0; i--) {
+					for(int j = 0; j < col; j++) {
+						commonGoalCard[i][j] = Tail.X;
+					}
+					col--;
+				}
+				col = 5;
+				Matrix.printMatrix(commonGoalCard, row, col);
+				return commonGoalCard;
+		}
+		return commonGoalCard;
 	}
 	
 	public boolean checkCommonGoals(int goal, Tail shelf[][]) {
@@ -215,5 +372,67 @@ public class CommonGoals implements Matrix {
 	
 	public boolean check12(Tail shelf[][]){
 		return false;
+	}
+	
+	public String getInfo(int index) {
+		String infoMsg = new String();
+		switch(index) {
+			case 1:
+				infoMsg = ("Six groups each containing at least\r\n"
+						+ "2 tiles of the same type (not necessarily\r\n"
+						+ "in the depicted shape).\r\n"
+						+ "The tiles of one group can be different\r\n"
+						+ "from those of another group.\r\n"
+						+ "");
+			case 2:
+				infoMsg = ("Four groups each containing at least\r\n"
+						+ "4 tiles of the same type (not necessarily\r\n"
+						+ "in the depicted shape).\r\n"
+						+ "The tiles of one group can be different\r\n"
+						+ "from those of another group.");
+			case 3:
+				infoMsg = ("Four tiles of the same type in the four\r\n"
+						+ "corners of the bookshelf.");
+			case 4:
+				infoMsg = ("Two groups each containing 4 tiles of\r\n"
+						+ "the same type in a 2x2 square. The tiles\r\n"
+						+ "of one square can be different from\r\n"
+						+ "those of the other square.");
+			case 5:
+				infoMsg = ("Three columns each formed by 6 tiles Five tiles of the same type forming an X.\r\n"
+						+ "of maximum three different types. One\r\n"
+						+ "column can show the same or a different\r\n"
+						+ "combination of another column.");
+			case 6:
+				infoMsg = ("Eight tiles of the same type. There’s no\r\n"
+						+ "restriction about the position of these\r\n"
+						+ "tiles.");
+			case 7:
+				infoMsg = ("Five tiles of the same type forming a\r\n"
+						+ "diagonal.");
+			case 8:
+				infoMsg = ("Four lines each formed by 5 tiles of\r\n"
+						+ "maximum three different types. One\r\n"
+						+ "line can show the same or a different\r\n"
+						+ "combination of another line.\r\n"
+						+ "");
+			case 9:
+				infoMsg = ("Two columns each formed by 6\r\n"
+						+ "different types of tiles.");
+			case 10:
+				infoMsg = ("Two lines each formed by 5 different\r\n"
+						+ "types of tiles. One line can show the\r\n"
+						+ "same or a different combination of the\r\n"
+						+ "other line.");
+			case 11:
+				infoMsg = ("Five tiles of the same type forming an X");
+			case 12:
+				infoMsg = ("Five columns of increasing or decreasing\r\n"
+						+ "height. Starting from the first column on\r\n"
+						+ "the left or on the right, each next column\r\n"
+						+ "must be made of exactly one more tile.\r\n"
+						+ "Tiles can be of any type.");
+		}
+		return infoMsg;
 	}
 }

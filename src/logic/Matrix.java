@@ -89,4 +89,13 @@ public interface Matrix {
     	}
     	return false;
     }
+    
+    static Tail[][] FillWithE(Tail matrix[][], int row, int col) {
+    	for(int i = 0; i < row; i++) {
+    		for(int j = 0; j < col; j++) {
+    			matrix[i][j] = Tail.E;
+    		}
+    	}
+    	return matrix;
+    }
 }
