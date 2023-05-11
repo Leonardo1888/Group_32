@@ -1,9 +1,8 @@
 package init;
 import logic.*;
-// import gui.*;
 
 public class Main {
-
+// ciao
 	public static void main(String[] args) {
 		final int NPLAYERS = 2;
 		Board board = new Board(NPLAYERS);
