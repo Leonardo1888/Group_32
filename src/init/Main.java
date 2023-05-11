@@ -21,7 +21,7 @@ public class Main {
 		
 		shelf1.printBoard();
 		personalGoal1.printBoard();
-	}//ciao
+	}//c
 
 }
 
