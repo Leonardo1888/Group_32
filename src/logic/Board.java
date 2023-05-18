@@ -27,7 +27,9 @@ public class Board implements Matrix {
 			System.exit(0);
 		}
 	}
-
+	
+	//TODO sistemare i controlli, se si sceglie una tail alla prima/ultima riga/colonna allora
+		//i controlli attuali generano array index of bound (inserire controllo se questo caso allora salta controllo side free ecc...)
 	public Tail selectTails(int row, int col, int index) {
 		Tail tail;
 		if (index == 0) {

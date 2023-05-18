@@ -33,6 +33,7 @@ public class Bookshelf implements Matrix {
 			return 1; // failure
 		}
 
+		// TODO inserire controllo se la cella dove si inserisce non è Tail.X
 		for (int n = 0; n < numTail; n++) {
 			for (int i = 0; i < this.row; i++) {
 				if (this.shelf[i][col] == Tail.X) {
