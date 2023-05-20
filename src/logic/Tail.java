@@ -11,5 +11,5 @@ public enum Tail {
 	T,
 	P,
 	S,	//used in CommonGoals
-	D	//=
+	D	//used in CommonGoals
 }

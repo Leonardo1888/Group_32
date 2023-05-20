@@ -5,16 +5,16 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PersonalGoalCard implements Matrix {
-	private int row = 6;
-	private int col = 5;
+	private final int ROW = 6;
+	private final int COL = 5;
 
 	private Tail[][] personalGoalCard;
 	private boolean[] controlTail = new boolean[8];
 
 	public PersonalGoalCard() { // fills matrix with E(mpty) and controlTail cells with false
-		this.personalGoalCard = new Tail[row][col];
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
+		this.personalGoalCard = new Tail[ROW][COL];
+		for (int i = 0; i < ROW; i++) {
+			for (int j = 0; j < COL; j++) {
 				personalGoalCard[i][j] = Tail.E;
 			}
 		}
@@ -49,6 +49,6 @@ public class PersonalGoalCard implements Matrix {
 	}
 
 	public void printBoard() {
-		Matrix.printMatrix(personalGoalCard, row, col);
+		Matrix.printMatrix(personalGoalCard, ROW, COL);
 	}
 }

@@ -1,24 +1,26 @@
 package logic;
 
+import java.util.Arrays;
+
 public class Bookshelf implements Matrix {
-	private int row = 6;
-	private int col = 5;
+	private final int ROW = 6;
+	private final int COL = 5;
 
 	private Tail[][] shelf;
 
 	public Bookshelf() {
-		this.shelf = new Tail[row][col];
-		for (int i = 0; i < (row); i++) {
-			for (int j = 0; j < col; j++) {
+		this.shelf = new Tail[ROW][COL];
+		for (int i = 0; i < (ROW); i++) {
+			for (int j = 0; j < COL; j++) {
 				shelf[i][j] = Tail.E;
-				if (i == (row - 1))
+				if (i == (ROW - 1))
 					shelf[i][j] = Tail.X;
 			}
 		}
 	}
 
 	public void printBoard() {
-		Matrix.printMatrix(shelf, row, col);
+		Matrix.printMatrix(shelf, ROW, COL);
 	}
 
 	public int insertTail(Tail[] tails, int col) {
@@ -34,7 +36,7 @@ public class Bookshelf implements Matrix {
 		}
 
 		for (int n = 0; n < numTail; n++) {
-			for (int i = 0; i < this.row; i++) {
+			for (int i = 0; i < this.ROW; i++) {
 				if (this.shelf[i][col] == Tail.X) {
 					this.shelf[i][col] = tails[n]; // insert tail
 					this.shelf[i - 1][col] = Tail.X; // insert X one row up
@@ -42,6 +44,16 @@ public class Bookshelf implements Matrix {
 			}
 		}
 		return 0; // success
+	}
+
+	// @Return the largest number of free cells (for every column). If 0 -> can't
+	// pick Tails
+	public int checkFreeSpaces() {
+		int[] count = new int[this.COL];
+		for (int j = 0; j < COL; j++) {
+			count[j] = Matrix.countEinCol(shelf, j);
+		}
+		return Arrays.stream(count).max().orElse(0);
 	}
 
 	public static String columnMsg() {
