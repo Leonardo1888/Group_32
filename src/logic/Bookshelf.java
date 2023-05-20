@@ -33,7 +33,6 @@ public class Bookshelf implements Matrix {
 			return 1; // failure
 		}
 
-		// TODO inserire controllo se la cella dove si inserisce non è Tail.X
 		for (int n = 0; n < numTail; n++) {
 			for (int i = 0; i < this.row; i++) {
 				if (this.shelf[i][col] == Tail.X) {
@@ -46,8 +45,7 @@ public class Bookshelf implements Matrix {
 	}
 
 	public static String columnMsg() {
-		String msg = new String();
-		msg = "Choose the column (1-5): ";
+		String msg = "Choose the column (1-5): ";
 		return msg;
 	}
 }

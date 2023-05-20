@@ -12,7 +12,18 @@ public interface Matrix {
 
 	static void printMatrix(Tail matrix[][], int row, int col) {
 		System.out.println();
+		for(int a = 0; a <= col; a++) {
+			if(a==0) 
+				System.out.print("/ ");
+			else 
+				System.out.print(a + " ");
+		}
+		System.out.println();
+		char indiceLettera = 'a';
+		
 		for (int i = 0; i < row; i++) {
+			System.out.print(indiceLettera + " ");
+			indiceLettera++;
 			for (int j = 0; j < col; j++) {
 				System.out.print(matrix[i][j] + " ");
 			}
@@ -30,7 +41,46 @@ public interface Matrix {
 		return mirrorMatrix;
 	}
 
+	// TODO - Needed function? 
 	static boolean[] checkOrthogonally(Tail matrix[][], int row, int col) {
+		
+		/*
+	
+	    boolean[] same = new boolean[4];
+	
+	    // Check right
+	    if (col + 1 < matrix[0].length && matrix[row][col] == matrix[row][col + 1]) {
+	        same[0] = true;
+	    } else {
+	        same[0] = false;
+	    }
+	
+	    // Check down
+	    if (row + 1 < matrix.length && matrix[row][col] == matrix[row + 1][col]) {
+	        same[1] = true;
+	    } else {
+	        same[1] = false;
+	    }
+	
+	    // Check left
+	    if (col - 1 >= 0 && matrix[row][col] == matrix[row][col - 1]) {
+	        same[2] = true;
+	    } else {
+	        same[2] = false;
+	    }
+	
+	    // Check up
+	    if (row - 1 >= 0 && matrix[row][col] == matrix[row - 1][col]) {
+	        same[3] = true;
+	    } else {
+	        same[3] = false;
+	    }
+	
+	    return same;
+		
+		}
+		 * 
+		 * */
 		boolean[] same = new boolean[4];
 		if (matrix[row][col] == matrix[row + 1][col]) {
 			same[0] = true;
@@ -56,7 +106,8 @@ public interface Matrix {
 		return same;
 	}
 
-	static boolean differentArray(Tail tails[], int length) { // return true if an array consists of different values
+	// return true if an array consists of different values
+	static boolean differentArray(Tail tails[], int length) { 
 		for (int i = 0; i < length; i++) {
 			for (int n = 0; n < length; n++) {
 				if (tails[i].values().equals(tails[n].values())) {
@@ -67,18 +118,24 @@ public interface Matrix {
 		return true;
 	}
 
-	static boolean EinCol(Tail matrix[][], int ncol) {
-		for (int i = 0; i < 6; i++) {
-			if (matrix[i][ncol].equals(Tail.E)) {
+	static boolean EinCol(Tail matrix[][], int col) {
+		int nRows = matrix.length;
+		int nCols = matrix[0].length;
+		
+		for (int i = 0; i < nRows; i++) {
+			if (matrix[i][col].equals(Tail.E)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	static boolean EinRow(Tail matrix[][], int nrow) {
-		for (int j = 0; j < 5; j++) {
-			if (matrix[j][nrow].equals(Tail.E)) {
+	static boolean EinRow(Tail matrix[][], int row) {
+		int nRows = matrix.length;
+		int nCols = matrix[0].length;
+		
+		for (int j = 0; j < nCols; j++) {
+			if (matrix[row][j].equals(Tail.E)) {
 				return true;
 			}
 		}
@@ -93,8 +150,11 @@ public interface Matrix {
 		}
 		return matrix;
 	}
-
-	static int[] controlEmptyRowsInCols(Tail matrix[][], int row, int col) { // returns the number of empty
+	
+	/*
+	 * @return the number of 'E' in every column in array emptyRowsInCols
+	 * */
+	static int[] controlEmptyRowsInCols(Tail matrix[][], int row, int col) { 
 		int[] emptyRowsInCols = new int[col]; // slot of each column
 		for (int j = 0; j < col; j++) {
 			int cont = 0;
@@ -109,12 +169,14 @@ public interface Matrix {
 	}
 
 	static int countEinCol(Tail matrix[][], int col) {
+		int nRows = matrix.length;
+		int nCols = matrix[0].length;
+		
 		int count = 0;
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < nCols; i++) {
 			if (matrix[i][col] == Tail.E) {
 				count++;
 			}
-
 		}
 		return count;
 	}

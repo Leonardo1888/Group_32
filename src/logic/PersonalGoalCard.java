@@ -31,8 +31,8 @@ public class PersonalGoalCard implements Matrix {
 		while (controlTail[2] == false || controlTail[3] == false || controlTail[4] == false || controlTail[5] == false
 				|| controlTail[6] == false || controlTail[7] == false) {
 
-			int tailIndex = ThreadLocalRandom.current().nextInt(2, 7 + 1); // random val from 2 to 7 inclusive (e.c.
-																			// only tails, not empty(E) or fillable(X))
+			int tailIndex = ThreadLocalRandom.current().nextInt(2, 7 + 1); 
+			// random val from 2 to 7 inclusive (e.c. , only tails, not empty(E) or fillable(X))
 			Tail tail = Tail.values()[tailIndex];
 
 			if (this.controlTail[tailIndex] == false) {

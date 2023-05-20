@@ -38,17 +38,22 @@ public class Main {
 		int n = 0;
 		int exit = 1;
 		while (n < 3 && exit != 0) {
-			System.out.println("Insert row");
-			int row = in.nextInt();
-			System.out.println("Insert col");
+			System.out.println("Insert row: ");
+			char inRow = in.next().charAt(0);
+			System.out.println("Insert col: ");
 			int col = in.nextInt();
+			
+			int row = (inRow-97);
+			col = col-1;
+			
 			tails[n] = board.selectTails(row, col, n);
+			
 			if (tails[n] == Tail.E) {
 				System.out.println("Choose a suitable Tail");
 			} else {
 				n++;
 			}
-			System.out.println("Insert 0 to stop - 1 to pick another");
+			System.out.println("Enter: '0' to stop or '1' to pick another.");
 			exit = in.nextInt();
 		}
 

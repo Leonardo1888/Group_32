@@ -27,51 +27,77 @@ public class Board implements Matrix {
 			System.exit(0);
 		}
 	}
-	
-	//TODO sistemare i controlli, se si sceglie una tail alla prima/ultima riga/colonna allora
-		//i controlli attuali generano array index of bound (inserire controllo se questo caso allora salta controllo side free ecc...)
-	public Tail selectTails(int row, int col, int index) {
+
+	public Tail selectTails(int row, int col, int index) throws IllegalArgumentException {
+		// System.out.println("row is: " + row + ", col is: " + col);
+
+		// Check if the row and column values are within the valid range
+		if (row < 0 || row >= this.row)
+			throw new IllegalArgumentException("Row has to be >= 0 and < " + this.row);
+		if (col < 0 || col >= this.col)
+			throw new IllegalArgumentException("Column has to be >= 0 and < " + this.col);
+
 		Tail tail;
+
+		// Select the tail based on the provided index
 		if (index == 0) {
-			if (sideFreeTail(row, col) == true && this.board[row][col] != Tail.E) {
+			// Check if the tile at the specified position is available and not empty
+			if (sideFreeTail(row, col) && this.board[row][col] != Tail.E) {
+				// Save the selected tail, set the tile to empty, and update temporary row and
+				// col values
 				tail = this.board[row][col];
 				this.board[row][col] = Tail.E;
 				this.rowTemp = row;
 				this.colTemp = col;
 			} else {
+				// If the tile is not available or empty, return an empty tail
 				tail = Tail.E;
 				return tail;
 			}
 		} else {
-			if (sideFreeTail(row, col) == true && adjacentTail(row, col, this.rowTemp, this.colTemp) == true
+			// Check if the tile at the specified position is available, adjacent to the
+			// previous tile,
+			// and not empty
+			if (sideFreeTail(row, col) && adjacentTail(row, col, this.rowTemp, this.colTemp)
 					&& this.board[row][col] != Tail.E) {
 				if (index == 3) {
-					if (controlAlign(row, col) == true) {
+					// If the index is 3, also check for alignment
+					if (controlAlign(row, col)) {
+						// Save the selected tail, set the tile to empty, and update temporary row and
+						// column values
 						tail = this.board[row][col];
 						this.board[row][col] = Tail.E;
 						this.rowTemp = row;
 						this.colTemp = col;
 					} else {
+						// If the alignment check fails, return an empty tail
 						tail = Tail.E;
 						return tail;
 					}
 				} else {
+					// Save the selected tail, set the tile to empty, and update temporary row and
+					// column values
 					tail = this.board[row][col];
 					this.board[row][col] = Tail.E;
 					this.rowTemp = row;
 					this.colTemp = col;
 				}
 			} else {
+				// If the tile is not available, not adjacent, or empty, return an empty tail
 				tail = Tail.E;
 				return tail;
 			}
 		}
-
+		// Return the selected tail
 		return tail;
 	}
 
 	public boolean sideFreeTail(int row, int col) {// TODO non so se è completo come controllo, forse si deve accettare
 													// anche == null?
+		if(row == 0 || row == 8 || col == 0 || col == 8) {
+			return true;
+		}
+			
 		if (this.board[row - 1][col] == Tail.E || this.board[row + 1][col] == Tail.E
 				|| this.board[row][col - 1] == Tail.E || this.board[row][col + 1] == Tail.E) {
 			return true;
@@ -143,7 +169,7 @@ public class Board implements Matrix {
 		for (int i = 0; i < this.row; i++) {
 			for (int j = 0; j < this.col; j++) {
 				// int tailIndex = ThreadLocalRandom.current().nextInt(min, max + 1); -- >
-				// Numeri casuali da 2 a 7 (compresi)
+				// casual numbers from 2 to 7 (2 and 7 included)
 				int tailIndex = ThreadLocalRandom.current().nextInt(2, 7 + 1);
 
 				Tail tail = Tail.values()[tailIndex];
