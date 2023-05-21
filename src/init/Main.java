@@ -37,24 +37,32 @@ public class Main {
 		System.out.println("\n\n---Select the Tails you want to put into your Shelf.");
 
 		int exit = 1;
-		int canPickTails = 0;
+		int nOfFreeSpaces = 0;
+		int canPickTailsBoard = 0;
 		int cont = 0;
 
 		int[][] tempPositionTails = new int[3][2];
 
-		// tRow = a,b,c,d.. tCol = 1,2,3.. - row = 0,1,2,3,.. col = 0,1,2,3,..
+		// tRow = a,b,.. tCol = 1,2,.. ----- row = col = 0,1,..
 		while (cont < 3 && exit != 0) {
-			canPickTails = shelf1.checkFreeSpaces();
-			if (canPickTails == 0) {
+
+			// Check if board has to be refilled
+			board.endBoard();
+
+			// Only the first time store the largest number of free cells (for every column)
+			if(cont==0)
+				nOfFreeSpaces = shelf1.checkFreeSpaces();
+			
+			// Check if user has space on his shelf
+			if (nOfFreeSpaces == 0) {
 				System.out.println("You can't pick any tails. Your shelf is full.");
 				// TODO -> Call function "nextTurn()"
 			}
 
+			// User enters ROW and COL
 			System.out.print("\n---Tail number: " + (cont + 1) + ".");
-			// Take ROW and COL from user
 			System.out.print("\n-Insert ROW [a-g]: ");
 			char tRow = in.next().charAt(0);
-
 			System.out.print("-Insert COL [1-9]: ");
 			int col = in.nextInt();
 			int tCol = col;
@@ -63,18 +71,29 @@ public class Main {
 			int row = (tRow - 97); // Convert from char to number (ASCII -97)
 			col = col - 1;
 
+			// Stores selected tail in tails[i], if user can't pick tails[i] = Tails.E
 			tails[cont] = board.selectTails(row, col, cont);
-
 			if (tails[cont] == Tail.E) {
 				System.out.println("The Tail in the position: [" + tRow + ", " + tCol + "] is not suitable.");
 			} else {
 				System.out.println(
-						"You have chosen the tail '" + tails[cont] + "' in the position: [" + tRow + ", " + tCol + "]");
+						"You have chosen the tail '" + tails[cont] + 
+						"' in the position: [" + tRow + ", " + tCol + "]");
 				tempPositionTails[cont][0] = row;
 				tempPositionTails[cont][1] = col;
 				cont++;
+				nOfFreeSpaces--;
+				
 			}
 
+			// Check if user can pick another tail (on the board).
+			canPickTailsBoard = board.checkFreeSpaces();
+			if (canPickTailsBoard == 0) {
+				System.out.println("You can't pick any adjacent tail on the board on the same row and column.");
+				// TODO -> Call function "nextTurn()"
+			}
+
+			// User decides if he wants to pick another tail
 			if (cont < 3) {
 				System.out.println("\nEnter: \n-0 to stop; \n-1 to pick another.");
 				exit = in.nextInt();
@@ -82,20 +101,23 @@ public class Main {
 					throw new IllegalArgumentException("You must enter 0 or 1.");
 				}
 			}
+
 		}
 
-		board.emptyTheBox(tempPositionTails);
+		// Remove the tails the user picked
+		board.emptyTheBoard(tempPositionTails);
 		System.out.println("---------------------------");
 
-		printSelectedTails(tails, cont);
+		// Print selected tails and the status board
+		printSelectedTails(tails, cont, tempPositionTails);
 		board.printBoard();
 
 	}
 
-	public static void printSelectedTails(Tail tails[], int n) {
+	public static void printSelectedTails(Tail tails[], int n, int tempPositionTails[][]) {
 		System.out.println("\n---The tails you selected are: \n");
 		for (int i = 0; i < n; i++) {
-			System.out.print("-Tail number -" + (i + 1) + ": " + tails[i] + "\n");
+			System.out.print((i + 1) + "° Tail: '" + tails[i] + "' in the position: [" + (char)(tempPositionTails[i][0] + 97) + ", " + (tempPositionTails[i][1] + 1) + "] \n");
 		}
 	}
 }

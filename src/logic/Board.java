@@ -129,14 +129,13 @@ public class Board implements Matrix {
 		}
 		return false;
 	}
+	
+	// Check if user can pick another tail on the same colum/row 
+	public int checkFreeSpaces() {
+		return 0;
+	}
 
-	/*
-	 * [0,1]
-	 * [5,6]
-	 * [1,6]
-	 */
-	 
-	public void emptyTheBox(int matrix[][]){
+	public void emptyTheBoard(int matrix[][]){
 		int row = matrix.length;	// How many tails the user selected
 		int r = 0;
 		int c = 0;
