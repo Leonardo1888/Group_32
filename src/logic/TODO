@@ -1,0 +1,39 @@
+TODO = X
+
+—Creazione board in modo casuale (in base al nPlayers)
+
+—Refill board quando non si possono più prendere
+
+—Check se l'utente può prendere delle tail: [
+     *check se la può prendere;
+     *check se ha shelf libera;
+     X*check se può prenderne altre nella board
+]
+
+—Rimozione dalla board delle tails scelte
+
+—inserimento nella shelf delle tails scelte
+
+—XnextTurn() se: [
+     *Non può prendere altre tails per la shelf;
+     X*Non può prendere altre tails per la board;
+     *Se preme 1.
+]
+
+—XpartitaFinita() se: [
+
+
+
+]
+
+—XconteggioPunti() se: [
+
+
+
+]
+
+—XsetWinner() se: [
+
+
+
+]

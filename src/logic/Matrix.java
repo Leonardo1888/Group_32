@@ -1,5 +1,5 @@
 package logic;
-
+//matrix
 public interface Matrix {
 
 	/*

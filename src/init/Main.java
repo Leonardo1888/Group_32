@@ -2,49 +2,70 @@ package init;
 
 import logic.*;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class Main {
-	public static void main(String[] args) throws IllegalArgumentException {
-		final int NPLAYERS = 4;
-		Board board = new Board(NPLAYERS);
-		System.out.println("\nBoard:");
-		board.printBoard();
+public static void main(String[] args) throws IllegalArgumentException {
+	
+	Scanner in = new Scanner(System.in);
 
-		Bookshelf shelf1 = new Bookshelf();
-		PersonalGoalCard personalGoal1 = new PersonalGoalCard();
-		Player Player1 = new Player(1, "Leonardo", shelf1, personalGoal1);
+	final int NPLAYERS = 4;
+	
+	Board board = new Board(NPLAYERS);
+	System.out.println("\n----------START GAME----------\n");
+	System.out.println("\nSTATUS Board:");
+	board.printBoard();
 
-		Bookshelf shelf2 = new Bookshelf();
-		PersonalGoalCard personalGoal2 = new PersonalGoalCard();
-		Player Player2 = new Player(2, "Pietro", shelf2, personalGoal2);
+	// Create player 1, currentPlayerIndex=1
+	Bookshelf shelf1 = new Bookshelf();
+	PersonalGoalCard personalGoal1 = new PersonalGoalCard();
+	Player Player1 = new Player(1, "Leonardo", shelf1, personalGoal1);
 
-		System.out.println("\nCommon Goal Cards:");
-		CommonGoals commonGoals = new CommonGoals();
+	// Create player 2, currentPlayerIndex=2
+	Bookshelf shelf2 = new Bookshelf();
+	PersonalGoalCard personalGoal2 = new PersonalGoalCard();
+	Player Player2 = new Player(2, "Pietro", shelf2, personalGoal2);
 
-		System.out.println("\n" + Player1.getUsername() + "'s Shelf:");
-		shelf1.printBoard();
-		System.out.println("\n" + Player1.getUsername() + "'s Personal Goal Card:");
-		personalGoal1.printBoard();
+	/* Commong goal cards and shelves.
+	System.out.println("\nCommon Goal Cards:");
+	CommonGoals commonGoals = new CommonGoals();
 
-		System.out.println("\n" + Player2.getUsername() + "'s Shelf:");
-		shelf2.printBoard();
-		System.out.println("\n" + Player2.getUsername() + "'s Personal Goal Card:");
-		personalGoal2.printBoard();
+	System.out.println("\n" + Player1.getUsername() + "'s Shelf:");
+	shelf1.printBoard();
+	System.out.println("\n" + Player1.getUsername() + "'s Personal Goal Card:");
+	personalGoal1.printBoard();
 
-		Scanner in = new Scanner(System.in);
+	System.out.println("\n" + Player2.getUsername() + "'s Shelf:");
+	shelf2.printBoard();
+	System.out.println("\n" + Player2.getUsername() + "'s Personal Goal Card:");
+	personalGoal2.printBoard();
+	 */
 
+	boolean gameOver = false;
+	
+	List<Player> players = new ArrayList<>();
+	players.add(Player1);
+	players.add(Player2);
+	
+	int currentPlayerIndex = 1;
+	
+	while(!gameOver) {
+		// -------- START TURN FUNCTIONALITIES
+		
 		Tail[] tails = new Tail[] { Tail.E, Tail.E, Tail.E };
 		System.out.println("\n\n---Select the Tails you want to put into your Shelf.");
 
-		int exit = 1;
-		int nOfFreeSpaces = 0;
-		int canPickTailsBoard = 0;
-		int cont = 0;
+		int endTurn = 1;					// endTurn=1 -> keep going - endTurn=0 -> stop turn
+		int nOfFreeSpaces = 0;				// nOfFreeSpaces in Player's shelf
+		boolean canPickTailsBoard = false;	// Number of tails a user can pick
+		int cont = 0;						// cont = number of tails the user picked
 
 		int[][] positionTails = new int[3][2];
 
 		// tRow = a,b,.. tCol = 1,2,.. ----- row = col = 0,1,..
-		while (cont < 3 && exit != 0) {
+		while (cont < 3 && endTurn != 0) {
 
 			// Check if board has to be refilled
 			board.endBoard();
@@ -56,7 +77,7 @@ public class Main {
 			// Check if user has space on his shelf
 			if (nOfFreeSpaces == 0) {
 				System.out.println("You can't pick any tails. Your shelf is full.");
-				// TODO -> Call function "nextTurn()"
+				// TODO -> Call function "nextTurn()" (end game)
 			}
 
 			// User enters ROW and COL
@@ -87,23 +108,27 @@ public class Main {
 			}
 
 			// Check if user can pick another tail (on the board).
-			canPickTailsBoard = board.checkFreeSpaces();
-			if (canPickTailsBoard == 0) {
-				System.out.println("You can't pick any adjacent tail on the board on the same row and column.");
-				// TODO -> Call function "nextTurn()"
+			if(cont < 3) {				
+				canPickTailsBoard = board.checkFreeSpaces(positionTails, cont);
+				if (canPickTailsBoard == false && cont > 0) {
+					System.out.println("You can't pick any adjacent tail on the board on the same row and column.");
+					// TODO -> Call function "nextTurn()"
+				}
 			}
 
 			// User decides if he wants to pick another tail
 			if (cont < 3) {
 				System.out.println("\nEnter: \n-0 to stop; \n-1 to pick another.");
-				exit = in.nextInt();
-				if (exit != 0 && exit != 1) {
+				endTurn = in.nextInt();
+				if (endTurn != 0 && endTurn != 1) {
 					throw new IllegalArgumentException("You must enter 0 or 1.");
 				}
 			}
 
 		}
-
+		
+		// -------- END TURN FUNCTIONALITIES
+		
 		// Remove the tails the user picked
 		board.emptyTheBoard(positionTails);
 		System.out.println("---------------------------");
@@ -111,13 +136,14 @@ public class Main {
 		// Print selected tails and the status board
 		printSelectedTails(tails, cont, positionTails);
 		board.printBoard();
-
 	}
+	
+}
 
-	public static void printSelectedTails(Tail tails[], int n, int tempPositionTails[][]) {
-		System.out.println("\n---The tails you selected are: \n");
-		for (int i = 0; i < n; i++) {
-			System.out.print((i + 1) + "° Tail: '" + tails[i] + "' in the position: [" + (char)(tempPositionTails[i][0] + 97) + ", " + (tempPositionTails[i][1] + 1) + "] \n");
+public static void printSelectedTails(Tail tails[], int n, int tempPositionTails[][]) {
+	System.out.println("\n---The tails you selected are: \n");
+	for (int i = 0; i < n; i++) {
+		System.out.print((i + 1) + "° Tail: '" + tails[i] + "' in the position: [" + (char)(tempPositionTails[i][0] + 97) + ", " + (tempPositionTails[i][1] + 1) + "] \n");
 		}
 	}
 }

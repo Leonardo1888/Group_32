@@ -1,5 +1,5 @@
 package logic;
-
+//
 // X = FILLABLE (IN BOOKSHELF), EMPTY, CAT, BOOK, GAME, FRAME, TROPHEY, PLANT, SAME, DIFFERENT
 public enum Tail {
 	X,
