@@ -41,7 +41,7 @@ public class Main {
 		int canPickTailsBoard = 0;
 		int cont = 0;
 
-		int[][] tempPositionTails = new int[3][2];
+		int[][] positionTails = new int[3][2];
 
 		// tRow = a,b,.. tCol = 1,2,.. ----- row = col = 0,1,..
 		while (cont < 3 && exit != 0) {
@@ -79,8 +79,8 @@ public class Main {
 				System.out.println(
 						"You have chosen the tail '" + tails[cont] + 
 						"' in the position: [" + tRow + ", " + tCol + "]");
-				tempPositionTails[cont][0] = row;
-				tempPositionTails[cont][1] = col;
+				positionTails[cont][0] = row;
+				positionTails[cont][1] = col;
 				cont++;
 				nOfFreeSpaces--;
 				
@@ -105,11 +105,11 @@ public class Main {
 		}
 
 		// Remove the tails the user picked
-		board.emptyTheBoard(tempPositionTails);
+		board.emptyTheBoard(positionTails);
 		System.out.println("---------------------------");
 
 		// Print selected tails and the status board
-		printSelectedTails(tails, cont, tempPositionTails);
+		printSelectedTails(tails, cont, positionTails);
 		board.printBoard();
 
 	}
