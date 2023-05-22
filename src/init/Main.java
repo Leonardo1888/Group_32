@@ -60,7 +60,7 @@ public static void main(String[] args) throws IllegalArgumentException {
 		int endTurn = 1;					// endTurn=1 -> keep going - endTurn=0 -> stop turn
 		int nOfFreeSpaces = 0;				// nOfFreeSpaces in Player's shelf
 		boolean canPickTailsBoard = false;	// Number of tails a user can pick
-		int cont = 0;						// cont = number of tails the user picked
+		int cont = 0;						// cont = number of tails the user picked 
 
 		int[][] positionTails = new int[3][2];
 

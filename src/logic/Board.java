@@ -131,7 +131,7 @@ public class Board implements Matrix {
 	}
 	
 	// Check if user can pick another tail on the same colum/row 
-	// Case:0 didn't pick any tails, Case:1 Picked 1 tail, Case 2: Picked 2 tails.
+	// Case:0 didn't pick any tails, Case:1 Picked 1 tail, Case 2: Picked 2 tails. 
 	public boolean checkFreeSpaces(int positionTails[][], int cont) {
 		int row = positionTails[cont - 1][0];	//get coordinates from array 2-dim
 		int col = positionTails[cont - 1][1];
