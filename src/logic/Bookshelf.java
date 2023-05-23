@@ -1,6 +1,7 @@
 package logic;
 //
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Bookshelf implements Matrix {
 	private final int ROW = 6;
@@ -13,7 +14,7 @@ public class Bookshelf implements Matrix {
 		for (int i = 0; i < (ROW); i++) {
 			for (int j = 0; j < COL; j++) {
 				shelf[i][j] = Tail.E;
-				if (i == (ROW - 1))
+				if (i == (ROW - 1)) 
 					shelf[i][j] = Tail.X;
 			}
 		}
@@ -22,7 +23,47 @@ public class Bookshelf implements Matrix {
 	public void printBoard() {
 		Matrix.printMatrix(shelf, ROW, COL);
 	}
-
+	
+	public Tail[] orderTailsToInsert(Tail tails[], int numTails){
+		Scanner in = new Scanner(System.in);
+		System.out.println("Your Tails:\n   1." + tails[0] + "\n   2." + tails[1] + "\n   3." + tails[2]);
+		System.out.println("\nChoose the order of the Tails to insert(1- " + numTails + ")): ");
+		
+		switch(numTails){
+			case 1:
+				Tail[] tailsToInsert1 = new Tail[1];
+				System.out.println("   first:");
+				int first1 = in.nextInt();
+				tailsToInsert1[0] = tails[first1 - 1];
+				in.close();
+				return tailsToInsert1;
+			case 2:
+				Tail[] tailsToInsert2 = new Tail[2];
+				System.out.println("   first:");
+				int first2 = in.nextInt();
+				System.out.println("   second:");
+				int second2 = in.nextInt();
+				tailsToInsert2[0] = tails[first2 - 1];
+				tailsToInsert2[1] = tails[second2 - 1];
+				in.close();
+				return tailsToInsert2;
+			case 3:
+				Tail[] tailsToInsert3 = new Tail[3];
+				System.out.println("   first:");
+				int first3 = in.nextInt();
+				System.out.println("   second:");
+				int second3 = in.nextInt();
+				System.out.println("   third:");
+				int third3 = in.nextInt();
+				tailsToInsert3[0] = tails[first3 - 1];
+				tailsToInsert3[1] = tails[second3 - 1];
+				tailsToInsert3[2] = tails[third3 - 1];
+				in.close();
+				return tailsToInsert3;	
+		}
+		return tails;
+	}
+	
 	public int insertTail(Tail[] tails, int col) {
 		int numTail = 3;
 		for (int n = 0; n < 3; n++) {
@@ -54,10 +95,5 @@ public class Bookshelf implements Matrix {
 			count[j] = Matrix.countEinCol(shelf, j);
 		}
 		return Arrays.stream(count).max().orElse(0);
-	}
-
-	public static String columnMsg() {
-		String msg = "Choose the column (1-5): ";
-		return msg;
 	}
 }

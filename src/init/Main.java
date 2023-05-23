@@ -38,7 +38,7 @@ public static void main(String[] args) throws IllegalArgumentException {
 	personalGoal1.printBoard();
 
 	System.out.println("\n" + Player2.getUsername() + "'s Shelf:");
-	shelf2.printBoard();
+	shelf2.printBoard()
 	System.out.println("\n" + Player2.getUsername() + "'s Personal Goal Card:");
 	personalGoal2.printBoard();
 	 */
@@ -52,17 +52,17 @@ public static void main(String[] args) throws IllegalArgumentException {
 	int currentPlayerIndex = 1;
 	
 	while(!gameOver) {
-		// -------- START TURN FUNCTIONALITIES
+		// -------- START TURN
 		
 		Tail[] tails = new Tail[] { Tail.E, Tail.E, Tail.E };
-		System.out.println("\n\n---Select the Tails you want to put into your Shelf.");
+		int[][] positionTails = new int[3][2];
 
 		int endTurn = 1;					// endTurn=1 -> keep going - endTurn=0 -> stop turn
 		int nOfFreeSpaces = 0;				// nOfFreeSpaces in Player's shelf
 		boolean canPickTailsBoard = false;	// Number of tails a user can pick
-		int cont = 0;						// cont = number of tails the user picked 
+		int cont = 0;						// cont = number of tails the user picked
 
-		int[][] positionTails = new int[3][2];
+		System.out.println("\n\n---Select the Tails you want to put into your Shelf.");
 
 		// tRow = a,b,.. tCol = 1,2,.. ----- row = col = 0,1,..
 		while (cont < 3 && endTurn != 0) {
@@ -124,10 +124,12 @@ public static void main(String[] args) throws IllegalArgumentException {
 					throw new IllegalArgumentException("You must enter 0 or 1.");
 				}
 			}
-
+			
+			
+			
+			// -------- END TURN
 		}
 		
-		// -------- END TURN FUNCTIONALITIES
 		
 		// Remove the tails the user picked
 		board.emptyTheBoard(positionTails);
@@ -136,6 +138,25 @@ public static void main(String[] args) throws IllegalArgumentException {
 		// Print selected tails and the status board
 		printSelectedTails(tails, cont, positionTails);
 		board.printBoard();
+		
+		Scanner inp = new Scanner(System.in);
+		shelf1.printBoard();
+		System.out.println("\nChoose the column where to insert(1-5): ");
+		int colInsert = inp.nextInt() - 1;
+		
+		if(colInsert < 0 || colInsert > 4){
+			System.out.println("Error: choose a column in the range 1-5");
+		}
+		
+		tails = shelf1.orderTailsToInsert(tails, cont);
+		
+		int state = shelf1.insertTail(tails, colInsert);
+		
+		inp.close();
+		
+		shelf1.printBoard();
+	
+		
 	}
 	
 }

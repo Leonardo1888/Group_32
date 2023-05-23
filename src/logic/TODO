@@ -1,4 +1,4 @@
-TODO = X
+TODO 
 
 —Creazione board in modo casuale (in base al nPlayers)
 
@@ -7,12 +7,15 @@ TODO = X
 —Check se l'utente può prendere delle tail: [
      *check se la può prendere;
      *check se ha shelf libera;
-     X*check se può prenderne altre nella board
+     *check se può prenderne altre nella board
 ]
 
 —Rimozione dalla board delle tails scelte
 
+
 —inserimento nella shelf delle tails scelte
+
+-aggiornare eclipse, sistemare turni
 
 —XnextTurn() se: [
      *Non può prendere altre tails per la shelf;
