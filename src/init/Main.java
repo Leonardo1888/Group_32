@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 public class Main {
 public static void main(String[] args) throws IllegalArgumentException {
-	
-	Scanner in = new Scanner(System.in);
 
 	final int NPLAYERS = 4;
 	
@@ -53,6 +51,7 @@ public static void main(String[] args) throws IllegalArgumentException {
 	
 	while(!gameOver) {
 		// -------- START TURN
+		Scanner in = new Scanner(System.in);
 		
 		Tail[] tails = new Tail[] { Tail.E, Tail.E, Tail.E };
 		int[][] positionTails = new int[3][2];
@@ -150,12 +149,13 @@ public static void main(String[] args) throws IllegalArgumentException {
 		
 		tails = shelf1.orderTailsToInsert(tails, cont);
 		
-		int state = shelf1.insertTail(tails, colInsert);
+		int state = shelf1.insertTail(tails, colInsert, cont);
 		
 		inp.close();
 		
 		shelf1.printBoard();
-	
+		
+		in.close();
 		
 	}
 	
@@ -164,7 +164,7 @@ public static void main(String[] args) throws IllegalArgumentException {
 public static void printSelectedTails(Tail tails[], int n, int tempPositionTails[][]) {
 	System.out.println("\n---The tails you selected are: \n");
 	for (int i = 0; i < n; i++) {
-		System.out.print((i + 1) + "° Tail: '" + tails[i] + "' in the position: [" + (char)(tempPositionTails[i][0] + 97) + ", " + (tempPositionTails[i][1] + 1) + "] \n");
+		System.out.print((i + 1) + "ï¿½ Tail: '" + tails[i] + "' in the position: [" + (char)(tempPositionTails[i][0] + 97) + ", " + (tempPositionTails[i][1] + 1) + "] \n");
 		}
 	}
 }

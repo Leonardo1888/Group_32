@@ -26,18 +26,17 @@ public class Bookshelf implements Matrix {
 	
 	public Tail[] orderTailsToInsert(Tail tails[], int numTails){
 		Scanner in = new Scanner(System.in);
-		System.out.println("Your Tails:\n   1." + tails[0] + "\n   2." + tails[1] + "\n   3." + tails[2]);
-		System.out.println("\nChoose the order of the Tails to insert(1- " + numTails + ")): ");
 		
 		switch(numTails){
 			case 1:
+				System.out.println("Your Tail:\n   1." + tails[0]);
 				Tail[] tailsToInsert1 = new Tail[1];
-				System.out.println("   first:");
-				int first1 = in.nextInt();
-				tailsToInsert1[0] = tails[first1 - 1];
+				tailsToInsert1[0] = tails[0];
 				in.close();
 				return tailsToInsert1;
 			case 2:
+				System.out.println("Your Tails:\n   1." + tails[0] + "\n   2." + tails[1]);
+				System.out.println("\nChoose the order of the Tails to insert(1- " + numTails + ")): ");
 				Tail[] tailsToInsert2 = new Tail[2];
 				System.out.println("   first:");
 				int first2 = in.nextInt();
@@ -48,6 +47,8 @@ public class Bookshelf implements Matrix {
 				in.close();
 				return tailsToInsert2;
 			case 3:
+				System.out.println("Your Tails:\n   1." + tails[0] + "\n   2." + tails[1] + "\n   3." + tails[2]);
+				System.out.println("\nChoose the order of the Tails to insert(1- " + numTails + ")): ");
 				Tail[] tailsToInsert3 = new Tail[3];
 				System.out.println("   first:");
 				int first3 = in.nextInt();
@@ -64,15 +65,10 @@ public class Bookshelf implements Matrix {
 		return tails;
 	}
 	
-	public int insertTail(Tail[] tails, int col) {
-		int numTail = 3;
-		for (int n = 0; n < 3; n++) {
-			if (tails[n] == Tail.E) {
-				numTail--;
-			}
-		}
+	public int insertTail(Tail[] tails, int col, int numTail) {
 
 		if (numTail > Matrix.countEinCol(this.shelf, col)) {
+			System.out.println("Not enough free spaces in the column...");
 			return 1; // failure
 		}
 
@@ -80,7 +76,11 @@ public class Bookshelf implements Matrix {
 			for (int i = 0; i < this.ROW; i++) {
 				if (this.shelf[i][col] == Tail.X) {
 					this.shelf[i][col] = tails[n]; // insert tail
-					this.shelf[i - 1][col] = Tail.X; // insert X one row up
+					if(i == 0) {	//se la riga è 0 non devo scrivere la X sopra
+						System.out.println("the column has been filled entirely");
+					}else {
+						this.shelf[i - 1][col] = Tail.X; // insert X one row up
+					}
 				}
 			}
 		}

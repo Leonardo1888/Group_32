@@ -406,7 +406,7 @@ public class Board implements Matrix {
 					this.board[i][j] = tail;
 					this.tailCount[tailIndex]++;
 				}
-				if (fillable[i][j] == true) { // If not fillable -> Set Empy
+				if (fillable[i][j] == true) { // If not fillable -> Set Empty
 					this.board[i][j] = Tail.E;
 				}
 
