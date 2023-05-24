@@ -15,6 +15,7 @@ TODO
 
 —inserimento nella shelf delle tails scelte
 
+-togliere classe Turn e rinominare TurnManagement in GameManagement? Può servire classe Turn?
 -aggiornare eclipse, sistemare turni
 
 —XnextTurn() se: [
@@ -40,3 +41,8 @@ TODO
 
 
 ]
+
+Alla fine: 
+-togliere a1,a2,a3
+-suddividere in package i file
+-aggiungere eccezioni e vari controlli

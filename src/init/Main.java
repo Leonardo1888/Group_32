@@ -9,22 +9,13 @@ import java.util.ArrayList;
 public class Main {
 public static void main(String[] args) throws IllegalArgumentException {
 
-	final int NPLAYERS = 4;
+	PlayersManagement pManagement = new PlayersManagement();
+	pManagement.enterPlayers();
 	
-	Board board = new Board(NPLAYERS);
-	System.out.println("\n----------START GAME----------\n");
-	System.out.println("\nSTATUS Board:");
+	Board board = new Board(pManagement.getnPlayers());	
 	board.printBoard();
 
-	// Create player 1, currentPlayerIndex=1
-	Bookshelf shelf1 = new Bookshelf();
-	PersonalGoalCard personalGoal1 = new PersonalGoalCard();
-	Player Player1 = new Player(1, "Leonardo", shelf1, personalGoal1);
-
-	// Create player 2, currentPlayerIndex=2
-	Bookshelf shelf2 = new Bookshelf();
-	PersonalGoalCard personalGoal2 = new PersonalGoalCard();
-	Player Player2 = new Player(2, "Pietro", shelf2, personalGoal2);
+	TurnManagement turnManagement = new TurnManagement(pManagement.getPlayers(), board);
 
 	/* Commong goal cards and shelves.
 	System.out.println("\nCommon Goal Cards:");
@@ -42,10 +33,6 @@ public static void main(String[] args) throws IllegalArgumentException {
 	 */
 
 	boolean gameOver = false;
-	
-	List<Player> players = new ArrayList<>();
-	players.add(Player1);
-	players.add(Player2);
 	
 	int currentPlayerIndex = 1;
 	
