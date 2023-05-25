@@ -43,6 +43,7 @@ TODO
 ]
 
 Alla fine: 
+-controllare tutti i TODO in tutte le classi
 -togliere a1,a2,a3
 -suddividere in package i file
 -aggiungere eccezioni e vari controlli

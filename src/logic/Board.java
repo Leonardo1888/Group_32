@@ -1,6 +1,5 @@
 package logic;
 
-//
 import java.lang.Math;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -13,7 +12,7 @@ public class Board implements Matrix {
 
 	private int rowTemp;
 	private int colTemp;
-	private int align; // 0 is horizontal, 1 is vertical
+	private int align; 		// 0 is horizontal, 1 is vertical
 
 	private Tail[][] board;
 	private int[] tailCount;
@@ -31,7 +30,7 @@ public class Board implements Matrix {
 	}
 
 	// index = position of tail, first, second, third tail selected in the board
-	public Tail selectTails(int row, int col, int index) throws IllegalArgumentException {
+	public Tail selectTails(int row, int col, int index) {
 		// Check if the row and column values are within the valid range
 		if (row < 0 || row >= this.ROW) {
 			System.out.println("Row has to be >= 0 and < " + this.ROW);
@@ -298,7 +297,7 @@ public class Board implements Matrix {
 		}
 	}
 
-	public void endBoard() { // Check if board is filled with 1 tails
+	public void checkEndBoard() { // Check if board is filled with 1 tails
 		for (int i = 0; i < this.ROW; i++) {
 			for (int j = 0; j < this.COL; j++) {
 				if (board[i][j] != Tail.E) {
@@ -308,6 +307,7 @@ public class Board implements Matrix {
 				}
 			}
 		}
+		System.out.println("--- Board has to be refilled ---");
 		refillBoard(board);
 	}
 

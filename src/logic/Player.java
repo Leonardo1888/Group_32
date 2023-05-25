@@ -9,13 +9,15 @@ public class Player {
 	
 	private String username;
 	private Bookshelf shelf;
-	private PersonalGoalCard personalGoal;
+	private PersonalGoalCard personalGoalCard;
+	private boolean isFirstPlayer;
 
-	public Player(String username, Bookshelf shelf, PersonalGoalCard personalGoal) {
+	public Player(String username, Bookshelf shelf, PersonalGoalCard personalGoal, boolean isFirstPlayer) {
 		this.id = PLAYER_COUNT++;
 		this.username = username;
 		this.shelf = shelf;
-		this.personalGoal = personalGoal;
+		this.personalGoalCard = personalGoal;
+		this.isFirstPlayer = isFirstPlayer;
 	}
 
 	public int getPLAYER_COUNT() {
@@ -34,12 +36,12 @@ public class Player {
 		this.shelf = shelf;
 	}
 
-	public PersonalGoalCard getPersonalGoal() {
-		return personalGoal;
+	public PersonalGoalCard getPersonalGoalCard() {
+		return personalGoalCard;
 	}
 
-	public void setPersonalGoal(PersonalGoalCard personalGoal) {
-		this.personalGoal = personalGoal;
+	public void setPersonalGoalCard(PersonalGoalCard personalGoal) {
+		this.personalGoalCard = personalGoal;
 	}
 
 	public int getId() {

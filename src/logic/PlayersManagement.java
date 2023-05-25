@@ -11,43 +11,63 @@ public class PlayersManagement {
 
 	public PlayersManagement() {
 		this.players = new ArrayList<>();
-		
+
 	}
-	
-	public void enterPlayers() {
+
+	// Enter players and saves them in "players"
+	public void enterPlayers () throws IllegalArgumentException {
 		Scanner sc = new Scanner(System.in);
-		do {
+		while(true) {
 			System.out.print("\nEnter the number of players [2-4]: ");
 			int nPlayers = sc.nextInt();
-			if(nPlayers < 2 || nPlayers > 4) 
+			if(nPlayers >= 2 || nPlayers <= 4) 
+				break;
+			else
 				System.out.println("ERROR! Number of players must be 2, 3 or 4.");
-		} while(nPlayers < 2 || nPlayers > 4);
+		}
 		setnPlayers(nPlayers);   
 		
-    	String playerName;
+    	String playerName = null;
     	for(int i = 0; i < nPlayers; i++) {
-            System.out.print("Enter " + (i+1) + "° player's name: ");
-            playerName = sc.nextLine();
-            Player p = new Player(playerName, 
+			boolean correctName = false;;
+    		while(!correctName) {
+	    		System.out.print("Enter " + (i+1) + "° player's name: ");
+				playerName = sc.nextLine();
+				if(playerName == null || playerName.isEmpty()) 
+					System.out.println("Player name can't be null or empty . Please try again.");
+				else if (playerName.length() < 3)
+					System.out.println("Player name must be at least 3 characters long. Please try again.");
+				else if (playerName.length() > 10)
+					System.out.println("Player name can't exceed 10 characters long. Please try again.");
+				else 
+					correctName = true;
+    		}
+    		Player p;
+    		if(i==0) {
+            	p = new Player(playerName, 
+ 					   new Bookshelf(), 
+ 					   new PersonalGoalCard(),
+ 					   true);
+            } else {
+	            p = new Player(playerName, 
 					   new Bookshelf(), 
-					   new PersonalGoalCard());
+					   new PersonalGoalCard(),
+					   false);
+            }
             addPlayer(p);
-            if(i==0) 
-            	setFirstPlayer(p);
-            
             System.out.println("");
     	}
 	}
-	
+
 	public void addPlayer(Player p) {
 		if (p == null) {
 			throw new NullPointerException("Player is null");
 		}
 		this.players.add(p);
 	}
-	
+
 	// Getter and setter
-	
+
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -63,11 +83,11 @@ public class PlayersManagement {
 	public void setnPlayers(int nPlayers) {
 		this.nPlayers = nPlayers;
 	}
-	
+
 	public int getnPlayers() {
 		return nPlayers;
 	}
-	
+
 	public void setFirstPlayer(Player fp) {
 		this.firstPlayer = fp;
 	}
