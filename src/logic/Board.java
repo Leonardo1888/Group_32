@@ -19,14 +19,9 @@ public class Board implements Matrix {
 
 	public Board(int nPlayers) {
 		this.nPlayers = nPlayers;
-
-		if (checkNPlayers(nPlayers)) {
-			this.board = new Tail[ROW][COL];
-			this.tailCount = new int[Tail.values().length];
-			fillBoard(board);
-		} else {
-			System.exit(0);
-		}
+		this.board = new Tail[ROW][COL];
+		this.tailCount = new int[Tail.values().length];
+		fillBoard(board);
 	}
 
 	// index = position of tail, first, second, third tail selected in the board
@@ -425,13 +420,6 @@ public class Board implements Matrix {
 	public void printBoard() {
 		System.out.println("\n---STATUS BOARD: \n");
 		Matrix.printMatrix(board, ROW, COL);
-	}
-
-	public boolean checkNPlayers(int nPlayers) throws IllegalArgumentException {
-		if (nPlayers < 2 || nPlayers > 4) {
-			throw new IllegalArgumentException("Number of player has to be 2, 3 or 4.");
-		}
-		return true;
 	}
 
 	public Tail[][] getBoard() {

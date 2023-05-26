@@ -8,6 +8,9 @@ public class PlayersManagement {
 	private int nPlayers;
 
 	private List<Player> players;
+	private int currentPlayerIndex;
+
+	Scanner sc = new Scanner(System.in);
 
 	public PlayersManagement() {
 		this.players = new ArrayList<>();
@@ -15,50 +18,61 @@ public class PlayersManagement {
 	}
 
 	// Enter players and saves them in "players"
-	public void enterPlayers () throws IllegalArgumentException {
-		Scanner sc = new Scanner(System.in);
+	public void enterPlayers () {
 		while(true) {
 			System.out.print("\nEnter the number of players [2-4]: ");
-			int nPlayers = sc.nextInt();
-			if(nPlayers >= 2 || nPlayers <= 4) 
+			this.nPlayers = sc.nextInt();
+			if(nPlayers >= 2 && nPlayers <= 4) 
 				break;
 			else
 				System.out.println("ERROR! Number of players must be 2, 3 or 4.");
 		}
-		setnPlayers(nPlayers);   
 		
-    	String playerName = null;
+    	String playerName = "";
+		boolean correctName = false;
     	for(int i = 0; i < nPlayers; i++) {
-			boolean correctName = false;;
-    		while(!correctName) {
-	    		System.out.print("Enter " + (i+1) + "° player's name: ");
-				playerName = sc.nextLine();
-				if(playerName == null || playerName.isEmpty()) 
+    		while(correctName == false) {
+    			System.out.print("-Enter " + (i+1) + "° player's name: ");
+    			playerName = sc.next();
+				if(playerName == null || playerName.isEmpty())
 					System.out.println("Player name can't be null or empty . Please try again.");
 				else if (playerName.length() < 3)
 					System.out.println("Player name must be at least 3 characters long. Please try again.");
 				else if (playerName.length() > 10)
 					System.out.println("Player name can't exceed 10 characters long. Please try again.");
+				else if(i > 0) {
+					if(checkUsernameAlreadyTaken(playerName) == true)
+						System.out.println("Player name has already been taken. Please try again.");
+					else
+						correctName = true;
+				}
 				else 
 					correctName = true;
     		}
+    		
     		Player p;
-    		if(i==0) {
-            	p = new Player(playerName, 
- 					   new Bookshelf(), 
- 					   new PersonalGoalCard(),
- 					   true);
-            } else {
-	            p = new Player(playerName, 
-					   new Bookshelf(), 
-					   new PersonalGoalCard(),
-					   false);
-            }
+            p = new Player(playerName, 
+	 					   new Bookshelf(),
+	 					   new PersonalGoalCard(),
+	 					   true);
             addPlayer(p);
-            System.out.println("");
+                        
+            System.out.println("Added " + (i+1) + "° player, named: " + playerName);
+            correctName = false;
     	}
 	}
 
+	// Return true if Username has already been taken
+	private boolean checkUsernameAlreadyTaken(String playerName) {
+		for(int i = 0; i < players.size(); i++) {
+			Player currentPlayer = players.get(currentPlayerIndex);
+			if (currentPlayer.getUsername().equals(playerName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void addPlayer(Player p) {
 		if (p == null) {
 			throw new NullPointerException("Player is null");
