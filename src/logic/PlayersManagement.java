@@ -28,44 +28,44 @@ public class PlayersManagement {
 				System.out.println("ERROR! Number of players must be 2, 3 or 4.");
 		}
 		
-    	String playerName = "";
-		boolean correctName = false;
+    	String playerUsername = "";
+		boolean correctUsername = false;
+		
+		// username checks
     	for(int i = 0; i < nPlayers; i++) {
-    		while(correctName == false) {
+    		while(!correctUsername) {
     			System.out.print("-Enter " + (i+1) + "° player's name: ");
-    			playerName = sc.next();
-				if(playerName == null || playerName.isEmpty())
-					System.out.println("Player name can't be null or empty . Please try again.");
-				else if (playerName.length() < 3)
-					System.out.println("Player name must be at least 3 characters long. Please try again.");
-				else if (playerName.length() > 10)
-					System.out.println("Player name can't exceed 10 characters long. Please try again.");
-				else if(i > 0) {
-					if(checkUsernameAlreadyTaken(playerName) == true)
-						System.out.println("Player name has already been taken. Please try again.");
-					else
-						correctName = true;
-				}
-				else 
-					correctName = true;
+    			playerUsername = sc.next();
+    			
+    			if (playerUsername == null || playerUsername.isEmpty()) {
+                    System.out.println("Player name can't be null or empty. Please try again.");
+                } else if (playerUsername.length() < 3) {
+                    System.out.println("Player name must be at least 3 characters long. Please try again.");
+                } else if (playerUsername.length() > 10) {
+                    System.out.println("Player name can't exceed 10 characters long. Please try again.");
+                } else if (i > 0 && checkUsernameAlreadyTaken(playerUsername)) {
+                    System.out.println("Player name has already been taken. Please try again.");
+                } else {
+                    correctUsername = true;
+                }
     		}
     		
     		Player p;
-            p = new Player(playerName, 
+            p = new Player(playerUsername, 
 	 					   new Bookshelf(),
 	 					   new PersonalGoalCard(),
 	 					   true);
             addPlayer(p);
                         
-            System.out.println("Added " + (i+1) + "° player, named: " + playerName);
-            correctName = false;
+            System.out.println("Added " + (i+1) + "° player, named: " + playerUsername);
+            correctUsername = false;
     	}
 	}
 
-	// Return true if Username has already been taken
+	// Return true if username has already been taken
 	private boolean checkUsernameAlreadyTaken(String playerName) {
 		for(int i = 0; i < players.size(); i++) {
-			Player currentPlayer = players.get(currentPlayerIndex);
+			Player currentPlayer = players.get(i);
 			if (currentPlayer.getUsername().equals(playerName)) {
 				return true;
 			}

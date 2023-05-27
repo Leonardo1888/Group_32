@@ -418,7 +418,7 @@ public class Board implements Matrix {
 	}
 
 	public void printBoard() {
-		System.out.println("\n---STATUS BOARD: \n");
+		System.out.println("\n---STATUS BOARD: ");
 		Matrix.printMatrix(board, ROW, COL);
 	}
 
