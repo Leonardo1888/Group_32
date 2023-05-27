@@ -8,14 +8,16 @@ import java.util.ArrayList;
 public class Main {
 	public static void main(String[] args) throws IllegalArgumentException {
 
-		PlayersManagement pManagement = new PlayersManagement();
+		Scanner sc = new Scanner(System.in);
+
+		PlayersManagement pManagement = new PlayersManagement(sc);
 		pManagement.enterPlayers();
 
 		Board board = new Board(pManagement.getnPlayers());
 		board.printBoard();
 
-		TurnsManagement turnsManagement = new TurnsManagement(pManagement.getPlayers(), board);
-
+		TurnsManagement turnsManagement = new TurnsManagement(pManagement.getPlayers(), board, sc);
+		sc.close();
 		/*
 		 * Commong goal cards and shelves. System.out.println("\nCommon Goal Cards:");
 		 * CommonGoals commonGoals = new CommonGoals();

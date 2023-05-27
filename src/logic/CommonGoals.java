@@ -1,11 +1,11 @@
 package logic;
-//
+
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CommonGoals implements Matrix { // this class generates an object that contains 2 cards
 	private int commonGoal1;
-	private int commonGoal2; // int for random choice
+	private int commonGoal2; 	  	  // int for random choice
 	private Tail[][] commonGoalCard1;
 	private Tail[][] commonGoalCard2; // matrix card that contains the tail arrangement
 
@@ -203,7 +203,9 @@ public class CommonGoals implements Matrix { // this class generates an object t
 		return false;
 	}
 
-	public boolean check1(Tail shelf[][]) { // TODO non fatto
+	// Ordered look at English Rules
+	// TODO
+	public boolean check1(Tail shelf[][]) {
 		Tail[][] mirrorShelf = Matrix.copyMatrix(shelf, 5, 6);
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -218,23 +220,26 @@ public class CommonGoals implements Matrix { // this class generates an object t
 		return false;
 	}
 
+	// TODO
 	public boolean check2(Tail shelf[][]) {
 		return false;
 	}
 
 	public boolean check3(Tail shelf[][]) {
-		if (shelf[0][0] != Tail.E && shelf[0][0].equals(shelf[0][4]) && shelf[0][0].equals(shelf[5][4])
-				&& shelf[0][0].equals(shelf[5][0])) {
+		if (shelf[0][0] != Tail.E && shelf[0][0] == shelf[0][4] && shelf[0][0] == shelf[5][4]
+				&& shelf[0][0] == shelf[5][0]) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-
+	
+	// TODO
 	public boolean check4(Tail shelf[][]) {
 		return false;
 	}
-
+	
+	// TODO
 	public boolean check5(Tail shelf[][]) {
 		return false;
 	}

@@ -10,10 +10,11 @@ public class PlayersManagement {
 	private List<Player> players;
 	private int currentPlayerIndex;
 
-	Scanner sc = new Scanner(System.in);
-
-	public PlayersManagement() {
+	Scanner sc;
+	
+	public PlayersManagement(Scanner sc) {
 		this.players = new ArrayList<>();
+		this.sc = sc;
 
 	}
 
@@ -34,7 +35,7 @@ public class PlayersManagement {
 		// username checks
     	for(int i = 0; i < nPlayers; i++) {
     		while(!correctUsername) {
-    			System.out.print("-Enter " + (i+1) + "* player's name: ");
+    			System.out.print("-Enter " + (i+1) + "° player's name: ");
     			playerUsername = sc.next();
     			
     			if (playerUsername == null || playerUsername.isEmpty()) {
@@ -57,7 +58,7 @@ public class PlayersManagement {
 	 					   true);
             addPlayer(p);
                         
-            System.out.println("Added " + (i+1) + "* player, named: " + playerUsername);
+            System.out.println("Added " + (i+1) + "° player, named: " + playerUsername);
             correctUsername = false;
     	}
 	}

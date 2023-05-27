@@ -73,7 +73,7 @@ public class Board implements Matrix {
 			}
 			break;
 		default:
-			System.out.println("Errore");
+			System.out.println("Errore.");
 			break;
 		}
 

@@ -1,5 +1,5 @@
 package logic;
-//
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -29,41 +29,45 @@ public class Bookshelf implements Matrix {
 		
 		switch(numTails){
 			case 1:
-				System.out.println("Your Tail:\n   1." + tails[0]);
+				System.out.println("Your Tail:\n1°: " + tails[0]);
 				Tail[] tailsToInsert1 = new Tail[1];
 				tailsToInsert1[0] = tails[0];
 				in.close();
 				return tailsToInsert1;
 			case 2:
-				System.out.println("Your Tails:\n1." + tails[0] + "\n   2." + tails[1]);
+				System.out.println("Your Tails: ");
 				System.out.println("1°: " + tails[0] + "\n2°: " + tails[1]);
-
-				System.out.println("\nChoose the order of the Tails to insert [1 - " + numTails + "]: ");
+				System.out.println("\nChoose the order of the Tails to insert [1, " + numTails + "]: ");
 				Tail[] tailsToInsert2 = new Tail[2];
-				System.out.println("   first:");
+				
+				System.out.print("First: ");
 				int first2 = in.nextInt();
-				System.out.println("   second:");
+				System.out.print("Second: ");
 				int second2 = in.nextInt();
+				
 				tailsToInsert2[0] = tails[first2 - 1];
 				tailsToInsert2[1] = tails[second2 - 1];
 				in.close();
 				return tailsToInsert2;
 			case 3:
-				System.out.println("Your Tails:\n   1." + tails[0] + "\n   2." + tails[1] + "\n   3." + tails[2]);
-				System.out.println("\nChoose the order of the Tails to insert(1- " + numTails + ")): ");
+				System.out.println("Your Tails:\n1°: " + tails[0] + "\n2°: " + tails[1] + "\n3°: " + tails[2]);
+				System.out.println("\nChoose the order of the Tails to insert [1, " + numTails + "]: ");
 				Tail[] tailsToInsert3 = new Tail[3];
-				System.out.println("   first:");
+				
+				System.out.print("First: ");
 				int first3 = in.nextInt();
-				System.out.println("   second:");
+				System.out.print("Second: ");
 				int second3 = in.nextInt();
-				System.out.println("   third:");
+				System.out.print("Third: ");
 				int third3 = in.nextInt();
+				
 				tailsToInsert3[0] = tails[first3 - 1];
 				tailsToInsert3[1] = tails[second3 - 1];
 				tailsToInsert3[2] = tails[third3 - 1];
 				in.close();
 				return tailsToInsert3;	
 		}
+		in.close();
 		return tails;
 	}
 	

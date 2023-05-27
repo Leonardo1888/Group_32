@@ -1,4 +1,3 @@
-//
 package logic;
 
 import java.util.Random;
@@ -47,7 +46,22 @@ public class PersonalGoalCard implements Matrix {
 
 		}
 	}
-
+	
+	//returns the number of tails matched with the personal card
+	public int tailsMatched(Tail shelf[][]){	
+		int cont = 0;
+		
+		for(int i = 0; i < ROW; i++){
+			for(int j = 0; j < COL; j++){
+				if(shelf[i][j] == this.personalGoalCard[i][j] && this.personalGoalCard[i][j] != Tail.E ){
+					cont++;
+				}
+			}
+		}
+		
+		return cont;
+	}
+	
 	public void printBoard() {
 		Matrix.printMatrix(personalGoalCard, ROW, COL);
 	}

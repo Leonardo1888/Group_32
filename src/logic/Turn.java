@@ -15,6 +15,7 @@ public class Turn {
 	private Player currentPlayer;
 	private Bookshelf shelf;
 	private PersonalGoalCard pgc;
+	private Scanner sc;
 	
 	// row and column in numbers
 	private int row; // [0-6]
@@ -24,99 +25,111 @@ public class Turn {
 	private char tRow; // [a-g]
 	private int tCol; // [1-9]
 
-	Scanner sc = new Scanner(System.in);
+	private boolean gameOver = false;
 
-	public Turn(Board board, Player currentPlayer, Bookshelf shelf, PersonalGoalCard pgc) {
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public Turn(Board board, Player currentPlayer, Bookshelf shelf, PersonalGoalCard pgc, Scanner sc) {
 		this.board = board;
 		this.currentPlayer = currentPlayer;
 		this.shelf = shelf;
 		this.pgc = pgc;
+		this.sc = sc;
 	}
 
-	/*
-	 * @return true if game is over
-	 */
+	// @return true if turn has ended
+	// sets gameOver to true if a shelf is full
+
 	public boolean playTurn() {
+		
 		System.out.println("\n\n--- Player turn: " + currentPlayer.getUsername() + ".");
 		System.out.println("Select the Tails you want to put into your Shelf.");
-		
-		// Store the largest number of free cells (for every column of the shelf)
-		nOfFreeSpaces = currentPlayer.getShelf().checkFreeSpaces();
 
+		// Store the biggest number of free cells (for every column of the shelf)
+		nOfFreeSpaces = shelf.checkFreeSpaces();
+		if (nOfFreeSpaces == 0) {
+			this.gameOver = true;
+		}
+		
 		while (nTailsPicked < 3 && endTurn != 0) {
 
 			// Check if board has to be refilled
 			board.checkEndBoard();
 
 			// User enters ROW and COL
-			selectTail();
+			selectTail(sc);
 
-			// Stores selected tail in tails[nTailsPicked], 
-			// if user CAN'T pick --> tails[inTailsPicked] = Tails.E
+			// Saves selected Tail, else is E
 			tails[nTailsPicked] = board.selectTails(row, col, nTailsPicked);
-			
-			// If suitable increment nTailsPicked and decrement nOfFreeSpaces (bcs it has to be on same col)
-			checkIfTailIsSuitable(tails[nTailsPicked]);
 
-			// Check if user can pick another tail (on the board)
-			if (tails[(nTailsPicked-1)] != Tail.E) {
-				System.out.println("nTailsPicked: " + nTailsPicked + " and canPickTailsBoard: " + canPickTailsBoard);
+			// If not E: saves in positionTails the coordinates; nTailsPicked++;
+			// nOfFreeSpaces-- (it has to be on same col in shelf)
+			checkIfNotEmpty(tails[nTailsPicked]);
+
+			// Check if user can pick another tail (on the board).
+			if (nTailsPicked < 3) {
 				canPickTailsBoard = board.checkFreeSpaces(positionTails, nTailsPicked);
-				System.out.println("nTailsPicked: " + nTailsPicked + " and canPickTailsBoard: " + canPickTailsBoard);
-				if (canPickTailsBoard == false) {
+				if (canPickTailsBoard == false && nTailsPicked > 0) {
 					System.out.println("You can't pick any adjacent tail on the board on the same row and column.");
 					actionsOfEndTurn();
-					sc.close();
+					// TURN FINISHED
+					return true;
 				}
 			}
 
 			// User decides if he wants to pick another tail
 			if (canPickTailsBoard == true && nTailsPicked < 3) {
-				endTurn = pickAgain();
-				if(endTurn == 0) {
+				endTurn = pickAgain(sc);
+				if (endTurn == 0) {
 					actionsOfEndTurn();
-					sc.close();
+					// TURN FINISHED
+					return true;
 				}
 			}
-			
+
 			if (nOfFreeSpaces == 0) {
+				actionsOfEndTurn();
+				// TURN FINISHED
 				return true;
 			}
 		}
-
-		return false;
+		actionsOfEndTurn();
+		return true;
 	}
-	
+
 	private void actionsOfEndTurn() {
 		removeTailsInBoard();
-		
+
 		// Print selected tails and the board status
 		printSelectedTails(tails, nTailsPicked, positionTails);
 		board.printBoard();
-	
+
 		// Column where the user wants to put the tail(s)
 		int colInsert = selectColumn();
-	
+
 		// Insert tail(s)
 		tails = shelf.orderTailsToInsert(tails, nTailsPicked);
 		int state = shelf.insertTail(tails, colInsert, nTailsPicked);
 		shelf.printShelf();
 	}
-	
+
 	private void removeTailsInBoard() {
 		// Remove the tails the user picked
 		this.board.emptyTheBoard(positionTails);
 		System.out.println("---------------------------");
 	}
-	
+
 	private static void printSelectedTails(Tail tails[], int n, int tempPositionTails[][]) {
 		System.out.println("\n---The tails you selected are: \n");
 		for (int i = 0; i < n; i++) {
-			System.out.print((i + 1) + "° Tail: '" + tails[i] + "' in the position: [" + (char)(tempPositionTails[i][0] + 97) + ", " + (tempPositionTails[i][1] + 1) + "] \n");
+			System.out.print((i + 1) + "° Tail: '" + tails[i] + "' in the position: ["
+					+ (char) (tempPositionTails[i][0] + 97) + ", " + (tempPositionTails[i][1] + 1) + "] \n");
 		}
 	}
 
-	private int pickAgain() {
+	private int pickAgain(Scanner sc) {
 		while (true) {
 			System.out.println("\nEnter: \n-0 to stop; \n-1 to pick another.");
 			endTurn = sc.nextInt();
@@ -129,21 +142,21 @@ public class Turn {
 		return endTurn;
 	}
 
-	private void checkIfTailIsSuitable(Tail t) {
+	private void checkIfNotEmpty(Tail t) {
 		if (t == Tail.E) {
 			System.out.println("The Tail in the position: [" + tRow + ", " + tCol + "] is not suitable.");
 		} else {
 			System.out.println("You have chosen the tail '" + t + "' in the position: [" + tRow + ", " + tCol + "]");
-			positionTails[nTailsPicked][0] = row;
-			positionTails[nTailsPicked][1] = col;
-			nTailsPicked++;
-			nOfFreeSpaces--;
+			this.positionTails[nTailsPicked][0] = row;
+			this.positionTails[nTailsPicked][1] = col;
+			this.nTailsPicked++;
+			this.nOfFreeSpaces--;
 
 		}
 	}
 
 	// User enters ROW and COL
-	private void selectTail() {
+	private void selectTail(Scanner sc) {
 		System.out.print("\n---Tail number: " + (nTailsPicked + 1) + ".");
 		System.out.print("\n-Insert ROW [a-g]: ");
 		this.tRow = sc.next().charAt(0);
@@ -159,12 +172,12 @@ public class Turn {
 	private int selectColumn() {
 		shelf.printShelf();
 		int column;
-		
-		while(true) {
+
+		while (true) {
 			System.out.print("\nChoose the column where to insert [1-5]: ");
 			column = sc.nextInt();
 			column--;
-			if(column >= 0 && column <= 4){
+			if (column >= 0 && column <= 4) {
 				break;
 			} else {
 				System.out.println("\nError: choose a column in the range [1-5].");
@@ -173,7 +186,7 @@ public class Turn {
 		}
 		return column;
 	}
-	
+
 	// -------- GETTER AND SETTER --------
 
 	public Tail[] getTails() {
@@ -206,14 +219,6 @@ public class Turn {
 
 	public void setnOfFreeSpaces(int nOfFreeSpaces) {
 		this.nOfFreeSpaces = nOfFreeSpaces;
-	}
-
-	public boolean isCanPickTailsBoard() {
-		return canPickTailsBoard;
-	}
-
-	public void setCanPickTailsBoard(boolean canPickTailsBoard) {
-		this.canPickTailsBoard = canPickTailsBoard;
 	}
 
 	public int getCont() {

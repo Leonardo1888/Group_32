@@ -1,42 +1,43 @@
 TODO 
 
-—Creazione board in modo casuale (in base al nPlayers)
+ï¿½Creazione board in modo casuale (in base al nPlayers)
 
-—Refill board quando non si possono più prendere
+ï¿½Refill board quando non si possono piï¿½ prendere
 
-—Check se l'utente può prendere delle tail: [
-     *check se la può prendere;
+ï¿½Check se l'utente puÃ² prendere delle tail: [
+     *check se la puÃ² prendere;
      *check se ha shelf libera;
-     *check se può prenderne altre nella board
+     *check se puï¿½ prenderne altre nella board
 ]
 
-—Rimozione dalla board delle tails scelte
+Rimozione dalla board delle tails scelte
 
 
-—inserimento nella shelf delle tails scelte
+ï¿½inserimento nella shelf delle tails scelte
 
--togliere classe Turn e rinominare TurnManagement in GameManagement? Può servire classe Turn?
+-togliere classe Turn e rinominare TurnManagement in GameManagement? Puï¿½ servire classe Turn?
 -aggiornare eclipse, sistemare turni
 
-—XnextTurn() se: [
-     *Non può prendere altre tails per la shelf;
-     X*Non può prendere altre tails per la board;
+ï¿½XnextTurn() se: [
+     *Non puï¿½ prendere altre tails per la shelf;
+     X*Non puï¿½ prendere altre tails per la board;
      *Se preme 1.
 ]
 
-—XpartitaFinita() se: [
+ï¿½XpartitaFinita() se: [
 
 
 
 ]
 
-—XconteggioPunti() se: [
-
-
-
+ï¿½XconteggioPunti() se: [
+PUNTI:
+-personal goal card -> alla fine del game
+-common goal card -> da conteggiare durante il gioco (controllo ogni turno se Ã¨ fatto tramite switch case del 700)
+-gruppi di sam tails adjacent ->alla fine del game
 ]
 
-—XsetWinner() se: [
+ï¿½XsetWinner() se: [
 
 
 
@@ -47,3 +48,7 @@ Alla fine:
 -togliere a1,a2,a3
 -suddividere in package i file
 -aggiungere eccezioni e vari controlli
+
+
+
+-.
