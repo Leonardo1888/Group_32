@@ -11,7 +11,7 @@ public class Bookshelf implements Matrix {
 
 	public Bookshelf() {
 		this.shelf = new Tail[ROW][COL];
-		for (int i = 0; i < (ROW); i++) {
+		for (int i = 0; i < ROW; i++) {
 			for (int j = 0; j < COL; j++) {
 				shelf[i][j] = Tail.E;
 				if (i == (ROW - 1)) 
@@ -20,7 +20,7 @@ public class Bookshelf implements Matrix {
 		}
 	}
 
-	public void printBoard() {
+	public void printShelf() {
 		Matrix.printMatrix(shelf, ROW, COL);
 	}
 	
@@ -35,8 +35,10 @@ public class Bookshelf implements Matrix {
 				in.close();
 				return tailsToInsert1;
 			case 2:
-				System.out.println("Your Tails:\n   1." + tails[0] + "\n   2." + tails[1]);
-				System.out.println("\nChoose the order of the Tails to insert(1- " + numTails + ")): ");
+				System.out.println("Your Tails:\n1." + tails[0] + "\n   2." + tails[1]);
+				System.out.println("1°: " + tails[0] + "\n2°: " + tails[1]);
+
+				System.out.println("\nChoose the order of the Tails to insert [1 - " + numTails + "]: ");
 				Tail[] tailsToInsert2 = new Tail[2];
 				System.out.println("   first:");
 				int first2 = in.nextInt();

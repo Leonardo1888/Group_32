@@ -5,11 +5,12 @@ import java.util.*;
 public class TurnsManagement {
     private List<Player> players;
     private List<Turn> turns;
+    private Board board;
+    
     private int currentPlayerIndex;
     // private int turnCounter;
     private boolean gameOver;
     
-    private Board board;
     
     public TurnsManagement(List<Player> players, Board board) {
         this.players = players;
@@ -23,7 +24,7 @@ public class TurnsManagement {
     
     // All the turns of the game
     private void startGame() {
-    	while(gameOver == false) {
+    	while(!gameOver) {
     		Player currentPlayer = players.get(currentPlayerIndex);
 			Turn t = new Turn(board, currentPlayer, currentPlayer.getShelf(), currentPlayer.getPersonalGoalCard());
 			gameOver = t.playTurn();
