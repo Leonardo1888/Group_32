@@ -110,7 +110,7 @@ public class Turn {
 		int colInsert = selectColumn();
 
 		// Insert tail(s)
-		tails = shelf.orderTailsToInsert(tails, nTailsPicked);
+		tails = shelf.orderTailsToInsert(this.sc, tails, nTailsPicked);
 		int state = shelf.insertTail(tails, colInsert, nTailsPicked);
 		shelf.printShelf();
 	}

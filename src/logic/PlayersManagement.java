@@ -23,6 +23,7 @@ public class PlayersManagement {
 		while(true) {
 			System.out.print("\nEnter the number of players [2-4]: ");
 			this.nPlayers = sc.nextInt();
+			sc.nextLine();
 			if(nPlayers >= 2 && nPlayers <= 4) 
 				break;
 			else

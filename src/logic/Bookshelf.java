@@ -3,6 +3,7 @@ package logic;
 import java.util.Arrays;
 import java.util.Scanner;
 
+
 public class Bookshelf implements Matrix {
 	private final int ROW = 6;
 	private final int COL = 5;
@@ -24,15 +25,12 @@ public class Bookshelf implements Matrix {
 		Matrix.printMatrix(shelf, ROW, COL);
 	}
 	
-	public Tail[] orderTailsToInsert(Tail tails[], int numTails){
-		Scanner in = new Scanner(System.in);
-		
+	public Tail[] orderTailsToInsert(Scanner sc, Tail tails[], int numTails){		
 		switch(numTails){
 			case 1:
 				System.out.println("Your Tail:\n1°: " + tails[0]);
 				Tail[] tailsToInsert1 = new Tail[1];
 				tailsToInsert1[0] = tails[0];
-				in.close();
 				return tailsToInsert1;
 			case 2:
 				System.out.println("Your Tails: ");
@@ -41,13 +39,14 @@ public class Bookshelf implements Matrix {
 				Tail[] tailsToInsert2 = new Tail[2];
 				
 				System.out.print("First: ");
-				int first2 = in.nextInt();
+				int first2 = sc.nextInt();
+				sc.nextLine();
 				System.out.print("Second: ");
-				int second2 = in.nextInt();
+				int second2 = sc.nextInt();
+				sc.nextLine();
 				
 				tailsToInsert2[0] = tails[first2 - 1];
 				tailsToInsert2[1] = tails[second2 - 1];
-				in.close();
 				return tailsToInsert2;
 			case 3:
 				System.out.println("Your Tails:\n1°: " + tails[0] + "\n2°: " + tails[1] + "\n3°: " + tails[2]);
@@ -55,19 +54,20 @@ public class Bookshelf implements Matrix {
 				Tail[] tailsToInsert3 = new Tail[3];
 				
 				System.out.print("First: ");
-				int first3 = in.nextInt();
+				int first3 = sc.nextInt();
+				sc.nextLine();
 				System.out.print("Second: ");
-				int second3 = in.nextInt();
+				int second3 = sc.nextInt();
+				sc.nextLine();
 				System.out.print("Third: ");
-				int third3 = in.nextInt();
+				int third3 = sc.nextInt();
+				sc.nextLine();
 				
 				tailsToInsert3[0] = tails[first3 - 1];
 				tailsToInsert3[1] = tails[second3 - 1];
 				tailsToInsert3[2] = tails[third3 - 1];
-				in.close();
 				return tailsToInsert3;	
 		}
-		in.close();
 		return tails;
 	}
 	
