@@ -71,7 +71,7 @@ public class Turn {
 			checkIfNotEmpty(tails[nTailsPicked]);
 
 			// Check if user can pick another tail (on the board).
-			if (nTailsPicked < 3) {
+			if (nTailsPicked > 0 && nTailsPicked < 3) {
 				canPickTailsBoard = board.checkFreeSpaces(positionTails, nTailsPicked);
 				if (canPickTailsBoard == false && nTailsPicked > 0) {
 					System.out.println("You can't pick any adjacent tail on the board on the same row and column.");
@@ -82,7 +82,7 @@ public class Turn {
 			}
 
 			// User decides if he wants to pick another tail
-			if (canPickTailsBoard == true && nTailsPicked < 3) {
+			if (canPickTailsBoard == true && nTailsPicked > 0 && nTailsPicked < 3) {
 				endTurn = pickAgain(sc);
 				if (endTurn == 0) {
 					actionsOfEndTurn();
@@ -92,6 +92,7 @@ public class Turn {
 			}
 
 			if (nOfFreeSpaces == 0) {
+				System.out.println("You can't pick more Tails because you don't have enough spaces on you bookshelf!");
 				actionsOfEndTurn();
 				// TURN FINISHED
 				return true;
@@ -101,14 +102,16 @@ public class Turn {
 		return true;
 	}
 
+	// Prints board and player's shelf next to each other
 	private void printBoardAndShelf() {
 		int ROW = board.getRow();
 		int COL = board.getCol();
-		char indexChar = 'a';
+		char indexChar = 'a'-1;
 
 		System.out.println("\nBoard:                       " + this.currentPlayer.getUsername() + "'s bookshelf: ");
-
-		for (int i = 0; i < ROW; i++) {
+		
+		// i = -1 prints the first row with numbers.
+		for (int i = -1; i < ROW; i++) {
 			// Print row board
 
 			board.printRowBoard(i, indexChar);
@@ -192,13 +195,15 @@ public class Turn {
 		// Set ROW and COL to numbers -> [0-6, 0-8]
 		this.row = (tRow - 97); // Convert from char to number (ASCII -97)
 		this.col = (tCol - 1);
+		System.out.println("row: " + row + " col: " + col);
 	}
 
 	// Insert in shelf the tails
 	private int selectColumn() {
 		int column = 0;
 		String testInput;
-
+		testInput = sc.nextLine();
+		
 		while (true) {
 			System.out.print("\nChoose the column where to insert [1-5]: ");
 			testInput = sc.nextLine();

@@ -1,6 +1,7 @@
 package init;
 
 import logic.*;
+import commonGoalsPackage.*;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ public class Main {
 		PlayersManagement pManagement = new PlayersManagement(sc);
 		pManagement.enterPlayers();
 
+		// Generate 2 random commonGoals
+		// CommonGoals commonGoals = new CommonGoals();
+		
 		Board board = new Board(pManagement.getnPlayers());
 		
 		TurnsManagement turnsManagement = new TurnsManagement(pManagement.getPlayers(), board, sc);
@@ -30,8 +34,5 @@ public class Main {
 		 * shelf2.printBoard() System.out.println("\n" + Player2.getUsername() +
 		 * "'s Personal Goal Card:"); personalGoal2.printBoard();
 		 */
-
-		boolean gameOver = false;
-
 	}
 }

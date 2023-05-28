@@ -48,7 +48,7 @@ public class Board implements Matrix {
 				tail = this.board[row][col];
 				setTemp(row, col);
 			} else {
-				System.out.println("1-Choose a suitable tail..");
+				System.out.println("\nChoose a suitable tail.");
 				tail = Tail.E;
 			}
 			break;
@@ -58,7 +58,7 @@ public class Board implements Matrix {
 				tail = this.board[row][col];
 				setTemp(row, col);
 			} else {
-				System.out.println("2-Choose a suitable tail..");
+				System.out.println("\nChoose a suitable tail.");
 				tail = Tail.E;
 			}
 			break;
@@ -68,7 +68,7 @@ public class Board implements Matrix {
 				tail = this.board[row][col];
 				setTemp(row, col);
 			} else {
-				System.out.println("3-Choose a suitable tail..");
+				System.out.println("\nChoose a suitable tail.");
 				tail = Tail.E;
 			}
 			break;
@@ -86,14 +86,16 @@ public class Board implements Matrix {
 	}
 
 	public boolean sideFreeTail(int row, int col) {
-		// If Tail is on the outer square
-		if (row == 0 || row == (this.ROW - 1) || col == 0 || col == (this.COL - 1)) {
-			return true;
-		}
+		if (this.board[row][col] != Tail.E) {
+			// If Tail is on the outer square
+			if (row == 0 || row == (this.ROW - 1) || col == 0 || col == (this.COL - 1)) {
+				return true;
+			}
 
-		if (this.board[row - 1][col] == Tail.E || this.board[row + 1][col] == Tail.E
-				|| this.board[row][col - 1] == Tail.E || this.board[row][col + 1] == Tail.E) {
-			return true;
+			if (this.board[row - 1][col] == Tail.E || this.board[row + 1][col] == Tail.E
+					|| this.board[row][col - 1] == Tail.E || this.board[row][col + 1] == Tail.E) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -124,133 +126,62 @@ public class Board implements Matrix {
 		}
 		return false;
 	}
-
+	
+	/* @Return:
+	 *  0 if not
+	 * 	1 if upper
+	 *  2 if left
+	 *  3 if bottom
+	 *  4 if right
+	 */
+	private int isInTheOuterSquare(int row, int col) {
+		if(row == 0){
+			return 1;
+		}
+		if(col == 0){
+			return 2;
+		}
+		if(row == this.ROW-1){
+			return 3;
+		}
+		if(col == this.COL-1){
+			return 4;
+		}
+		
+		return 0;
+	}
+	
 	// Check if user can pick another tail on the same colum/row
 	// Case:0 didn't pick any tails, Case:1 Picked 1 tail, Case 2: Picked 2 tails.
 	public boolean checkFreeSpaces(int positionTails[][], int cont) {
-		int row = positionTails[cont - 1][0]; // get coordinates from array 2-dim
-		int col = positionTails[cont - 1][1];
-
-		// If Tail is on the outer square
-		if (row == 0) {
-			switch (cont) {
-			case 1:
-				if (sideFreeTail(row + 1, col) || sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)) {
-					if (this.board[row + 1][col] != Tail.E || this.board[row][col + 1] != Tail.E
-							|| this.board[row][col - 1] != Tail.E) {
-						return true;
-					}
-				}
-				break;
-			case 2:
-				if (align == 0) { // horizontal
-					if (sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)) {
-						if (this.board[row][col + 1] != Tail.E || this.board[row][col - 1] != Tail.E) {
-							return true;
-						}
-					}
-				}
-				if (align == 1) { // vertical
-					if (sideFreeTail(row + 1, col)) {
-						if (this.board[row + 1][col] != Tail.E) {
-							return true;
-						}
-					}
-				}
-				break;
-			}
-			return false;
+		
+		
+		
+		//picked not suitable tail
+		if(cont == 0){
+			System.out.println("Pick another tail");
+			return true;
 		}
-		if (row == this.ROW - 1) {
-			switch (cont) {
-			case 1:
-				if (sideFreeTail(row - 1, col) || sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)) {
-					if (this.board[row - 1][col] != Tail.E || this.board[row][col + 1] != Tail.E
-							|| this.board[row][col - 1] != Tail.E) {
-						return true;
-					}
-				}
-				break;
-			case 2:
-				if (align == 0) { // horizontal
-					if (sideFreeTail(row, col - 1)) {
-						if (this.board[row][col + 1] != Tail.E || this.board[row][col - 1] != Tail.E) {
-							return true;
-						}
-					}
-				}
-				if (align == 1) { // vertical
-					if (sideFreeTail(row - 1, col)) {
-						if (this.board[row - 1][col] != Tail.E) {
-							return true;
-						}
-					}
-				}
-				break;
+		
+		//picked 1 tail
+		if(cont == 1){
+			int row = positionTails[0][0]; // get coordinates from array 2-dim
+			int col = positionTails[0][1];
+			
+			int outer = isInTheOuterSquare(row, col);
+			switch(outer){
+				case 0:
+					break;
+				case 1:
+					return upper1(row,col);
+				case 2:
+					return left1(row,col);
+				case 3:
+					return bottom1(row,col);
+				case 4:
+					return right1(row,col);
 			}
-			return false;
-		}
-		if (col == 0) {
-			switch (cont) {
-			case 1: // ha preso 1 tail
-				if (sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col) || sideFreeTail(row, col + 1)) {
-					if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E
-							|| this.board[row][col + 1] != Tail.E || this.board[row][col - 1] != Tail.E) {
-						return true;
-					}
-				}
-				break;
-			case 2: // ha preso 2 tail
-				if (align == 0) { // horizontal
-					if (sideFreeTail(row, col + 1)) {
-						if (this.board[row][col + 1] != Tail.E) {
-							return true;
-						}
-					}
-				}
-				if (align == 1) { // vertical
-					if (sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col)) {
-						if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E) {
-							return true;
-						}
-					}
-				}
-				break;
-			}
-			return false;
-		}
-		if (col == this.COL - 1) {
-			switch (cont) {
-			case 1:
-				if (sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col) || sideFreeTail(row, col - 1)) {
-					if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E
-							|| this.board[row][col - 1] != Tail.E) {
-						return true;
-					}
-				}
-				break;
-			case 2:
-				if (align == 0) { // horizontal
-					if (sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)) {
-						if (this.board[row][col - 1] != Tail.E) {
-							return true;
-						}
-					}
-				}
-				if (align == 1) { // vertical
-					if (sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col)) {
-						if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E) {
-							return true;
-						}
-					}
-				}
-				break;
-			}
-			return false;
-		}
-
-		switch (cont) {
-		case 1:
+			
 			if (sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col) || sideFreeTail(row, col + 1)
 					|| sideFreeTail(row, col - 1)) {
 				if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E
@@ -258,23 +189,181 @@ public class Board implements Matrix {
 					return true;
 				}
 			}
-			break;
-		case 2:
-			if (align == 0) { // horizontal
-				if (sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)) {
-					if (this.board[row][col + 1] != Tail.E || this.board[row][col - 1] != Tail.E) {
-						return true;
+		}
+		
+		//picked 2 tails
+		if(cont == 2){
+			int row1 = positionTails[0][0]; // get 1st coordinates from array 2-dim
+			int col1 = positionTails[0][1];
+			
+			int row2 = positionTails[1][0]; // get 2nd coordinates from array 2-dim
+			int col2 = positionTails[1][1];
+			
+			int outer1 = isInTheOuterSquare(row1, col1);
+			int outer2 = isInTheOuterSquare(row1, col1);
+			
+			if(outer1 != 0 && outer1 == outer2){
+				return false;	//se tutte e due sono nell outer allora non ci sono casi in cui si puo pickare una 3rd
+			}
+			
+			int addR = addR(row1, row2);
+			int addC = addC(col1, col2);
+			
+			switch(outer1){
+				case 0:
+					break;
+				case 1:
+					return upper2(row1,col1,addR);
+				case 2:
+					return left2(row1,col1,addC);
+				case 3:
+					return bottom2(row1,col1,addR);
+				case 4:
+					return right2(row1,col1,addC);
+			}
+			
+			addR = addR(row2, row2);
+			addC = addC(col2, col1);
+			
+			switch(outer2){
+				case 0:
+					break;
+				case 1:
+					return upper2(row2,col2,addR);
+				case 2:
+					return left2(row2,col2,addC);
+				case 3:
+					return bottom2(row2,col2,addR);
+				case 4:
+					return right2(row2,col2,addC);
+			}
+			
+			//from here 2 tails not in outer
+			if (align == 0) { // horizontal ->  - 1 2 -
+				if(col1 < col2){
+					if(sideFreeTail(row1, col1-1) || sideFreeTail(row2, col2+1)){
+						if(this.board[row1][col1-1] != Tail.E || this.board[row2][col2+1] != Tail.E){
+							return true;
+						}
+					}
+				}
+				if(col2 > col1){
+					if(sideFreeTail(row2, col2-1) || sideFreeTail(row1, col1+1)){
+						if(this.board[row2][col2-1] != Tail.E || this.board[row1][col1+1] != Tail.E){
+							return true;
+						}
 					}
 				}
 			}
+
 			if (align == 1) { // vertical
-				if (sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col)) {
-					if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E) {
-						return true;
+				if(row1 < row2){
+					if(sideFreeTail(row1-1, col1) || sideFreeTail(row2+1, col2)){
+						if(this.board[row1-1][col1] != Tail.E || this.board[row2+1][col2] != Tail.E){
+							return true;
+						}
+					}
+				}
+				if(row2 > row1){
+					if(sideFreeTail(row2-1, col2) || sideFreeTail(row1+1, col1)){
+						if(this.board[row2-1][col2] != Tail.E || this.board[row1+1][col1] != Tail.E){
+							return true;
+						}
 					}
 				}
 			}
-			break;
+		}
+		return false;
+	}
+	
+	public int addR(int row1, int row2){
+		if(row1 < row2){
+				return 2;
+			}else{
+				return 1;
+			}
+	}
+	
+	public int addC(int col1, int col2){
+		if(col1 < col2){
+				return 2;
+			}else{
+				return 1;
+			}
+	}
+	
+	public boolean upper1(int row, int col){
+		if(sideFreeTail(row + 1, col) || sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)){
+			if (this.board[row + 1][col] != Tail.E || this.board[row][col + 1] != Tail.E
+							|| this.board[row][col - 1] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean left1(int row, int col){
+		if(sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col) || sideFreeTail(row, col + 1)){
+			if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E
+							|| this.board[row][col + 1] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean bottom1(int row, int col){
+		if(sideFreeTail(row - 1, col) || sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)){
+			if (this.board[row - 1][col] != Tail.E || this.board[row][col + 1] != Tail.E
+							|| this.board[row][col - 1] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean right1(int row, int col){
+		if(sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col) || sideFreeTail(row, col - 1)){
+			if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E
+							|| this.board[row][col - 1] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean upper2(int row, int col, int add){
+		if(sideFreeTail(row + add, col)){
+			if (this.board[row + add][col] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean left2(int row, int col, int add){
+		if(sideFreeTail(row, col + add)){
+			if (this.board[row][col + add] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean bottom2(int row, int col, int add){
+		if(sideFreeTail(row - add, col)){
+			if (this.board[row - add][col] != Tail.E){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean right2(int row, int col, int add){
+		if(sideFreeTail(row, col - add)){
+			if (this.board[row][col - add] != Tail.E) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -423,7 +512,7 @@ public class Board implements Matrix {
 	}
 
 	public void printRowBoard(int row, char indexChar) {
-		if (row == 0) {
+		if (row == -1) {
 			System.out.println();
 			for (int a = 0; a <= this.COL; a++) {
 				if (a == 0)

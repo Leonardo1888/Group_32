@@ -26,6 +26,8 @@ public class Bookshelf implements Matrix {
 
 	public Tail[] orderTailsToInsert(Scanner sc, Tail tails[], int numTails) {
 		switch (numTails) {
+		case 0:
+			// TODO
 		case 1:
 			System.out.println("Your Tail:\n1°: " + tails[0]);
 			Tail[] tailsToInsert1 = new Tail[1];
@@ -97,7 +99,7 @@ public class Bookshelf implements Matrix {
 	}
 
 	public void printRowBookshelf(int row) {
-		if (row == 0) {
+		if (row == -1) {
 			for (int a = 1; a <= this.COL; a++) {
 				System.out.print(a + " ");
 			}

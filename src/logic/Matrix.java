@@ -60,13 +60,10 @@ public interface Matrix {
 					System.out.print("P");
 					System.out.print(Color.RESET);
 				} 
-				if (matrix[i][j] == Tail.E) {
+				if (matrix[i][j] == Tail.E && matrix[i][j] == Tail.X) {
 					System.out.print(Color.BLACK);
 					System.out.print("#");
 					System.out.print(Color.RESET);
-				} 
-				if (matrix[i][j] == Tail.X) {
-					System.out.print("X");
 				}
 				System.out.print(" ");
 			}

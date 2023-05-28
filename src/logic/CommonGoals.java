@@ -3,11 +3,17 @@ package logic;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+/*
+ * 4 players: 8->6->4->2
+ * 3 players: 8->6->4
+ * 2 players: 8->4
+ */
+
 public class CommonGoals implements Matrix { // this class generates an object that contains 2 cards
 	private int commonGoal1;
-	private int commonGoal2; 	  	  // int for random choice
+	private int commonGoal2; 	  	  	// int for random choice
 	private Tail[][] commonGoalCard1;
-	private Tail[][] commonGoalCard2; // matrix card that contains the tail arrangement
+	private Tail[][] commonGoalCard2; 	// matrix card that contains the tail arrangement
 
 	public CommonGoals() {
 		Random random = new Random();

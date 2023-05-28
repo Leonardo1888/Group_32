@@ -40,8 +40,7 @@ public class TurnsManagement {
     }
     
     private void gameOver() {
-    	System.out.println(" --- Game is over --- : " + gameOver);
-    	
+    	System.out.println(" --- Game is over --- : " + gameOver); 	
     }
     
     public void addPlayer(Turn t) {
@@ -54,6 +53,10 @@ public class TurnsManagement {
     // count points and set winner
     private void countPoints() {
     	
+    }
+    
+    private void printWinner() {
+    	System.out.println("The winner is.. and points.. ");
     }
 
 	public boolean isGameOver() {
