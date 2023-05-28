@@ -12,7 +12,7 @@ public class Board implements Matrix {
 
 	private int rowTemp;
 	private int colTemp;
-	private int align; 		// 0 is horizontal, 1 is vertical
+	private int align; // 0 is horizontal, 1 is vertical
 
 	private Tail[][] board;
 	private int[] tailCount;
@@ -422,6 +422,61 @@ public class Board implements Matrix {
 		Matrix.printMatrix(board, ROW, COL);
 	}
 
+	public void printRowBoard(int row, char indexChar) {
+		if (row == 0) {
+			System.out.println();
+			for (int a = 0; a <= this.COL; a++) {
+				if (a == 0)
+					System.out.print("/ ");
+				else
+					System.out.print(a + " ");
+			}
+		} else {
+			System.out.print(indexChar + " ");
+			for (int j = 0; j < this.COL; j++) {
+				if (board[row][j] == Tail.C) {
+					System.out.print(Color.GREEN);
+					System.out.print("C");
+					System.out.print(Color.RESET);
+				}
+				if (board[row][j] == Tail.B) {
+					System.out.print(Color.WHITE);
+					System.out.print("B");
+					System.out.print(Color.RESET);
+				}
+				if (board[row][j] == Tail.G) {
+					System.out.print(Color.YELLOW);
+					System.out.print("G");
+					System.out.print(Color.RESET);
+				}
+				if (board[row][j] == Tail.F) {
+					System.out.print(Color.BLUE);
+					System.out.print("F");
+					System.out.print(Color.RESET);
+				}
+				if (board[row][j] == Tail.T) {
+					System.out.print(Color.CYAN);
+					System.out.print("T");
+					System.out.print(Color.RESET);
+				}
+				if (board[row][j] == Tail.P) {
+					System.out.print(Color.RED);
+					System.out.print("P");
+					System.out.print(Color.RESET);
+				}
+				if (board[row][j] == Tail.E) {
+					System.out.print(Color.BLACK);
+					System.out.print("#");
+					System.out.print(Color.RESET);
+				}
+				if (board[row][j] == Tail.X) {
+					System.out.print("X");
+				}
+				System.out.print(" ");
+			}
+		}
+	}
+
 	public Tail[][] getBoard() {
 		return board;
 	}
@@ -438,4 +493,11 @@ public class Board implements Matrix {
 		this.tailCount = tailCount;
 	}
 
+	public int getRow() {
+		return this.ROW;
+	}
+
+	public int getCol() {
+		return this.COL;
+	}
 }

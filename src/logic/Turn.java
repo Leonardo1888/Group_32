@@ -43,6 +43,8 @@ public class Turn {
 	// sets gameOver to true if a shelf is full
 
 	public boolean playTurn() {
+		System.out.println("--------------------------------------------------");
+		printBoardAndShelf();
 		
 		System.out.println("\n\n--- Player turn: " + currentPlayer.getUsername() + ".");
 		System.out.println("Select the Tails you want to put into your Shelf.");
@@ -99,14 +101,36 @@ public class Turn {
 		return true;
 	}
 
+	private void printBoardAndShelf() {
+		int ROW = board.getRow();
+		int COL = board.getCol();
+		char indexChar = 'a';
+		
+		System.out.println("\nBoard:                       " + this.currentPlayer.getUsername() + "'s bookshelf: ");
+		
+		for(int i = 0; i < ROW; i++) {
+			// Print row board
+			
+			board.printRowBoard(i, indexChar);
+			indexChar++;
+			
+			System.out.print("         ");
+			
+			// Print row shelf
+			if(i < this.shelf.getRow())
+				this.shelf.printRowBookshelf(i);
+			System.out.println();
+		}
+	}
+	
 	private void actionsOfEndTurn() {
 		removeTailsInBoard();
 
 		// Print selected tails and the board status
 		printSelectedTails(tails, nTailsPicked, positionTails);
-		board.printBoard();
-
+		
 		// Column where the user wants to put the tail(s)
+		printBoardAndShelf();
 		int colInsert = selectColumn();
 
 		// Insert tail(s)
@@ -170,7 +194,6 @@ public class Turn {
 
 	// Insert in shelf the tails
 	private int selectColumn() {
-		shelf.printShelf();
 		int column;
 
 		while (true) {
