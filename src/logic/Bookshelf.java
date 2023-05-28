@@ -134,13 +134,10 @@ public class Bookshelf implements Matrix {
 					System.out.print("P");
 					System.out.print(Color.RESET);
 				}
-				if (shelf[row][j] == Tail.E) {
+				if (shelf[row][j] == Tail.E || shelf[row][j] == Tail.X) {
 					System.out.print(Color.BLACK);
 					System.out.print("#");
 					System.out.print(Color.RESET);
-				}
-				if (shelf[row][j] == Tail.X) {
-					System.out.print("X");
 				}
 				System.out.print(" ");
 			}

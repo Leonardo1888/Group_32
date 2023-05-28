@@ -464,13 +464,10 @@ public class Board implements Matrix {
 					System.out.print("P");
 					System.out.print(Color.RESET);
 				}
-				if (board[row][j] == Tail.E) {
+				if (board[row][j] == Tail.E || board[row][j] == Tail.X) {
 					System.out.print(Color.BLACK);
 					System.out.print("#");
 					System.out.print(Color.RESET);
-				}
-				if (board[row][j] == Tail.X) {
-					System.out.print("X");
 				}
 				System.out.print(" ");
 			}
