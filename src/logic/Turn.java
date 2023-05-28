@@ -16,7 +16,7 @@ public class Turn {
 	private Bookshelf shelf;
 	private PersonalGoalCard pgc;
 	private Scanner sc;
-	
+
 	// row and column in numbers
 	private int row; // [0-6]
 	private int col; // [0-8]
@@ -45,7 +45,7 @@ public class Turn {
 	public boolean playTurn() {
 		System.out.println("--------------------------------------------------");
 		printBoardAndShelf();
-		
+
 		System.out.println("\n\n--- Player turn: " + currentPlayer.getUsername() + ".");
 		System.out.println("Select the Tails you want to put into your Shelf.");
 
@@ -54,7 +54,7 @@ public class Turn {
 		if (nOfFreeSpaces == 0) {
 			this.gameOver = true;
 		}
-		
+
 		while (nTailsPicked < 3 && endTurn != 0) {
 
 			// Check if board has to be refilled
@@ -105,30 +105,30 @@ public class Turn {
 		int ROW = board.getRow();
 		int COL = board.getCol();
 		char indexChar = 'a';
-		
+
 		System.out.println("\nBoard:                       " + this.currentPlayer.getUsername() + "'s bookshelf: ");
-		
-		for(int i = 0; i < ROW; i++) {
+
+		for (int i = 0; i < ROW; i++) {
 			// Print row board
-			
+
 			board.printRowBoard(i, indexChar);
 			indexChar++;
-			
+
 			System.out.print("         ");
-			
+
 			// Print row shelf
-			if(i < this.shelf.getRow())
+			if (i < this.shelf.getRow())
 				this.shelf.printRowBookshelf(i);
 			System.out.println();
 		}
 	}
-	
+
 	private void actionsOfEndTurn() {
 		removeTailsInBoard();
 
 		// Print selected tails and the board status
 		printSelectedTails(tails, nTailsPicked, positionTails);
-		
+
 		// Column where the user wants to put the tail(s)
 		printBoardAndShelf();
 		int colInsert = selectColumn();
@@ -142,7 +142,7 @@ public class Turn {
 	private void removeTailsInBoard() {
 		// Remove the tails the user picked
 		this.board.emptyTheBoard(positionTails);
-		System.out.println("---------------------------");
+		System.out.println("------------------------------");
 	}
 
 	private static void printSelectedTails(Tail tails[], int n, int tempPositionTails[][]) {
@@ -170,7 +170,9 @@ public class Turn {
 		if (t == Tail.E) {
 			System.out.println("The Tail in the position: [" + tRow + ", " + tCol + "] is not suitable.");
 		} else {
-			System.out.println("You have chosen the tail '" + t + "' in the position: [" + tRow + ", " + tCol + "]");
+			System.out.print("You have chosen the tail '");
+			printTail(t);
+			System.out.println("' in the position: [" + tRow + ", " + tCol + "]");
 			this.positionTails[nTailsPicked][0] = row;
 			this.positionTails[nTailsPicked][1] = col;
 			this.nTailsPicked++;
@@ -194,12 +196,27 @@ public class Turn {
 
 	// Insert in shelf the tails
 	private int selectColumn() {
-		int column;
+		int column = 0;
+		String testInput;
 
 		while (true) {
 			System.out.print("\nChoose the column where to insert [1-5]: ");
-			column = sc.nextInt();
-			column--;
+			testInput = sc.nextLine();
+
+			if (testInput.isEmpty()) {
+				System.out.println("Error: Please enter a value.");
+				continue;
+			}
+
+			try {
+				column = Integer.parseInt(testInput); // Parse string into number
+				column--;
+			} catch (NumberFormatException e) {
+				System.out.println("You have to enter a number!");
+				continue;
+			}
+
+			System.out.println("Column: " + column + " testInput: " + testInput);
 			if (column >= 0 && column <= 4) {
 				break;
 			} else {
@@ -208,6 +225,44 @@ public class Turn {
 			System.out.println("");
 		}
 		return column;
+	}
+
+	public void printTail(Tail t) {
+		if (t == Tail.C) {
+			System.out.print(Color.GREEN);
+			System.out.print("C");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.B) {
+			System.out.print(Color.WHITE);
+			System.out.print("B");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.G) {
+			System.out.print(Color.YELLOW);
+			System.out.print("G");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.F) {
+			System.out.print(Color.BLUE);
+			System.out.print("F");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.T) {
+			System.out.print(Color.CYAN);
+			System.out.print("T");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.P) {
+			System.out.print(Color.RED);
+			System.out.print("P");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.E || t == Tail.X) {
+			System.out.print(Color.BLACK);
+			System.out.print("#");
+			System.out.print(Color.RESET);
+		}
 	}
 
 	// -------- GETTER AND SETTER --------
