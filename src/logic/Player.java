@@ -28,7 +28,7 @@ public class Player {
 	}
 
 	public Bookshelf getShelf() {
-		return shelf;
+		return this.shelf;
 	}
 
 	public void setShelf(Bookshelf shelf) {

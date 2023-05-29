@@ -51,7 +51,7 @@ public class Turn {
 		if(turnCounter == 0)
 			testInput = sc.nextLine();
 		System.out.println("\n-------------- NEXT TURN - PLAYER: [" + currentPlayer.getUsername() + "] --------------");
-		printBoardAndShelf();
+		printBoardAndShelfAndPgc();
 
 		System.out.println("\n\n--- Player turn: " + currentPlayer.getUsername() + ".");
 		System.out.println("Select the Tails you want to put into your Shelf.");
@@ -97,7 +97,7 @@ public class Turn {
 					return true;
 				}
 			}
-
+			
 			if (nOfFreeSpaces == 0) {
 				System.out.println("You can't pick more Tails because you don't have enough spaces on you bookshelf!");
 				actionsOfEndTurn();
@@ -110,7 +110,7 @@ public class Turn {
 	}
 
 	// Prints board and player's shelf next to each other
-	private void printBoardAndShelf() {
+	private void printBoardAndShelfAndPgc() {
 		int ROW = board.getRow();
 		int COL = board.getCol();
 		char indexChar = 'a' - 1;
@@ -128,7 +128,16 @@ public class Turn {
 			// Print row shelf
 			if (i < this.shelf.getRow())
 				this.shelf.printRowBookshelf(i);
+			
+			System.out.print("        ");
+
+			// Print row personalGoalCard
+			if (i < this.shelf.getRow())
+				this.pgc.printRowPersonalGoalCard(i);
 			System.out.println();
+			
+			
+			
 		}
 	}
 
@@ -139,7 +148,8 @@ public class Turn {
 		printSelectedTails(tails, nTailsPicked, positionTails);
 
 		// Select the Column where the user wants to put the tail(s)
-		printBoardAndShelf();
+		printBoardAndShelfAndPgc();
+		//TODO fixare
 		int state = 1;
 		while(state == 1){
 			int colInsert = selectColumn();
@@ -147,9 +157,9 @@ public class Turn {
 			System.out.println("\nnel while state = "+state+"\n");
 			tails = shelf.orderTailsToInsert(this.sc, tails, nTailsPicked);
 			state = shelf.insertTail(tails, colInsert, nTailsPicked);	//insertTail returns 0->success
-			shelf.printShelf();														//return 1->E in col < n Tails
+			shelf.printShelf();												//return 1->E in col < n Tails
 		}
-	}
+	}	
 
 	private void removeTailsInBoard() {
 		// Remove the tails the user picked
@@ -280,9 +290,11 @@ public class Turn {
 	private int selectColumn() {
 		int column = 0;
 		String testInput; // = sc.nextLine();
-
+		
+		
 		if(nTailsPicked == 1)
 			testInput = sc.nextLine();
+		
 		
 		while (true) {
 			System.out.print("\nChoose the column where to insert [1-5]: ");

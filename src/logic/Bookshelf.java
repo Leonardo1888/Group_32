@@ -100,16 +100,17 @@ public class Bookshelf implements Matrix {
 		return 0; // success
 	}
 	
-	//START DFS
-	public static int findMaxAdjacentCount(int[][] grid){
-        boolean[][] visited = createVisitGrid(grid);
+	// START DFS
+	// call in actionOfEndGame this function, it will return the number of each group then you have to count the points
+	public void findMaxAdjacentCount(){	//TODO era int, messa void ma lasciato controllo di max (res) da togliere
+		boolean[][] visited = createVisitMatrixShelf();
         int res = 0;
         int[] groupCounts = new int[4]; // Indici: 0 = dimensione 3, 1 = dimensione 4, 2 = dimensione 5, 3 = dimensione 6 e superiori
 
-        for (int row = 0; row < grid.length; row++)
-            for (int col = 0; col < grid[row].length; col++)
+        for (int row = 0; row < this.shelf.length; row++)
+            for (int col = 0; col < this.shelf[row].length; col++)
                 if (!visited[row][col])
-                    res = Math.max(res, dfs(grid, visited, grid[row][col], row, col, groupCounts));
+                    res = Math.max(res, dfs(this.shelf, visited, this.shelf[row][col], row, col, groupCounts));
        
         //sistemo gli output 
         int group4 = groupCounts[1] - (groupCounts[2] - groupCounts[3]);
@@ -121,45 +122,50 @@ public class Bookshelf implements Matrix {
         System.out.println("Numero di gruppi di dimensione 4: " + group4);
         System.out.println("Numero di gruppi di dimensione 5: " + group5);
         System.out.println("Numero di gruppi di dimensione 6 e superiori: " + group6plus);
-
-        return res;
+        System.out.println("Numero di gruppi di dimensione 3: " + groupCounts[0]);
+        System.out.println("Numero di gruppi di dimensione 4: " + groupCounts[1]);
+        System.out.println("Numero di gruppi di dimensione 5: " + groupCounts[2]);
+        System.out.println("Numero di gruppi di dimensione 6 e superiori: " + groupCounts[3]);
     }
 
-    private static int dfs(int[][] grid, boolean[][] visited, int expected, int row, int col, int[] groupCounts) {
-        if (row < 0 || row >= grid.length)
+    private static int dfs(Tail[][] matrixShelf, boolean[][] visited, Tail expected, int row, int col, int[] groupCounts) {
+        if (row < 0 || row >= matrixShelf.length)
             return 0;
-        if (col < 0 || col >= grid[row].length)
+        if (col < 0 || col >= matrixShelf[row].length)
             return 0;
-        if (visited[row][col] || grid[row][col] != expected)
+        if (visited[row][col] || matrixShelf[row][col] != expected)
             return 0;
 
         visited[row][col] = true;
 
         int depth = 1;
-        depth += dfs(grid, visited, expected, row, col - 1, groupCounts);
-        depth += dfs(grid, visited, expected, row, col + 1, groupCounts);
-        depth += dfs(grid, visited, expected, row - 1, col, groupCounts);
-        depth += dfs(grid, visited, expected, row + 1, col, groupCounts);
+        depth += dfs(matrixShelf, visited, expected, row, col - 1, groupCounts);
+        depth += dfs(matrixShelf, visited, expected, row, col + 1, groupCounts);
+        depth += dfs(matrixShelf, visited, expected, row - 1, col, groupCounts);
+        depth += dfs(matrixShelf, visited, expected, row + 1, col, groupCounts);
 
         // Aggiorna l'array groupCounts in base alla dimensione del gruppo
-        if (depth == 3) {
-            groupCounts[0]++;
-        } else if (depth == 4) {
-            groupCounts[1]++;
-        } else if (depth == 5) {
-            groupCounts[2]++;
-        } else if (depth >= 6) {
-            groupCounts[3]++;
-        }
+        if(matrixShelf[row][col] != Tail.E){
+			if (depth == 3) {
+	            groupCounts[0]++;
+	        } else if (depth == 4) {
+	            groupCounts[1]++;
+	        } else if (depth == 5) {
+	            groupCounts[2]++;
+	        } else if (depth >= 6) {
+	            groupCounts[3]++;
+	        }
+		}
+        
 
         return depth;
     }
 
-    private static boolean[][] createVisitGrid(int[][] grid) {
-        boolean[][] visit = new boolean[grid.length][];
+    private boolean[][] createVisitMatrixShelf() {
+        boolean[][] visit = new boolean[shelf.length][];
 
-        for (int row = 0; row < grid.length; row++)
-            visit[row] = new boolean[grid[row].length];
+        for (int row = 0; row < shelf.length; row++)
+            visit[row] = new boolean[shelf[row].length];
 
         return visit;
     }
@@ -230,5 +236,15 @@ public class Bookshelf implements Matrix {
 	public int getCol() {
 		return this.COL;
 	}
+
+	public Tail[][] getShelf() {
+		return shelf;
+	}
+
+	public void setShelf(Tail[][] shelf) {
+		this.shelf = shelf;
+	}
+	
+	
 
 }
