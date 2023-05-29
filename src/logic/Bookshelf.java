@@ -93,13 +93,78 @@ public class Bookshelf implements Matrix {
 						System.out.println("The column has been filled entirely");
 					} else {
 						this.shelf[i - 1][col] = Tail.X; // insert X one row up
-					}	
+					}
 				}
 			}
 		}
 		return 0; // success
 	}
+	
+	//START DFS
+	public static int findMaxAdjacentCount(int[][] grid){
+        boolean[][] visited = createVisitGrid(grid);
+        int res = 0;
+        int[] groupCounts = new int[4]; // Indici: 0 = dimensione 3, 1 = dimensione 4, 2 = dimensione 5, 3 = dimensione 6 e superiori
 
+        for (int row = 0; row < grid.length; row++)
+            for (int col = 0; col < grid[row].length; col++)
+                if (!visited[row][col])
+                    res = Math.max(res, dfs(grid, visited, grid[row][col], row, col, groupCounts));
+       
+        //sistemo gli output 
+        int group4 = groupCounts[1] - (groupCounts[2] - groupCounts[3]);
+        int group5 = groupCounts[2] - groupCounts[3];
+        int group6plus = groupCounts[3];
+        int group3 = groupCounts[0] - group4 - group5 - group6plus;
+        // stampa il numero di gruppi per ogni dimensione
+        System.out.println("Numero di gruppi di dimensione 3: " + group3);
+        System.out.println("Numero di gruppi di dimensione 4: " + group4);
+        System.out.println("Numero di gruppi di dimensione 5: " + group5);
+        System.out.println("Numero di gruppi di dimensione 6 e superiori: " + group6plus);
+
+        return res;
+    }
+
+    private static int dfs(int[][] grid, boolean[][] visited, int expected, int row, int col, int[] groupCounts) {
+        if (row < 0 || row >= grid.length)
+            return 0;
+        if (col < 0 || col >= grid[row].length)
+            return 0;
+        if (visited[row][col] || grid[row][col] != expected)
+            return 0;
+
+        visited[row][col] = true;
+
+        int depth = 1;
+        depth += dfs(grid, visited, expected, row, col - 1, groupCounts);
+        depth += dfs(grid, visited, expected, row, col + 1, groupCounts);
+        depth += dfs(grid, visited, expected, row - 1, col, groupCounts);
+        depth += dfs(grid, visited, expected, row + 1, col, groupCounts);
+
+        // Aggiorna l'array groupCounts in base alla dimensione del gruppo
+        if (depth == 3) {
+            groupCounts[0]++;
+        } else if (depth == 4) {
+            groupCounts[1]++;
+        } else if (depth == 5) {
+            groupCounts[2]++;
+        } else if (depth >= 6) {
+            groupCounts[3]++;
+        }
+
+        return depth;
+    }
+
+    private static boolean[][] createVisitGrid(int[][] grid) {
+        boolean[][] visit = new boolean[grid.length][];
+
+        for (int row = 0; row < grid.length; row++)
+            visit[row] = new boolean[grid[row].length];
+
+        return visit;
+    }
+	//END DFS
+	
 	public void printRowBookshelf(int row) {
 		if (row == -1) {
 			for (int a = 1; a <= this.COL; a++) {
@@ -147,7 +212,7 @@ public class Bookshelf implements Matrix {
 			}
 		}
 	}
-
+	
 	// @Return the largest number of free cells (for every column). If 0 -> can't
 	// pick Tails
 	public int checkFreeSpaces() {

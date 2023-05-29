@@ -8,7 +8,7 @@ public class TurnsManagement {
     private Board board;
     
     private int currentPlayerIndex;
-    // private int turnCounter;
+    private int turnCounter;
     private boolean gameOver;
     private Scanner sc;
     
@@ -16,7 +16,7 @@ public class TurnsManagement {
         this.players = players;
         this.currentPlayerIndex = 0;
         this.board = board;
-        // this.turnCounter = 0;
+        this.turnCounter = 0;
         this.gameOver = false;
         this.sc = sc;
         startGame();
@@ -26,8 +26,8 @@ public class TurnsManagement {
     private void startGame() {
     	while(!gameOver) {
     		Player currentPlayer = players.get(currentPlayerIndex);
-			Turn t = new Turn(board, currentPlayer, currentPlayer.getShelf(), currentPlayer.getPersonalGoalCard(), this.sc);
-			
+			Turn t = new Turn(board, currentPlayer, currentPlayer.getShelf(), currentPlayer.getPersonalGoalCard(), this.sc, this.turnCounter);
+			this.turnCounter++;
 			t.playTurn();
 			// turns.add(t);
 			if(currentPlayerIndex == (players.size()-1))
