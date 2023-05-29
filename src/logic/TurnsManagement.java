@@ -1,5 +1,6 @@
 package logic;
 
+import commonGoalsPackage.*;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -8,13 +9,18 @@ public class TurnsManagement {
     private List<Turn> turns;
     private Board board;
     
+    private int nPlayers;
     private int currentPlayerIndex;
     private int turnCounter;
     private boolean gameOver;
     private Scanner sc;
-        
+    
+    private CommonGoal CommonGoal1;
+    private CommonGoal CommonGoal2;    
+    
     public TurnsManagement(List<Player> players, Board board, Scanner sc) {
         this.players = players;
+        this.nPlayers = players.size();
         this.currentPlayerIndex = 0;
         this.board = board;
         this.turnCounter = 0;
@@ -25,7 +31,9 @@ public class TurnsManagement {
     
     // All the turns of the game
     private void startGame() {
-    	createCommonGoals();
+    	CommonGoal1 = createCommonGoal(nPlayers);
+    	CommonGoal2 = createCommonGoal(nPlayers);
+
     	while(!gameOver) {
     		Player currentPlayer = players.get(currentPlayerIndex);
 			Turn t = new Turn(board, currentPlayer, currentPlayer.getShelf(), currentPlayer.getPersonalGoalCard(), this.sc, this.turnCounter);
@@ -33,7 +41,7 @@ public class TurnsManagement {
 			this.turnCounter++;
 					
 			// TODO REMOVE ME 
-			if(turnCounter == 8) {
+			if(turnCounter == 6) {
 				break;
 			}
 			
@@ -78,7 +86,42 @@ public class TurnsManagement {
         return points;
     }
     
-    private void createCommonGoals() {
+    // TODO
+    private CommonGoal createCommonGoal() {
+    	Random random = new Random();
+    	
+        switch (ThreadLocalRandom.current().nextInt(1, 12 + 1)) {
+            case 1:
+                return new CommonGoal1(nPlayers);
+            case 2:
+                return new CommonGoal2(nPlayers);
+            case 3:
+                return new CommonGoal3(nPlayers);
+            case 4:
+                return new CommonGoal4(nPlayers);
+            case 5:
+                return new CommonGoal5(nPlayers);
+            case 6:
+                return new CommonGoal6(nPlayers);
+            case 7:
+                return new CommonGoal7(nPlayers);
+            case 8:
+                return new CommonGoal8(nPlayers);
+            case 9:
+                return new CommonGoal9(nPlayers);
+            case 10:
+                return new CommonGoal10(nPlayers);
+            case 11:
+                return new CommonGoal11(nPlayers);
+            case 12:
+                return new CommonGoal12(nPlayers);
+            default:
+                throw new IllegalArgumentException("Index " + index + " is not a valid CommonGoal.");
+        }
+
+    	
+    	
+    	
     	Random random = new Random();
 		this.commonGoal1 = ThreadLocalRandom.current().nextInt(1, 12 + 1);
 		this.commonGoal2 = ThreadLocalRandom.current().nextInt(1, 12 + 1);

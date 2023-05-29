@@ -136,8 +136,6 @@ public class Turn {
 				this.pgc.printRowPersonalGoalCard(i);
 			System.out.println();
 			
-			
-			
 		}
 	}
 
@@ -149,7 +147,7 @@ public class Turn {
 
 		// Select the Column where the user wants to put the tail(s)
 		printBoardAndShelfAndPgc();
-		//TODO fixare
+		// TODO fixare (non credo ci sia nulla da fixare -Leo)
 		int state = 1;
 		while(state == 1){
 			int colInsert = selectColumn();
@@ -167,11 +165,13 @@ public class Turn {
 		System.out.println("");
 	}
 
-	private static void printSelectedTails(Tail tails[], int n, int tempPositionTails[][]) {
+	private void printSelectedTails(Tail tails[], int n, int tempPositionTails[][]) {
 		System.out.println("\n---The tails you selected are: \n");
 		for (int i = 0; i < n; i++) {
-			System.out.print((i + 1) + "° Tail: '" + tails[i] + "' in the position: ["
-					+ (char) (tempPositionTails[i][0] + 97) + ", " + (tempPositionTails[i][1] + 1) + "] \n");
+			Tail t = tails[i];
+			System.out.print((i + 1) + "° Tail: '");
+			printTail(t);
+			System.out.println("' in the position: [" + (char) (tempPositionTails[i][0] + 97) + ", " + (tempPositionTails[i][1] + 1) + "] \n");
 		}
 	}
 
