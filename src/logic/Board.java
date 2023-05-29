@@ -151,11 +151,9 @@ public class Board implements Matrix {
 		return 0;
 	}
 	
-	// Check if user can pick another tail on the same colum/row
+	// Check if user can pick another tail on the same column/row
 	// Case:0 didn't pick any tails, Case:1 Picked 1 tail, Case 2: Picked 2 tails.
 	public boolean checkFreeSpaces(int positionTails[][], int cont) {
-		
-		
 		
 		//picked not suitable tail
 		if(cont == 0){
@@ -246,6 +244,7 @@ public class Board implements Matrix {
 							return true;
 						}
 					}
+					return false;
 				}
 				if(col2 > col1){
 					if(sideFreeTail(row2, col2-1) || sideFreeTail(row1, col1+1)){
@@ -253,6 +252,7 @@ public class Board implements Matrix {
 							return true;
 						}
 					}
+					return false;
 				}
 			}
 
@@ -263,6 +263,7 @@ public class Board implements Matrix {
 							return true;
 						}
 					}
+					return false;
 				}
 				if(row2 > row1){
 					if(sideFreeTail(row2-1, col2) || sideFreeTail(row1+1, col1)){
@@ -270,6 +271,7 @@ public class Board implements Matrix {
 							return true;
 						}
 					}
+					return false;
 				}
 			}
 		}
