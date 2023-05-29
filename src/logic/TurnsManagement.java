@@ -1,6 +1,7 @@
 package logic;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class TurnsManagement {
     private List<Player> players;
@@ -11,7 +12,7 @@ public class TurnsManagement {
     private int turnCounter;
     private boolean gameOver;
     private Scanner sc;
-    
+        
     public TurnsManagement(List<Player> players, Board board, Scanner sc) {
         this.players = players;
         this.currentPlayerIndex = 0;
@@ -24,6 +25,7 @@ public class TurnsManagement {
     
     // All the turns of the game
     private void startGame() {
+    	createCommonGoals();
     	while(!gameOver) {
     		Player currentPlayer = players.get(currentPlayerIndex);
 			Turn t = new Turn(board, currentPlayer, currentPlayer.getShelf(), currentPlayer.getPersonalGoalCard(), this.sc, this.turnCounter);
@@ -48,11 +50,6 @@ public class TurnsManagement {
     	gameOver();
     }
     
-    // TODO count points and set winner
-    private void countPoints() {
-    	
-    }
-    
     private void gameOver() {
     	System.out.println(" --- Game is over ---");
     	
@@ -64,18 +61,36 @@ public class TurnsManagement {
     		Bookshelf bookshelf = currentPlayer.getShelf();
     		Tail[][] shelfMatrix = bookshelf.getShelf();
     		PersonalGoalCard pgc = currentPlayer.getPersonalGoalCard();
-    		
-    		//print each group
-    		currentPlayer.getShelf().findMaxAdjacentCount();
-    		
     		//call adjacent tails groups points
-    		int cont = pgc.tailsMatched(shelfMatrix);
-    		int points = pgc.countPoints(cont);
-    		System.out.println("punti personal goal card:" + points);
+    		int pointsPGC = countPersonalGoalPoints(shelfMatrix, pgc);
+    		System.out.println("Personal Goal Card points: " + pointsPGC);
+    		
+    		//print each group and total points of adjacent groups
+    		int pointsADJ = currentPlayer.getShelf().AdjacentPoints();
+    		System.out.println("Adjacent Group Tails points: " + pointsADJ);
     	}
- 
-    	
-    	countPoints();
+    }
+    
+    //count the personal goal card points
+    private int countPersonalGoalPoints(Tail[][] shelfMatrix, PersonalGoalCard pgc){
+        int cont = pgc.tailsMatched(shelfMatrix);
+        int points = pgc.countPoints(cont);
+        return points;
+    }
+    
+    private void createCommonGoals() {
+    	Random random = new Random();
+		this.commonGoal1 = ThreadLocalRandom.current().nextInt(1, 12 + 1);
+		this.commonGoal2 = ThreadLocalRandom.current().nextInt(1, 12 + 1);
+		while (this.commonGoal2 == this.commonGoal1) {
+			this.commonGoal2 = ThreadLocalRandom.current().nextInt(1, 12 + 1);
+		}
+		System.out.println("\n" + CommonGoal1 + ".");
+		commonGoalCard1 = generateCommonGoalCard(this.commonGoal1);
+		System.out.println("\n" + getInfo(CommonGoal1));
+		System.out.println("\n"CommonGoal2al2 + ".");
+		commonGoalCard2 = generateCommonGoalCard(this.commonGoal2);
+		System.out.println("\n" + getInCommonGoal2al2));
     }
     
     public void addPlayer(Turn t) {

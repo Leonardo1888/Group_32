@@ -9,7 +9,10 @@ public class Player {
 	private String username;
 	private Bookshelf shelf;
 	private PersonalGoalCard personalGoalCard;
+	private int points = 0;
 	private boolean isFirstPlayer;
+	private boolean checkCommonGoal1 = false;
+	private boolean checkCommonGoal2 = false;
 
 	public Player(String username, Bookshelf shelf, PersonalGoalCard personalGoal, boolean isFirstPlayer) {
 		this.id = PLAYER_COUNT++;

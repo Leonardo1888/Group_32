@@ -16,7 +16,7 @@ public class Turn {
 	private Bookshelf shelf;
 	private PersonalGoalCard pgc;
 	private Scanner sc;
-
+	
 	// row and column in numbers
 	private int row; // [0-6]
 	private int col; // [0-8]

@@ -102,7 +102,7 @@ public class Bookshelf implements Matrix {
 	
 	// START DFS
 	// call in actionOfEndGame this function, it will return the number of each group then you have to count the points
-	public void findMaxAdjacentCount(){	//TODO era int, messa void ma lasciato controllo di max (res) da togliere
+	public int AdjacentPoints(){
 		boolean[][] visited = createVisitMatrixShelf();
         int res = 0;
         int[] groupCounts = new int[4]; // Indici: 0 = dimensione 3, 1 = dimensione 4, 2 = dimensione 5, 3 = dimensione 6 e superiori
@@ -122,13 +122,30 @@ public class Bookshelf implements Matrix {
         System.out.println("Numero di gruppi di dimensione 4: " + group4);
         System.out.println("Numero di gruppi di dimensione 5: " + group5);
         System.out.println("Numero di gruppi di dimensione 6 e superiori: " + group6plus);
-        System.out.println("Numero di gruppi di dimensione 3: " + groupCounts[0]);
-        System.out.println("Numero di gruppi di dimensione 4: " + groupCounts[1]);
-        System.out.println("Numero di gruppi di dimensione 5: " + groupCounts[2]);
-        System.out.println("Numero di gruppi di dimensione 6 e superiori: " + groupCounts[3]);
+        
+        return returnPoints(group3, group4, group5, group6plus);
     }
-
-    private static int dfs(Tail[][] matrixShelf, boolean[][] visited, Tail expected, int row, int col, int[] groupCounts) {
+    
+    //count the adjacent groups total points
+    public int returnPoints(int g3, int g4, int g5, int g6){
+		int points = 0;
+		for(int i = 0; i < g3; i++){
+			points += 2;
+		}
+		for(int i = 0; i < g4; i++){
+			points += 3;
+		}
+		for(int i = 0; i < g5; i++){
+			points += 5;
+		}
+		for(int i = 0; i < g6; i++){
+			points += 8;
+		}
+		return points;
+	}
+    
+	//dfs algorithm for deep search
+    public static int dfs(Tail[][] matrixShelf, boolean[][] visited, Tail expected, int row, int col, int[] groupCounts) {
         if (row < 0 || row >= matrixShelf.length)
             return 0;
         if (col < 0 || col >= matrixShelf[row].length)
@@ -161,7 +178,7 @@ public class Bookshelf implements Matrix {
         return depth;
     }
 
-    private boolean[][] createVisitMatrixShelf() {
+    public boolean[][] createVisitMatrixShelf() {
         boolean[][] visit = new boolean[shelf.length][];
 
         for (int row = 0; row < shelf.length; row++)

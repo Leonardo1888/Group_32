@@ -1,5 +1,5 @@
 package commonGoalsPackage;
 
-public class commonGoal12 {
+public class CommonGoal11 {
 
 }
