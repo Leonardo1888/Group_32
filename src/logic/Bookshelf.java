@@ -76,22 +76,24 @@ public class Bookshelf implements Matrix {
 		return tails;
 	}
 
+	// Insert Tails in column
+	// @Return 0 if success, @Return 1 if failure, @Return 
 	public int insertTail(Tail[] tails, int col, int numTail) {
-
+		//if num E in selected col < num Tails
 		if (numTail > Matrix.countEinCol(this.shelf, col)) {
 			System.out.println("Not enough free spaces in the column...");
 			return 1; // failure
 		}
-
+		//insert
 		for (int n = 0; n < numTail; n++) {
 			for (int i = 0; i < this.ROW; i++) {
 				if (this.shelf[i][col] == Tail.X) {
 					this.shelf[i][col] = tails[n]; // insert tail
-					if (i == 0) { // se la riga è 0 non devo scrivere la X sopra
-						System.out.println("the column has been filled entirely");
+					if (i == 0) { 				   // se la riga è 0 non devo scrivere la X sopra
+						System.out.println("The column has been filled entirely");
 					} else {
 						this.shelf[i - 1][col] = Tail.X; // insert X one row up
-					}
+					}	
 				}
 			}
 		}

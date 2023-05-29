@@ -43,7 +43,7 @@ public class Turn {
 	// sets gameOver to true if a shelf is full
 
 	public boolean playTurn() {
-		System.out.println("--------------------------------------------------");
+		System.out.println("\n-------------- NEXT TURN - PLAYER: [" + currentPlayer.getUsername() + "] --------------");
 		printBoardAndShelf();
 
 		System.out.println("\n\n--- Player turn: " + currentPlayer.getUsername() + ".");
@@ -74,7 +74,7 @@ public class Turn {
 			if (nTailsPicked > 0 && nTailsPicked < 3) {
 				canPickTailsBoard = board.checkFreeSpaces(positionTails, nTailsPicked);
 				if (canPickTailsBoard == false && nTailsPicked > 0) {
-					System.out.println("You can't pick any adjacent tail on the board on the same row and column.");
+					System.out.println("You can't pick more Tails on the board on the same row and column.");
 					actionsOfEndTurn();
 					// TURN FINISHED
 					return true;
@@ -82,7 +82,7 @@ public class Turn {
 			}
 
 			// User decides if he wants to pick another tail
-			if (canPickTailsBoard == true && nTailsPicked > 0 && nTailsPicked < 3) {
+			if (canPickTailsBoard == true && nTailsPicked > 0 && nTailsPicked < 3 && nOfFreeSpaces != 0) {
 				endTurn = pickAgain(sc);
 				if (endTurn == 0) {
 					actionsOfEndTurn();
@@ -106,17 +106,16 @@ public class Turn {
 	private void printBoardAndShelf() {
 		int ROW = board.getRow();
 		int COL = board.getCol();
-		char indexChar = 'a'-1;
+		char indexChar = 'a' - 1;
 
 		System.out.println("\nBoard:                       " + this.currentPlayer.getUsername() + "'s bookshelf: ");
-		
+
 		// i = -1 prints the first row with numbers.
 		for (int i = -1; i < ROW; i++) {
+			
 			// Print row board
-
 			board.printRowBoard(i, indexChar);
 			indexChar++;
-
 			System.out.print("         ");
 
 			// Print row shelf
@@ -132,20 +131,23 @@ public class Turn {
 		// Print selected tails and the board status
 		printSelectedTails(tails, nTailsPicked, positionTails);
 
-		// Column where the user wants to put the tail(s)
+		// Select the Column where the user wants to put the tail(s)
 		printBoardAndShelf();
-		int colInsert = selectColumn();
-
-		// Insert tail(s)
-		tails = shelf.orderTailsToInsert(this.sc, tails, nTailsPicked);
-		int state = shelf.insertTail(tails, colInsert, nTailsPicked);
-		shelf.printShelf();
+		int state = 1;
+		while(state == 1){
+			int colInsert = selectColumn();
+			// Insert tail(s)
+			System.out.println("\nnel while state = "+state+"\n");
+			tails = shelf.orderTailsToInsert(this.sc, tails, nTailsPicked);
+			state = shelf.insertTail(tails, colInsert, nTailsPicked);	//insertTail returns 0->success
+			shelf.printShelf();														//return 1->E in col < n Tails
+		}
 	}
 
 	private void removeTailsInBoard() {
 		// Remove the tails the user picked
 		this.board.emptyTheBoard(positionTails);
-		System.out.println("------------------------------");
+		System.out.println("");
 	}
 
 	private static void printSelectedTails(Tail tails[], int n, int tempPositionTails[][]) {
@@ -187,23 +189,80 @@ public class Turn {
 	// User enters ROW and COL
 	private void selectTail(Scanner sc) {
 		System.out.print("\n---Tail number: " + (nTailsPicked + 1) + ".");
-		System.out.print("\n-Insert ROW [a-g]: ");
-		this.tRow = sc.next().charAt(0);
-		System.out.print("-Insert COL [1-9]: ");
-		this.tCol = sc.nextInt();
+		this.tRow = insertRow();
+		this.tCol = insertCol();
 
 		// Set ROW and COL to numbers -> [0-6, 0-8]
 		this.row = (tRow - 97); // Convert from char to number (ASCII -97)
 		this.col = (tCol - 1);
-		System.out.println("row: " + row + " col: " + col);
+	}
+
+	private char insertRow() {
+		char row;
+		int testRow = 0;
+		String testInput  = "a";
+
+		
+		while (true) {
+			System.out.print("\n-Insert ROW [a-i]: ");
+			testInput = sc.nextLine();
+			if (testInput.isEmpty()) {
+				System.out.println("Error: Please enter a character.");
+				continue;
+			}
+
+			try {
+				testRow = Integer.parseInt(testInput); // Parse string into number
+				System.out.println("You have to enter a character for the row!");
+				continue;
+			} catch (NumberFormatException e) {
+				// Saves in row the char the user Entered
+				row = testInput.charAt(0);
+			}
+
+			if (row >= 97 && row <= 105) {
+				break;
+			} else {
+				System.out.println("\nError: choose a row in the range [a-i].");
+			}
+		}
+		return row;
+	}
+
+	private int  insertCol() {
+		int col = 0;
+		String testInput;
+
+		while (true) {
+			System.out.print("-Insert COL [1-9]: ");
+			testInput = sc.nextLine();
+
+			if (testInput.isEmpty()) {
+				System.out.println("Error: Please enter a value.");
+				continue;
+			}
+
+			try {
+				col = Integer.parseInt(testInput); // Parse string into number
+			} catch (NumberFormatException e) {
+				System.out.println("You have to enter a number!");
+				continue;
+			}
+
+			if (col >= 1 && col <= 9) {
+				break;
+			} else {
+				System.out.print("-Insert COL [1-9]: ");
+			}
+		}
+		return col;
 	}
 
 	// Insert in shelf the tails
 	private int selectColumn() {
 		int column = 0;
 		String testInput;
-		testInput = sc.nextLine();
-		
+
 		while (true) {
 			System.out.print("\nChoose the column where to insert [1-5]: ");
 			testInput = sc.nextLine();
@@ -221,7 +280,6 @@ public class Turn {
 				continue;
 			}
 
-			System.out.println("Column: " + column + " testInput: " + testInput);
 			if (column >= 0 && column <= 4) {
 				break;
 			} else {

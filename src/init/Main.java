@@ -10,7 +10,6 @@ public class Main {
 	public static void main(String[] args) throws IllegalArgumentException {
 
 		Scanner sc = new Scanner(System.in);
-
 		PlayersManagement pManagement = new PlayersManagement(sc);
 		pManagement.enterPlayers();
 

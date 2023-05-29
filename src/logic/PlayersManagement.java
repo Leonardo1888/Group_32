@@ -11,7 +11,7 @@ public class PlayersManagement {
 	private int currentPlayerIndex;
 
 	Scanner sc;
-	
+
 	public PlayersManagement(Scanner sc) {
 		this.players = new ArrayList<>();
 		this.sc = sc;
@@ -19,54 +19,68 @@ public class PlayersManagement {
 	}
 
 	// Enter players and saves them in "players"
-	public void enterPlayers () {
-		while(true) {
+	public void enterPlayers() {
+
+		nPlayers = 0;
+		String testInput;
+
+		while (true) {
 			System.out.print("\nEnter the number of players [2-4]: ");
-			this.nPlayers = sc.nextInt();
-			sc.nextLine();
-			if(nPlayers >= 2 && nPlayers <= 4) 
-				break;
-			else
-				System.out.println("ERROR! Number of players must be 2, 3 or 4.");
+			testInput = sc.nextLine();
+
+			if (testInput.isEmpty()) {
+				System.out.println("Error: Please enter a number in the range [2-4].");
+				continue;
+			}
+
+			try {
+				nPlayers = Integer.parseInt(testInput); // Parse string into number
+				if (nPlayers < 2 || nPlayers > 4) {
+					System.out.println("Error: Please enter a number in the range [2-4].");
+					continue;
+				} else {
+					break;
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("You have to enter a number!");
+				continue;
+			}
 		}
-		
-    	String playerUsername = "";
+
+		String playerUsername = "";
 		boolean correctUsername = false;
-		
+
 		// username checks
-    	for(int i = 0; i < nPlayers; i++) {
-    		while(!correctUsername) {
-    			System.out.print("-Enter " + (i+1) + "° player's name: ");
-    			playerUsername = sc.next();
-    			
-    			if (playerUsername == null || playerUsername.isEmpty()) {
-                    System.out.println("Player name can't be null or empty. Please try again.");
-                } else if (playerUsername.length() < 3) {
-                    System.out.println("Player name must be at least 3 characters long. Please try again.");
-                } else if (playerUsername.length() > 10) {
-                    System.out.println("Player name can't exceed 10 characters long. Please try again.");
-                } else if (i > 0 && checkUsernameAlreadyTaken(playerUsername)) {
-                    System.out.println("Player name has already been taken. Please try again.");
-                } else {
-                    correctUsername = true;
-                }
-    		}
-    		
-    		Player p;
-            p = new Player(playerUsername, 
-	 					   new Bookshelf(),
-	 					   new PersonalGoalCard(),
-	 					   true);
-            addPlayer(p);
-                        
-            System.out.println("Added " + (i+1) + "° player, named: " + playerUsername);
-            correctUsername = false;
-    	}
+		for (int i = 0; i < nPlayers; i++) {
+			while (!correctUsername) {
+				System.out.print("-Enter " + (i + 1) + "° player's name: ");
+				playerUsername = sc.next();
+
+				if (playerUsername == null || playerUsername.isEmpty()) {
+					System.out.println("Player name can't be null or empty. Please try again.");
+				} else if (playerUsername.length() < 3) {
+					System.out.println("Player name must be at least 3 characters long. Please try again.");
+				} else if (playerUsername.length() > 10) {
+					System.out.println("Player name can't exceed 10 characters long. Please try again.");
+				} else if (i > 0 && checkUsernameAlreadyTaken(playerUsername)) {
+					System.out.println("Player name has already been taken. Please try again.");
+				} else {
+					correctUsername = true;
+				}
+			}
+
+			Player p;
+			p = new Player(playerUsername, new Bookshelf(), new PersonalGoalCard(), true);
+			addPlayer(p);
+
+			System.out.println("Added " + (i + 1) + "° player, named: " + playerUsername);
+			correctUsername = false;
+		}
 	}
 
 	// Return true if username has already been taken
 	private boolean checkUsernameAlreadyTaken(String playerName) {
-		for(int i = 0; i < players.size(); i++) {
+		for (int i = 0; i < players.size(); i++) {
 			Player currentPlayer = players.get(i);
 			if (currentPlayer.getUsername().equals(playerName)) {
 				return true;
@@ -74,7 +88,7 @@ public class PlayersManagement {
 		}
 		return false;
 	}
-	
+
 	public void addPlayer(Player p) {
 		if (p == null) {
 			throw new NullPointerException("Player is null");

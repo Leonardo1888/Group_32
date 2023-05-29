@@ -25,7 +25,7 @@ public class PersonalGoalCard implements Matrix {
 	}
 
 	public void generateRandom() {
-		Random random = new Random();
+		Random random = new Random();//TODO useless?
 
 		while (controlTail[2] == false || controlTail[3] == false || controlTail[4] == false || controlTail[5] == false
 				|| controlTail[6] == false || controlTail[7] == false) {
@@ -58,9 +58,30 @@ public class PersonalGoalCard implements Matrix {
 				}
 			}
 		}
-		
 		return cont;
 	}
+	
+	//return the points
+	public int countPoints(int cont){
+		switch(cont){
+			case 0:
+				return 0;
+			case 1:
+				return 1;
+			case 2:
+				return 2;
+			case 3:
+				return 4;
+			case 4:
+				return 6;
+			case 5:
+				return 9;
+			case 6:
+				return 12;
+		}
+		System.out.println("Error countPoints <0 || >6");
+		return 0;
+	}	
 	
 	public void printBoard() {
 		Matrix.printMatrix(personalGoalCard, ROW, COL);
