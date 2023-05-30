@@ -4,6 +4,10 @@ import logic.*;
 
 public class CommonGoal7 extends CommonGoal {
 
+	/*
+	 * Five tiles of the same type forming a diagonal.
+	 */
+
 	public CommonGoal7(int nPlayers) {
 		super(nPlayers);
 	}
@@ -33,6 +37,18 @@ public class CommonGoal7 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
-		System.out.println("Printa la commongGoal");
+		int row = 5;
+		int col = 5;
+		Tail[][] commonGoalCard = new Tail[row][col];
+		commonGoalCard = Matrix.FillWithE(commonGoalCard, row, col);
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				if (i == j) {
+					commonGoalCard[i][j] = Tail.S;
+				}
+			}
+		}
+		Matrix.printMatrix(commonGoalCard, row, col);
+		// return commonGoalCard;
 	}
 }

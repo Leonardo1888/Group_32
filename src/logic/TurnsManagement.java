@@ -37,11 +37,7 @@ public class TurnsManagement {
     	initializeCommonGoals();
     	
     	while(!gameOver) {
-    		//TODO remove - for testing
-    		
-    		
     		Player currentPlayer = players.get(currentPlayerIndex);
-    		// invece di 'bs' mettere 'currentPlayer.getShelf()'
 			Turn t = new Turn(board, currentPlayer, currentPlayer.getShelf(), currentPlayer.getPersonalGoalCard(), 
 					this.sc, this.turnCounter,
 					this.CommonGoalA, this.CommonGoalB);
@@ -49,12 +45,12 @@ public class TurnsManagement {
 			this.turnCounter++;
 					
 			// TODO REMOVE ME 
-			if(turnCounter == 6) {
+			if(turnCounter == 8) {
 				break;
 			}
 			
 			t.playTurn();
-			// turns.add(t);
+			// turns.add(t); TODO -> è necessario?
 			
 			if(currentPlayerIndex == (players.size()-1))
 				currentPlayerIndex=0;
@@ -169,11 +165,37 @@ public class TurnsManagement {
 		this.turns.add(t);
 	}
     
-    // TODO
     private void printWinner() {
-    	System.out.println("The winner is.. and points.. ");
+    	System.out.println("-------------");
+    	int max = 0;
+    	String winner = "";
+    	
+    	Player currentPlayer;
+    	for(int i = 0; i < players.size(); i++) {
+    		currentPlayer = players.get(i);
+    
+    		if(currentPlayer.getPoints() > max) {
+    			max = currentPlayer.getPoints();
+    			winner = currentPlayer.getUsername();
+    		}
+    	}
+    	
+    	for(int i = 0; i < players.size(); i++) {
+    		currentPlayer = players.get(i);
+    	    
+    		if(currentPlayer.getPoints() == max && !currentPlayer.equals(winner)) {
+    			max = currentPlayer.getPoints();
+    			winner = currentPlayer.getUsername();
+    		}
+
+    	}	
+    	
+    	
+    	System.out.println("The winner is " + winner + " with " + max + "points.");
+    	
     }
 
+    // --- Setter and Getter --- 
 	public boolean isGameOver() {
 		return gameOver;
 	}

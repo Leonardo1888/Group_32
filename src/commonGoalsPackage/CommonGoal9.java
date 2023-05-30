@@ -4,6 +4,10 @@ import logic.*;
 
 public class CommonGoal9 extends CommonGoal {
 
+	/*
+	 * Two columns each formed by 6 different types of tiles.
+	 */
+
 	public CommonGoal9(int nPlayers) {
 		super(nPlayers);
 	}
@@ -16,7 +20,7 @@ public class CommonGoal9 extends CommonGoal {
 			return 0;
 	}
 
-	@Override	
+	@Override
 	public boolean check(Bookshelf bs) {
 		Tail[][] shelf = bs.getShelf();
 		int cont = 0;
@@ -37,6 +41,14 @@ public class CommonGoal9 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
-		System.out.println("Printa la commongGoal");
+		int row = 6;
+		int col = 1;
+		Tail[][] commonGoalCard = new Tail[row][col];
+		for (int i = 0; i < row; i++) {
+			commonGoalCard[i][0] = Tail.D;
+		}
+		Matrix.printMatrix(commonGoalCard, row, col);
+		System.out.println("\nx2");
+		// return commonGoalCard;
 	}
 }

@@ -4,6 +4,11 @@ import logic.*;
 
 public class CommonGoal10 extends CommonGoal {
 
+	/*
+	 * Two lines each formed by 5 different types of tiles. One line can show the
+	 * same or a different combination of the other line.
+	 */
+
 	public CommonGoal10(int nPlayers) {
 		super(nPlayers);
 	}
@@ -16,7 +21,7 @@ public class CommonGoal10 extends CommonGoal {
 			return 0;
 	}
 
-	@Override	
+	@Override
 	public boolean check(Bookshelf bs) {
 		Tail[][] shelf = bs.getShelf();
 		int cont = 0;
@@ -37,6 +42,14 @@ public class CommonGoal10 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
-		System.out.println("Printa la commongGoal");
+		int row = 1;
+		int col = 5;
+		Tail[][] commonGoalCard = new Tail[row][col];
+		for (int j = 0; j < col; j++) {
+			commonGoalCard[0][j] = Tail.D;
+		}
+		Matrix.printMatrix(commonGoalCard, row, col);
+		System.out.println("\nx2");
+		// return commonGoalCard;
 	}
 }

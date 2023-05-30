@@ -4,6 +4,11 @@ import logic.*;
 
 public class CommonGoal6 extends CommonGoal {
 
+	/*
+	 * Eight tiles of the same type. There’s no restriction about the position of
+	 * these tiles.
+	 */
+
 	public CommonGoal6(int nPlayers) {
 		super(nPlayers);
 	}
@@ -16,7 +21,7 @@ public class CommonGoal6 extends CommonGoal {
 			return 0;
 	}
 
-	@Override	
+	@Override
 	public boolean check(Bookshelf bs) {
 		Tail[][] shelf = bs.getShelf();
 		for (int i = 0; i < 6; i++) {
@@ -90,6 +95,16 @@ public class CommonGoal6 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
-		System.out.println("Printa la commongGoal");
+		int row = 3;
+		int col = 3;
+		Tail[][] commonGoalCard = new Tail[row][col];
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				commonGoalCard[i][j] = Tail.S;
+			}
+		}
+		commonGoalCard[0][1] = Tail.E;
+		Matrix.printMatrix(commonGoalCard, row, col);
+		// return commonGoalCard;
 	}
 }

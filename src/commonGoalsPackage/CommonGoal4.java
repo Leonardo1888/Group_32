@@ -3,7 +3,11 @@ package commonGoalsPackage;
 import logic.*;
 
 public class CommonGoal4 extends CommonGoal {
-
+	/*
+	 * Two groups each containing 4 tiles of the same type in a 2x2 square. The
+	 * tiles of one square can be different from those of the other square.
+	 */
+	
 	public CommonGoal4(int nPlayers) {
 		super(nPlayers);
 	}
@@ -40,6 +44,16 @@ public class CommonGoal4 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
-		System.out.println("Printa la commongGoal");
+		int row = 2;
+		int col = 2;
+		Tail [][] commonGoalCard = new Tail[row][col];
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				commonGoalCard[i][j] = Tail.S;
+			}
+		}
+		Matrix.printMatrix(commonGoalCard, row, col);
+		System.out.println("\nx2");
+		// return commonGoalCard;
 	}
 }

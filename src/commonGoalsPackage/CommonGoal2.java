@@ -4,6 +4,13 @@ import logic.*;
 
 public class CommonGoal2 extends CommonGoal {
 
+	/**
+	 * Four groups each containing at least 4 tiles of the same type (not
+	 * necessarily in the depicted shape). The tiles of one group can be different
+	 * from those of another group.
+	 * 
+	 */
+
 	public CommonGoal2(int nPlayers) {
 		super(nPlayers);
 	}
@@ -16,35 +23,35 @@ public class CommonGoal2 extends CommonGoal {
 			return 0;
 	}
 
-	@Override	// TODO
+	@Override
 	public boolean check(Bookshelf bs) {
 		Tail[][] shelf = bs.getShelf();
 		int cont = AdjacentPoints(shelf);
-		if(cont >= 4){
+		if (cont >= 4) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	// START DFS
-	// call in actionOfEndGame this function, it will return the number of each group then you have to count the points
 	public int AdjacentPoints(Tail shelf[][]){
 		boolean[][] visited = createVisitMatrixShelf(shelf);
-        int res = 0;
-        int groupCount = 0; //counter for >= 2 groups
-
-        for (int row = 0; row < shelf.length; row++)
-            for (int col = 0; col < shelf[row].length; col++)
-                if (!visited[row][col])
-                    res = Math.max(res, dfs(shelf, visited, shelf[row][col], row, col, groupCount));
-       
+        int[] groupCount = new int[1]; //counter for >= 2 groups
         
-        System.out.println("Numero di gruppi: " + groupCount);
-        return groupCount;
+        for (int row = 0; row < shelf.length; row++) {
+            for (int col = 0; col < shelf[row].length; col++) {
+                if (!visited[row][col]) {
+                	dfs(shelf, visited, shelf[row][col], row, col, groupCount);
+                }
+            }
+        }
+        
+        System.out.println("Numero di gruppi: " + groupCount[0]);
+        return groupCount[0];
     }
     
 	//dfs algorithm for deep search
-    public static int dfs(Tail[][] matrixShelf, boolean[][] visited, Tail expected, int row, int col, int groupCount) {
+    public static int dfs(Tail[][] matrixShelf, boolean[][] visited, Tail expected, int row, int col, int[] groupCount) {
         if (row < 0 || row >= matrixShelf.length)
             return 0;
         if (col < 0 || col >= matrixShelf[row].length)
@@ -62,8 +69,8 @@ public class CommonGoal2 extends CommonGoal {
 
         // Aggiorna l'array groupCounts in base alla dimensione del gruppo
         if(matrixShelf[row][col] != Tail.E && matrixShelf[row][col] != Tail.X){
-			if (depth >= 4) {
-	            groupCount ++;
+			if (depth == 4) {
+	            groupCount[0] ++;
 	        } 
 		}
  	
@@ -78,10 +85,18 @@ public class CommonGoal2 extends CommonGoal {
 
         return visit;
     }
-	//END DFS	
-	
+	//END DFS
+
 	@Override
 	public void printCommonGoal() {
-		System.out.println("Printa la commongGoal");
+		int row = 4;
+		int col = 1;
+		Tail[][] commonGoalCard = new Tail[row][col];		
+		for (int i = 0; i < row; i++) {
+			commonGoalCard[i][0] = Tail.S;
+		}
+		Matrix.printMatrix(commonGoalCard, row, col);
+		System.out.println("\nx4");
+		// return commonGoalCard;
 	}
 }

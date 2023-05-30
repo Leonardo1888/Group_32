@@ -4,6 +4,12 @@ import logic.*;
 
 public class CommonGoal5 extends CommonGoal {
 
+	/*
+	  	Three columns each formed by 6 tiles Five tiles of the same type forming an X.
+		of maximum three different types. 
+		One	column can show the same or a different combination of another column.
+	*/
+	
 	public CommonGoal5(int nPlayers) {
 		super(nPlayers);
 	}
@@ -16,31 +22,48 @@ public class CommonGoal5 extends CommonGoal {
 			return 0;
 	}
 
-	@Override	// TODO Almeno 3 tails uguali in una riga. (x3)
+	@Override // At least 3 same Tails in a column. (x3 cols)
 	public boolean check(Bookshelf bs) {
 		Tail[][] s = bs.getShelf();
 		// A copy of the original shelf we edit
 		Tail[][] shelf = s;
-		int cont = 0;
-
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 4; j++) {
-				if (shelf[i][j] != Tail.E && shelf[i][j] == shelf[i][j + 1] && shelf[i][j] == shelf[i + 1][j]
-						&& shelf[i][j] == shelf[i + 1][j + 1]) {
-					shelf[i][j] = shelf[i][j + 1] = shelf[i + 1][j] = shelf[i + 1][j + 1] = Tail.E;
-					cont++;
+		int sameTailsPerCol = 0;
+		int numberOfCols = 0;
+		int max = 0;
+		Tail t = Tail.E;
+		// Columns 0,1,2,..4
+		for (int j = 0; j < 5; j++) {
+			// Element of col 0,1,2,..5
+			for (int i = 0; i < 6; i++) {
+				t = shelf[i][j];
+				sameTailsPerCol = 0;
+				for (int k = 0; k < 6; k++) {
+					if (t == shelf[k][j])
+						sameTailsPerCol++;
+				}
+				if(sameTailsPerCol >= 3) {
+					numberOfCols++;
+					break;
 				}
 			}
 		}
-		if (cont == 2)
+
+		if (numberOfCols >= 3)
 			return true;
 		else
 			return false;
 	}
 
-
 	@Override
 	public void printCommonGoal() {
-		System.out.println("Printa la commongGoal");
+		int row = 6;
+		int col = 1;
+		Tail[][] commonGoalCard = new Tail[row][col];
+		for (int i = 0; i < row; i++) {
+			commonGoalCard[i][0] = Tail.X;
+		}
+		Matrix.printMatrix(commonGoalCard, row, col);
+		System.out.println("\nx3, max 3 different");
+		// return commonGoalCard;
 	}
 }
