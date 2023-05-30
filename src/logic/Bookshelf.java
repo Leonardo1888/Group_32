@@ -162,7 +162,7 @@ public class Bookshelf implements Matrix {
         depth += dfs(matrixShelf, visited, expected, row + 1, col, groupCounts);
 
         // Aggiorna l'array groupCounts in base alla dimensione del gruppo
-        if(matrixShelf[row][col] != Tail.E){
+        if(matrixShelf[row][col] != Tail.E && matrixShelf[row][col] != Tail.X){
 			if (depth == 3) {
 	            groupCounts[0]++;
 	        } else if (depth == 4) {
