@@ -14,11 +14,12 @@ public class TurnsManagement {
     private int turnCounter;
     private boolean gameOver;
     private Scanner sc;
+    private int index;
     
-    private CommonGoal CommonGoal1;
-    private CommonGoal CommonGoal2;    
-    
-    public TurnsManagement(List<Player> players, Board board, Scanner sc) {
+    private CommonGoal CommonGoalA;
+    private CommonGoal CommonGoalB;    
+
+	public TurnsManagement(List<Player> players, Board board, Scanner sc) {
         this.players = players;
         this.nPlayers = players.size();
         this.currentPlayerIndex = 0;
@@ -26,17 +27,24 @@ public class TurnsManagement {
         this.turnCounter = 0;
         this.gameOver = false;
         this.sc = sc;
+        this.index = 0;
+        
         startGame();
     }
     
     // All the turns of the game
     private void startGame() {
-    	CommonGoal1 = createCommonGoal(nPlayers);
-    	CommonGoal2 = createCommonGoal(nPlayers);
-
+    	initializeCommonGoals();
+    	
     	while(!gameOver) {
+    		//TODO remove - for testing
+    		
+    		
     		Player currentPlayer = players.get(currentPlayerIndex);
-			Turn t = new Turn(board, currentPlayer, currentPlayer.getShelf(), currentPlayer.getPersonalGoalCard(), this.sc, this.turnCounter);
+    		// invece di 'bs' mettere 'currentPlayer.getShelf()'
+			Turn t = new Turn(board, currentPlayer, currentPlayer.getShelf(), currentPlayer.getPersonalGoalCard(), 
+					this.sc, this.turnCounter,
+					this.CommonGoalA, this.CommonGoalB);
 			
 			this.turnCounter++;
 					
@@ -61,15 +69,14 @@ public class TurnsManagement {
     private void gameOver() {
     	System.out.println(" --- Game is over ---");
     	
-    	
-    	
-    	//call personal goal card points
+    	// Call personal goal card points
     	for(int i = 0; i < players.size(); i++) {
     		Player currentPlayer = players.get(i);
     		Bookshelf bookshelf = currentPlayer.getShelf();
     		Tail[][] shelfMatrix = bookshelf.getShelf();
     		PersonalGoalCard pgc = currentPlayer.getPersonalGoalCard();
-    		//call adjacent tails groups points
+    		
+    		// call adjacent tails groups points
     		int pointsPGC = countPersonalGoalPoints(shelfMatrix, pgc);
     		System.out.println("Personal Goal Card points: " + pointsPGC);
     		
@@ -86,11 +93,30 @@ public class TurnsManagement {
         return points;
     }
     
-    // TODO
-    private CommonGoal createCommonGoal() {
-    	Random random = new Random();
+    private void initializeCommonGoals() {
+    	CommonGoalA = createCommonGoal(3);
+    	CommonGoalB = createCommonGoal(6);
     	
-        switch (ThreadLocalRandom.current().nextInt(1, 12 + 1)) {
+    	System.out.println("\n--- START GAME OF MY SHELFIE ---\n");
+    	System.out.println("The common goal cards grant points the players who achieve the illustrated pattern.");
+    	System.out.println("Those are the common goals you have to achieve: ");
+    	CommonGoalA.printCommonGoal();
+    	CommonGoalB.printCommonGoal();
+    }
+    
+    // TODO controllo che siano dieversi i commongoal
+    private CommonGoal createCommonGoal(int index) {
+    	/*
+    	Random random = new Random();
+    	int index = ThreadLocalRandom.current().nextInt(1, 12 + 1);
+    	while(index == this.index)
+        	index = ThreadLocalRandom.current().nextInt(1, 12 + 1);
+    	this.index = index;
+    	*/
+    	// TODO togliere i commenti e togliere index dai parametri d'ingresso
+    	
+    	
+        switch (index) {
             case 1:
                 return new CommonGoal1(nPlayers);
             case 2:
@@ -116,11 +142,11 @@ public class TurnsManagement {
             case 12:
                 return new CommonGoal12(nPlayers);
             default:
-                throw new IllegalArgumentException("Index " + index + " is not a valid CommonGoal.");
+                throw new IllegalArgumentException("Index: '" + index + "' is not a valid CommonGoal.");
         }
 
     	
-    	
+    	/*
     	
     	Random random = new Random();
 		this.commonGoal1 = ThreadLocalRandom.current().nextInt(1, 12 + 1);
@@ -133,7 +159,7 @@ public class TurnsManagement {
 		System.out.println("\n" + getInfo(CommonGoal1));
 		System.out.println("\n"CommonGoal2al2 + ".");
 		commonGoalCard2 = generateCommonGoalCard(this.commonGoal2);
-		System.out.println("\n" + getInCommonGoal2al2));
+		System.out.println("\n" + getInCommonGoal2al2));*/
     }
     
     public void addPlayer(Turn t) {
@@ -156,4 +182,21 @@ public class TurnsManagement {
 		this.gameOver = gameOver;
 	}
     
+
+    public CommonGoal getCommonGoalA() {
+		return CommonGoalA;
+	}
+
+	public void setCommonGoalA(CommonGoal commonGoalA) {
+		CommonGoalA = commonGoalA;
+	}
+
+	public CommonGoal getCommonGoalB() {
+		return CommonGoalB;
+	}
+
+	public void setCommonGoalB(CommonGoal commonGoalB) {
+		CommonGoalB = commonGoalB;
+	}
+	
 }

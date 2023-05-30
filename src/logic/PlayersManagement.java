@@ -69,12 +69,28 @@ public class PlayersManagement {
 				}
 			}
 
+			// Keep for testing 
+			/*
+			Tail[][] s = {
+		            {Tail.C, Tail.T, Tail.P, Tail.E, Tail.C},
+		            {Tail.C, Tail.T, Tail.P, Tail.P, Tail.P},
+		            {Tail.T, Tail.P, Tail.P, Tail.P, Tail.P},
+		            {Tail.T, Tail.P, Tail.P, Tail.T, Tail.P},
+		            {Tail.T, Tail.T, Tail.P, Tail.P, Tail.P},
+		            {Tail.C, Tail.T, Tail.P, Tail.P, Tail.C}
+	    		};
+	    		Bookshelf bs = new Bookshelf();
+	    		bs.setShelf(s);
+			*/
 			Player p;
+			// TODO invece di 'bs' mettere 'new Bookshelf()'
 			p = new Player(playerUsername, new Bookshelf(), new PersonalGoalCard(), true);
 			addPlayer(p);
 
 			System.out.println("Added " + (i + 1) + "° player, named: " + playerUsername);
 			correctUsername = false;
+			
+			
 		}
 	}
 

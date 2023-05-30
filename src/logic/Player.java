@@ -11,17 +11,34 @@ public class Player {
 	private PersonalGoalCard personalGoalCard;
 	private int points = 0;
 	private boolean isFirstPlayer;
-	private boolean checkCommonGoal1 = false;
-	private boolean checkCommonGoal2 = false;
-
+	private boolean checkCommonGoalA;	// If true is checked
+	private boolean checkCommonGoalB;
+	/*
+	turnsmanagemente -> fine turno
+		if(checkCommonGoal1 == false)
+			player.checkCommonGoal1 = CommonGoal1.check();
+		if(checkCommonGoal2 == false)
+			player.checkCommonGoal2 = CommonGoal2.check();
+	 */
+	
 	public Player(String username, Bookshelf shelf, PersonalGoalCard personalGoal, boolean isFirstPlayer) {
 		this.id = PLAYER_COUNT++;
 		this.username = username;
 		this.shelf = shelf;
 		this.personalGoalCard = personalGoal;
 		this.isFirstPlayer = isFirstPlayer;
+		this.checkCommonGoalA = false;
+		this.checkCommonGoalB = false;
 	}
 
+	public void sumPoints(int addedPoints) {
+		this.points = this.points + addedPoints;
+	}
+	
+	public int getPoints() {
+		return this.points;
+	}
+	
 	public int getPLAYER_COUNT() {
 		return PLAYER_COUNT;
 	}
@@ -56,5 +73,13 @@ public class Player {
 
 	public String getUsername() {
 		return this.username;
+	}
+	
+	public boolean getCommonGoalA(){
+		return this.checkCommonGoalA;
+	}
+	
+	public boolean getCommonGoalB(){
+		return this.checkCommonGoalB;
 	}
 }

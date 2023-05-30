@@ -3,43 +3,36 @@ package commonGoalsPackage;
 import logic.*;
 
 public class CommonGoal1 extends CommonGoal {
+
 	public CommonGoal1(int nPlayers) {
 		super(nPlayers);
 	}
 
 	@Override
-	public int checkCommonGoal(Bookshelf shelf) {
-		if (check()) {
-			subtractContOfTwo();
-			if(nPlayers == 4) {
-				
-			}
-			if(nPlayers == 3) {
-				
-			}
-			if(nPlayers == 2) {
-				
-			}
-			if (cont == 2)
-				return cont;
-			if (cont == 1)
-				return cont;
-			if (cont == 0)
-				return cont;
-		}
-		return 0;
+	public int checkCommonGoal(Bookshelf bs) {
+		if (check(bs)) {
+			return super.countPoints();
+		} else
+			return 0;
 	}
 
-	@Override
-	public boolean check() {
-		// Implementazione specifica per il CommonGoal1
-		// Esegui il controllo del CommonGoal1
-		return true;
+	@Override	// TODO
+	public boolean check(Bookshelf bs) {
+		Tail[][] shelf = bs.getShelf();
+		Tail[][] mirrorShelf = Matrix.copyMatrix(shelf, 5, 6);
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 5; j++) {
+				int cont = 0;
+				while (Matrix.checkOrthogonally(mirrorShelf, i, j)[0] == true) {
+
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public void printCommonGoal() {
 		System.out.println("Printa la commongGoal");
 	}
-
 }

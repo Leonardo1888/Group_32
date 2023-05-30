@@ -1,6 +1,7 @@
 package logic;
 
 import java.util.*;
+import commonGoalsPackage.*;
 
 public class Turn {
 	Tail[] tails = new Tail[] { Tail.E, Tail.E, Tail.E };
@@ -16,6 +17,8 @@ public class Turn {
 	private Bookshelf shelf;
 	private PersonalGoalCard pgc;
 	private Scanner sc;
+	private CommonGoal commonGoalA;
+    private CommonGoal commonGoalB;  
 	
 	// row and column in numbers
 	private int row; // [0-6]
@@ -23,7 +26,7 @@ public class Turn {
 
 	// row and column selected
 	private char tRow; // [a-g]
-	private int tCol; // [1-9]
+	private int tCol;  // [1-9]
 
 	private int turnCounter;
 	
@@ -33,7 +36,7 @@ public class Turn {
 		return gameOver;
 	}
 
-	public Turn(Board board, Player currentPlayer, Bookshelf shelf, PersonalGoalCard pgc, Scanner sc, int turnCounter) {
+	public Turn(Board board, Player currentPlayer, Bookshelf shelf, PersonalGoalCard pgc, Scanner sc, int turnCounter, CommonGoal A, CommonGoal B) {
 		this.board = board;
 		this.currentPlayer = currentPlayer;
 		this.shelf = shelf;
@@ -41,6 +44,8 @@ public class Turn {
 		this.sc = sc;
 		this.turnCounter = turnCounter;
 		this.nTailsPicked = 0;
+		this.commonGoalA = A;
+		this.commonGoalB = B;
 	}
 
 	// @return true if turn has ended
@@ -89,6 +94,7 @@ public class Turn {
 			}
 
 			// User decides if he wants to pick another tail
+			// If the user can't pick he won't be able to choose 1 and pick again.
 			if (canPickTailsBoard == true && nTailsPicked > 0 && nTailsPicked < 3 && nOfFreeSpaces != 0) {
 				endTurn = pickAgain(sc);
 				if (endTurn == 0) {
@@ -147,17 +153,37 @@ public class Turn {
 
 		// Select the Column where the user wants to put the tail(s)
 		printBoardAndShelfAndPgc();
-		// TODO fixare (non credo ci sia nulla da fixare -Leo)
+		
 		int state = 1;
 		while(state == 1){
 			int colInsert = selectColumn();
 			// Insert tail(s)
+			// TODO 
 			System.out.println("\nnel while state = "+state+"\n");
 			tails = shelf.orderTailsToInsert(this.sc, tails, nTailsPicked);
 			state = shelf.insertTail(tails, colInsert, nTailsPicked);	//insertTail returns 0->success
 			shelf.printShelf();												//return 1->E in col < n Tails
 		}
-	}	
+		
+		checkCommonGoals();
+	}
+	
+	//check the common goal 1 and 2, sum the player's points
+	public void checkCommonGoals(){
+		
+		// If false check if the user achieved the commonGoal in his shelf
+		if(this.currentPlayer.getCommonGoalA() == false){
+			currentPlayer.sumPoints(this.commonGoalA.checkCommonGoal(this.shelf));
+		}
+		System.out.println("commA: " + currentPlayer.getPoints() );
+
+		if(this.currentPlayer.getCommonGoalB() == false){
+			currentPlayer.sumPoints(this.commonGoalB.checkCommonGoal(this.shelf));
+		}
+		System.out.println("commB: " + currentPlayer.getPoints() );
+				
+	}
+	
 
 	private void removeTailsInBoard() {
 		// Remove the tails the user picked
