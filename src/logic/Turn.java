@@ -158,11 +158,9 @@ public class Turn {
 		while(state == 1){
 			int colInsert = selectColumn();
 			// Insert tail(s)
-			// TODO 
-			System.out.println("\nnel while state = "+state+"\n");
 			tails = shelf.orderTailsToInsert(this.sc, tails, nTailsPicked);
 			state = shelf.insertTail(tails, colInsert, nTailsPicked);	//insertTail returns 0->success
-			shelf.printShelf();												//return 1->E in col < n Tails
+			shelf.printShelf();											//return 1->E in col < n Tails
 		}
 		
 		checkCommonGoals();

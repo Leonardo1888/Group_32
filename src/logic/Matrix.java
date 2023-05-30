@@ -196,10 +196,9 @@ public interface Matrix {
 	static int countEinCol(Tail matrix[][], int col) {
 		int nRows = matrix.length;
 		int nCols = matrix[0].length;
-
 		int count = 0;
-		for (int i = 0; i < nCols; i++) {
-			if (matrix[i][col] == Tail.E) {
+		for (int i = 0; i < nRows; i++) {
+			if (matrix[i][col] == Tail.E || matrix[i][col] == Tail.X) {
 				count++;
 			}
 		}
