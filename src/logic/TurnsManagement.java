@@ -95,8 +95,11 @@ public class TurnsManagement {
     	
     	System.out.println("\n--- START GAME OF MY SHELFIE ---\n");
     	System.out.println("The common goal cards grant points the players who achieve the illustrated pattern.");
-    	System.out.println("Those are the common goals you have to achieve: ");
+    	System.out.println("There are two common goals, and we will call them 'A' and 'B'. \nThose are the two common goals you have to achieve: ");
+    	System.out.println("\nCommon goal A: \n");
     	CommonGoalA.printCommonGoal();
+    	
+    	System.out.println("\nCommon goal B: \n");
     	CommonGoalB.printCommonGoal();
     }
     

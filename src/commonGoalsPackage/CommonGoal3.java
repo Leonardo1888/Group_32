@@ -7,6 +7,9 @@ public class CommonGoal3 extends CommonGoal {
 	/*
 	 * Four tiles of the same type in the four corners of the bookshelf.
 	 */
+	
+	private String msg = "Four tiles of the same type in the four corners of the bookshelf.";
+	
 	public CommonGoal3(int nPlayers) {
 		super(nPlayers);
 	}
@@ -32,6 +35,8 @@ public class CommonGoal3 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
+		System.out.println(msg);
+		
 		int row = 6;
 		int col = 5;
 		Tail[][] commonGoalCard = new Tail[row][col];
@@ -40,7 +45,7 @@ public class CommonGoal3 extends CommonGoal {
 		commonGoalCard[0][4] = Tail.S;
 		commonGoalCard[5][0] = Tail.S;
 		commonGoalCard[5][4] = Tail.S;
-		Matrix.printMatrix(commonGoalCard, row, col);
+		Matrix.printMatrixSimple(commonGoalCard, row, col);
 		// return commonGoalCard;
 	}
 }

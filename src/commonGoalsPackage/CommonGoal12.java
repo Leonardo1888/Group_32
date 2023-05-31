@@ -9,6 +9,10 @@ public class CommonGoal12 extends CommonGoal {
 	 * column on the left or on the right, each next column must be made of exactly
 	 * one more tile. Tiles can be of any type.
 	 */
+	
+	private String msg = "Five columns of increasing or decreasing height. "
+			+ "Starting from the first column on the left or on the right, each next column must be made of exactly "
+			+ "one more tile. Tiles can be of any type.";
 
 	public CommonGoal12(int nPlayers) {
 		super(nPlayers);
@@ -64,6 +68,8 @@ public class CommonGoal12 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
+		System.out.println(msg);
+		
 		int row = 5;
 		int col = 5;
 		Tail[][] commonGoalCard = new Tail[row][col];
@@ -75,7 +81,7 @@ public class CommonGoal12 extends CommonGoal {
 			col--;
 		}
 		col = 5;
-		Matrix.printMatrix(commonGoalCard, row, col);
+		Matrix.printMatrixSimple(commonGoalCard, row, col);
 		// return commonGoalCard;
 	}
 }

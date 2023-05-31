@@ -15,7 +15,21 @@ public interface Matrix {
 	 * (CAT, BOOK, GAME, FRAME, TROPHEY, PLANT) -> (GREEN, WHITE, YELLOW, BLUE, CYAN, RED)
 	 */
 
- 	
+ 	static void printMatrixSimple(Tail matrix[][], int row, int col){
+		 for(int i = 0; i < row; i++){
+			 for (int j = 0; j < col; j++){
+				 if (matrix[i][j] == Tail.E || matrix[i][j] == Tail.X) {
+					System.out.print(Color.BLACK);
+					System.out.print("#");
+					System.out.print(Color.RESET);
+					}else{
+						System.out.println(matrix[i][j]);
+					}
+				 
+			 }
+		 }
+	 }
+	 
 	static void printMatrix(Tail matrix[][], int row, int col) {
 		System.out.println();
 		for (int a = 0; a <= col; a++) {

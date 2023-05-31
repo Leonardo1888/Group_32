@@ -10,10 +10,13 @@ public class CommonGoal1 extends CommonGoal {
 	 * another group..
 	 */
 
+	private String msg = "Six groups each containing at least 2 tiles of the same type (not necessarily in the depicted shape). "
+			+ "The tiles of one group can be different from those of another group.";
+
 	public CommonGoal1(int nPlayers) {
 		super(nPlayers);
 	}
-
+	
 	@Override
 	public int checkCommonGoal(Bookshelf bs) {
 		if (check(bs)) {
@@ -89,14 +92,15 @@ public class CommonGoal1 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
+		System.out.println(msg);
+
 		int row = 2;
 		int col = 1;
 		Tail[][] commonGoalCard = new Tail[row][col];
 		for (int i = 0; i < row; i++) {
 			commonGoalCard[i][0] = Tail.S;
 		}
-		Matrix.printMatrix(commonGoalCard, row, col);
+		Matrix.printMatrixSimple(commonGoalCard, row, col);
 		System.out.println("\nx6");
-		// return commonGoalCard;
 	}
 }

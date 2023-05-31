@@ -7,10 +7,10 @@ public class Turn {
 	Tail[] tails = new Tail[] { Tail.E, Tail.E, Tail.E };
 	int[][] positionTails = new int[3][2]; // Position of the tails the user picked
 
-	private int endTurn = 1; 	   // endTurn=1 -> keep going - endTurn=0 -> stop turn
+	private int endTurn = 1; // endTurn=1 -> keep going - endTurn=0 -> stop turn
 	private int nOfFreeSpaces = 0; // number of free spaces in Player's shelf
 	private boolean canPickTailsBoard = true; // Can user pick a Tail on the same row/col
-	private int nTailsPicked = 0;  // number of tails the user picked
+	private int nTailsPicked = 0; // number of tails the user picked
 
 	private Board board;
 	private Player currentPlayer;
@@ -18,25 +18,26 @@ public class Turn {
 	private PersonalGoalCard pgc;
 	private Scanner sc;
 	private CommonGoal commonGoalA;
-    private CommonGoal commonGoalB;  
-	
+	private CommonGoal commonGoalB;
+
 	// row and column in numbers
 	private int row; // [0-6]
 	private int col; // [0-8]
 
 	// row and column selected
 	private char tRow; // [a-g]
-	private int tCol;  // [1-9]
+	private int tCol; // [1-9]
 
 	private int turnCounter;
-	
+
 	private boolean gameOver = false;
 
 	public boolean isGameOver() {
 		return gameOver;
 	}
 
-	public Turn(Board board, Player currentPlayer, Bookshelf shelf, PersonalGoalCard pgc, Scanner sc, int turnCounter, CommonGoal A, CommonGoal B) {
+	public Turn(Board board, Player currentPlayer, Bookshelf shelf, PersonalGoalCard pgc, Scanner sc, int turnCounter,
+			CommonGoal A, CommonGoal B) {
 		this.board = board;
 		this.currentPlayer = currentPlayer;
 		this.shelf = shelf;
@@ -53,7 +54,7 @@ public class Turn {
 
 	public boolean playTurn() {
 		String testInput;
-		if(turnCounter == 0)
+		if (turnCounter == 0)
 			testInput = sc.nextLine();
 		System.out.println("\n-------------- NEXT TURN - PLAYER: [" + currentPlayer.getUsername() + "] --------------");
 		printBoardAndShelfAndPgc();
@@ -103,7 +104,7 @@ public class Turn {
 					return true;
 				}
 			}
-			
+
 			if (nOfFreeSpaces == 0) {
 				System.out.println("You can't pick more Tails because you don't have enough spaces on you bookshelf!");
 				actionsOfEndTurn();
@@ -121,11 +122,12 @@ public class Turn {
 		int COL = board.getCol();
 		char indexChar = 'a' - 1;
 
-		System.out.println("\nBoard:                       " + this.currentPlayer.getUsername() + "'s bookshelf: ");
+		System.out.println("\nBoard:                       " + this.currentPlayer.getUsername()
+				+ "'s shelf & personal goal card.");
 
 		// i = -1 prints the first row with numbers.
 		for (int i = -1; i < ROW; i++) {
-			
+
 			// Print row board
 			board.printRowBoard(i, indexChar);
 			indexChar++;
@@ -134,14 +136,14 @@ public class Turn {
 			// Print row shelf
 			if (i < this.shelf.getRow())
 				this.shelf.printRowBookshelf(i);
-			
+
 			System.out.print("        ");
 
 			// Print row personalGoalCard
 			if (i < this.shelf.getRow())
 				this.pgc.printRowPersonalGoalCard(i);
 			System.out.println();
-			
+
 		}
 	}
 
@@ -153,35 +155,46 @@ public class Turn {
 
 		// Select the Column where the user wants to put the tail(s)
 		printBoardAndShelfAndPgc();
-		
+
 		int state = 1;
-		while(state == 1){
+		while (state == 1) {
 			int colInsert = selectColumn();
 			// Insert tail(s)
 			tails = shelf.orderTailsToInsert(this.sc, tails, nTailsPicked);
-			state = shelf.insertTail(tails, colInsert, nTailsPicked);	//insertTail returns 0->success
-			shelf.printShelf();											//return 1->E in col < n Tails
+			state = shelf.insertTail(tails, colInsert, nTailsPicked); // insertTail returns 0->success
+			System.out.println("\n\nThis is " + currentPlayer.getUsername() + "'s shelf updated:");
+			shelf.printShelf(); // return 1->E in col < n Tails
 		}
-		
+
 		checkCommonGoals();
 	}
-	
-	//check the common goal 1 and 2, sum the player's points
-	public void checkCommonGoals(){
-		
-		// If false check if the user achieved the commonGoal in his shelf
-		if(this.currentPlayer.getCommonGoalA() == false){
-			currentPlayer.sumPoints(this.commonGoalA.checkCommonGoal(this.shelf));
-		}
-		System.out.println("commA: " + currentPlayer.getPoints() );
 
-		if(this.currentPlayer.getCommonGoalB() == false){
-			currentPlayer.sumPoints(this.commonGoalB.checkCommonGoal(this.shelf));
+	// check the common goal 1 and 2, sum the player's points
+	public void checkCommonGoals() {
+
+		// If false check if the user achieved the commonGoal A in his shelf
+		if (this.currentPlayer.getCommonGoalA() == false) {
+			currentPlayer.sumPoints(this.commonGoalA.checkCommonGoal(this.shelf));
+			if (this.commonGoalA.checkCommonGoal(this.shelf) != 0) {
+				System.out.println("You achieved the commongoal 'A' and you gained: "
+						+ this.commonGoalA.checkCommonGoal(this.shelf) + " points!");
+				System.out.println("Player: " + currentPlayer.getUsername() + " has now a total of "
+						+ currentPlayer.getPoints() + " points.");
+			}
 		}
-		System.out.println("commB: " + currentPlayer.getPoints() );
-				
+
+		// If false check if the user achieved the commonGoal B in his shelf
+		if (this.currentPlayer.getCommonGoalB() == false) {
+			currentPlayer.sumPoints(this.commonGoalB.checkCommonGoal(this.shelf));
+			if (this.commonGoalB.checkCommonGoal(this.shelf) != 0) {
+				System.out.println("You achieved the commongoal 'B' and you gained: "
+						+ this.commonGoalA.checkCommonGoal(this.shelf) + " points!");
+				System.out.println("Player: " + currentPlayer.getUsername() + " has now a total of "
+						+ currentPlayer.getPoints() + " points.");
+			}
+		}
+
 	}
-	
 
 	private void removeTailsInBoard() {
 		// Remove the tails the user picked
@@ -195,21 +208,25 @@ public class Turn {
 			Tail t = tails[i];
 			System.out.print((i + 1) + "° Tail: '");
 			printTail(t);
-			System.out.println("' in the position: [" + (char) (tempPositionTails[i][0] + 97) + ", " + (tempPositionTails[i][1] + 1) + "] \n");
+			System.out.println("' in the position: [" + (char) (tempPositionTails[i][0] + 97) + ", "
+					+ (tempPositionTails[i][1] + 1) + "] ");
 		}
 	}
 
 	private int pickAgain(Scanner sc) {
-		while (true) {
-			System.out.println("\nEnter: \n-0 to stop; \n-1 to pick another.");
-			endTurn = sc.nextInt();
-			if (endTurn == 0 || endTurn == 1) {
-				break;
-			} else {
-				System.out.println("You must enter 0 or 1.");
+		int errorCount = 0;
+		while (errorCount++ < 10) {
+			System.out.println("\nEnter: 'no' to stop or 'yes' if you want to pick another tail.");
+			String input = sc.nextLine().toLowerCase().trim();
+			if (input.equals("y") || input.equals("yes")) {
+				return 1;
 			}
+			if (input.equals("n") || input.equals("no")) {
+				return 0;
+			}
+			System.out.println("Error! Answer 'yes' or 'no'.");
 		}
-		return endTurn;
+		throw new RuntimeException("Repeated invalid user input");
 	}
 
 	private void checkIfNotEmpty(Tail t) {
@@ -241,23 +258,22 @@ public class Turn {
 	private char insertRow() {
 		char row;
 		int testRow = 0;
-		String testInput  = "a";
-		if(nTailsPicked != 0 && turnCounter == 0) {			
+		String testInput = "a";
+		if (nTailsPicked != 0 && turnCounter == 0) {
 			testInput = sc.nextLine();
 		}
-		if(nTailsPicked >= 1 && turnCounter > 1)
+		if (nTailsPicked >= 1 && turnCounter > 1)
 			testInput = sc.nextLine();
-
 
 		while (true) {
 			System.out.print("\n-Insert ROW [a-i]: ");
 			testInput = sc.nextLine();
-	
+
 			if (testInput.isEmpty() && nTailsPicked == 0) {
 				System.out.println("Error: Please enter a character.");
 				continue;
 			}
-			
+
 			try {
 				testRow = Integer.parseInt(testInput); // Parse string into number
 				System.out.println("You have to enter a character for the row!");
@@ -268,7 +284,7 @@ public class Turn {
 					System.out.println("Error: Please enter a character.");
 					continue;
 				}
-				
+
 				row = testInput.charAt(0);
 			}
 
@@ -281,7 +297,7 @@ public class Turn {
 		return row;
 	}
 
-	private int  insertCol() {
+	private int insertCol() {
 		int col = 0;
 		String testInput;
 
@@ -314,12 +330,10 @@ public class Turn {
 	private int selectColumn() {
 		int column = 0;
 		String testInput; // = sc.nextLine();
-		
-		
-		if(nTailsPicked == 1)
+
+		if (nTailsPicked == 1)
 			testInput = sc.nextLine();
-		
-		
+
 		while (true) {
 			System.out.print("\nChoose the column where to insert [1-5]: ");
 			testInput = sc.nextLine();
@@ -333,7 +347,7 @@ public class Turn {
 				column = Integer.parseInt(testInput); // Parse string into number
 				column--;
 			} catch (NumberFormatException e) {
-				System.out.println("You have to enter a number!");
+				System.out.println("\nError: choose a column in the range [1-5].");
 				continue;
 			}
 
@@ -347,7 +361,7 @@ public class Turn {
 		return column;
 	}
 
-	public void printTail(Tail t) {
+	static public void printTail(Tail t) {
 		if (t == Tail.C) {
 			System.out.print(Color.GREEN);
 			System.out.print("C");

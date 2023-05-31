@@ -10,6 +10,9 @@ public class CommonGoal2 extends CommonGoal {
 	 * from those of another group.
 	 * 
 	 */
+	
+	private String msg = "Four groups each containing at least 4 tiles of the same type (not necessarily in the depicted shape). "
+			+ "The tiles of one group can be different from those of another group.";
 
 	public CommonGoal2(int nPlayers) {
 		super(nPlayers);
@@ -89,13 +92,15 @@ public class CommonGoal2 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
+		System.out.println(msg);
+
 		int row = 4;
 		int col = 1;
 		Tail[][] commonGoalCard = new Tail[row][col];		
 		for (int i = 0; i < row; i++) {
 			commonGoalCard[i][0] = Tail.S;
 		}
-		Matrix.printMatrix(commonGoalCard, row, col);
+		Matrix.printMatrixSimple(commonGoalCard, row, col);
 		System.out.println("\nx4");
 		// return commonGoalCard;
 	}

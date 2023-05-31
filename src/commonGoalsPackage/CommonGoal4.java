@@ -8,6 +8,9 @@ public class CommonGoal4 extends CommonGoal {
 	 * tiles of one square can be different from those of the other square.
 	 */
 	
+	private String msg = "Two groups each containing 4 tiles of the same type in a 2x2 square. "
+			+ "The tiles of one square can be different from those of the other square.";
+	
 	public CommonGoal4(int nPlayers) {
 		super(nPlayers);
 	}
@@ -44,6 +47,8 @@ public class CommonGoal4 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
+		System.out.println(msg);
+		
 		int row = 2;
 		int col = 2;
 		Tail [][] commonGoalCard = new Tail[row][col];
@@ -52,7 +57,7 @@ public class CommonGoal4 extends CommonGoal {
 				commonGoalCard[i][j] = Tail.S;
 			}
 		}
-		Matrix.printMatrix(commonGoalCard, row, col);
+		Matrix.printMatrixSimple(commonGoalCard, row, col);
 		System.out.println("\nx2");
 		// return commonGoalCard;
 	}

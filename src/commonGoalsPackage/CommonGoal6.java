@@ -9,6 +9,8 @@ public class CommonGoal6 extends CommonGoal {
 	 * these tiles.
 	 */
 
+	private String msg = "Eight tiles of the same type. There’s no restriction about the position of these tiles.";
+	
 	public CommonGoal6(int nPlayers) {
 		super(nPlayers);
 	}
@@ -95,6 +97,8 @@ public class CommonGoal6 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
+		System.out.println(msg);
+		
 		int row = 3;
 		int col = 3;
 		Tail[][] commonGoalCard = new Tail[row][col];
@@ -104,7 +108,7 @@ public class CommonGoal6 extends CommonGoal {
 			}
 		}
 		commonGoalCard[0][1] = Tail.E;
-		Matrix.printMatrix(commonGoalCard, row, col);
+		Matrix.printMatrixSimple(commonGoalCard, row, col);
 		// return commonGoalCard;
 	}
 }

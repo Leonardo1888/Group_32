@@ -24,6 +24,8 @@ public class Bookshelf implements Matrix {
 		Matrix.printMatrix(shelf, ROW, COL);
 	}
 
+	
+	
 	public Tail[] orderTailsToInsert(Scanner sc, Tail tails[], int numTails) {
 		switch (numTails) {
 		case 0:
@@ -37,13 +39,24 @@ public class Bookshelf implements Matrix {
 			if (tails[0] != tails[1]) {
 				System.out.println("Your Tails: ");
 				System.out.println("1°: " + tails[0] + "\n2°: " + tails[1]);
-				System.out.println("\nChoose the order of the Tails to insert [1, " + numTails + "]: ");
+				System.out.print("\nChoose the order of the Tails to insert [1, " + numTails + "].");
+				System.out.print("Write the number: '1' for the tail '");
+				printTail(tails[0]);
+				System.out.print("' or '2' for the tail '");
+				printTail(tails[1]);
+				System.out.println("' ");
+				System.out.print("Choose the tail that will go on the bottom: ");
+				printTail(tails[0]);
+				System.out.print("' or '2' for the tail '");
+				printTail(tails[1]);
+				System.out.println("'.");
+				
 				Tail[] tailsToInsert2 = new Tail[2];
 
-				System.out.print("First: ");
+				System.out.print("Choose the tail that will go on the bottom: ");
 				int first2 = sc.nextInt();
 				sc.nextLine();
-				System.out.print("Second: ");
+				System.out.print("Choose the 2nd tail: ");
 				int second2 = sc.nextInt();
 				sc.nextLine();
 
@@ -54,16 +67,16 @@ public class Bookshelf implements Matrix {
 		case 3:	//  they are the same don't ask the user to order the tails
 			if (tails[0] != tails[1] && tails[0] != tails[1]) {
 				System.out.println("Your Tails:\n1°: " + tails[0] + "\n2°: " + tails[1] + "\n3°: " + tails[2]);
-				System.out.println("\nChoose the order of the Tails to insert [1, " + numTails + "]: ");
+				System.out.println("\nChoose the order of the Tails to insert [1, " + numTails + "]. ");
 				Tail[] tailsToInsert3 = new Tail[3];
-
-				System.out.print("First: ");
+				
+				System.out.print("Choose the tail that will go on the bottom: ");
 				int first3 = sc.nextInt();
 				sc.nextLine();
-				System.out.print("Second: ");
+				System.out.print("Choose the 2nd tail: ");
 				int second3 = sc.nextInt();
 				sc.nextLine();
-				System.out.print("Third: ");
+				System.out.print("Choose the 3rd tail: ");
 				int third3 = sc.nextInt();
 				sc.nextLine();
 
@@ -233,6 +246,44 @@ public class Bookshelf implements Matrix {
 				}
 				System.out.print(" ");
 			}
+		}
+	}
+	
+	static public void printTail(Tail t) {
+		if (t == Tail.C) {
+			System.out.print(Color.GREEN);
+			System.out.print("C");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.B) {
+			System.out.print(Color.WHITE);
+			System.out.print("B");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.G) {
+			System.out.print(Color.YELLOW);
+			System.out.print("G");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.F) {
+			System.out.print(Color.BLUE);
+			System.out.print("F");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.T) {
+			System.out.print(Color.CYAN);
+			System.out.print("T");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.P) {
+			System.out.print(Color.RED);
+			System.out.print("P");
+			System.out.print(Color.RESET);
+		}
+		if (t == Tail.E || t == Tail.X) {
+			System.out.print(Color.BLACK);
+			System.out.print("#");
+			System.out.print(Color.RESET);
 		}
 	}
 	

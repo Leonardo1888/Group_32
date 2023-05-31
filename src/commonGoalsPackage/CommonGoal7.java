@@ -8,6 +8,8 @@ public class CommonGoal7 extends CommonGoal {
 	 * Five tiles of the same type forming a diagonal.
 	 */
 
+	private String msg = "Five tiles of the same type forming a diagonal.";
+	
 	public CommonGoal7(int nPlayers) {
 		super(nPlayers);
 	}
@@ -37,6 +39,8 @@ public class CommonGoal7 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
+		System.out.println(msg);
+		
 		int row = 5;
 		int col = 5;
 		Tail[][] commonGoalCard = new Tail[row][col];
@@ -48,7 +52,7 @@ public class CommonGoal7 extends CommonGoal {
 				}
 			}
 		}
-		Matrix.printMatrix(commonGoalCard, row, col);
+		Matrix.printMatrixSimple(commonGoalCard, row, col);
 		// return commonGoalCard;
 	}
 }

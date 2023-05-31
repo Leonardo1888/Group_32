@@ -8,6 +8,8 @@ public class CommonGoal9 extends CommonGoal {
 	 * Two columns each formed by 6 different types of tiles.
 	 */
 
+	private String msg = "Two columns each formed by 6 different types of tiles.";
+	
 	public CommonGoal9(int nPlayers) {
 		super(nPlayers);
 	}
@@ -41,13 +43,15 @@ public class CommonGoal9 extends CommonGoal {
 
 	@Override
 	public void printCommonGoal() {
+		System.out.println(msg);
+		
 		int row = 6;
 		int col = 1;
 		Tail[][] commonGoalCard = new Tail[row][col];
 		for (int i = 0; i < row; i++) {
 			commonGoalCard[i][0] = Tail.D;
 		}
-		Matrix.printMatrix(commonGoalCard, row, col);
+		Matrix.printMatrixSimple(commonGoalCard, row, col);
 		System.out.println("\nx2");
 		// return commonGoalCard;
 	}
