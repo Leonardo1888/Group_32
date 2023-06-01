@@ -92,9 +92,9 @@ public class Board implements Matrix {
 			if (row == 0 || row == (this.ROW - 1) || col == 0 || col == (this.COL - 1)) {
 				return true;
 			}
-
 			if (this.board[row - 1][col] == Tail.E || this.board[row + 1][col] == Tail.E
 					|| this.board[row][col - 1] == Tail.E || this.board[row][col + 1] == Tail.E) {
+				System.out.println("\ncheckato side free -> return true\n");
 				return true;
 			}
 		}
@@ -202,6 +202,7 @@ public class Board implements Matrix {
 			int outer2 = isInTheOuterSquare(row1, col1);
 			
 			if(outer1 != 0 && outer1 == outer2){
+				System.out.println("\ncont == 2 ed entroato nell'outer -> return false\n");
 				return false;	//se tutte e due sono nell outer allora non ci sono casi in cui si puo pickare una 3rd
 			}
 			
@@ -239,6 +240,7 @@ public class Board implements Matrix {
 			
 			//from here 2 tails not in outer
 			if (align == 0) { // horizontal ->  - 1 2 -
+				//from right to left
 				if(col1 < col2){
 					if(sideFreeTail(row1, col1-1) || sideFreeTail(row2, col2+1)){
 						if(this.board[row1][col1-1] != Tail.E || this.board[row2][col2+1] != Tail.E){
@@ -247,6 +249,7 @@ public class Board implements Matrix {
 					}
 					return false;
 				}
+				//from left to right
 				if(col2 > col1){
 					if(sideFreeTail(row2, col2-1) || sideFreeTail(row1, col1+1)){
 						if(this.board[row2][col2-1] != Tail.E || this.board[row1][col1+1] != Tail.E){
