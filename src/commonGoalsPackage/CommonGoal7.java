@@ -25,11 +25,23 @@ public class CommonGoal7 extends CommonGoal {
 	@Override
 	public boolean check(Bookshelf bs) {
 		Tail[][] shelf = bs.getShelf();
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 5; j++) {
+		//check diagonal from (0,0) and from (1,0) from left to the right
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 1; j++) {
 				if (shelf[i][j] != Tail.E && shelf[i][j].equals(shelf[i + 1][j + 1])
 						&& shelf[i][j].equals(shelf[i + 2][j + 2]) && shelf[i][j].equals(shelf[i + 3][j + 3])
 						&& shelf[i][j].equals(shelf[i + 4][j + 4])) {
+					return true;
+				}
+			}
+		}
+		
+		//check diagonal from (0,4) and from (1,4) from right to the left
+		for (int i = 0; i < 2; i++) {
+			for (int j = 4; j < 1; j++) {
+				if (shelf[i][j] != Tail.E && shelf[i][j].equals(shelf[i + 1][j - 1])
+						&& shelf[i][j].equals(shelf[i + 2][j - 2]) && shelf[i][j].equals(shelf[i + 3][j - 3])
+						&& shelf[i][j].equals(shelf[i + 4][j - 4])) {
 					return true;
 				}
 			}
