@@ -7,10 +7,10 @@ public class Turn {
 	Tail[] tails = new Tail[] { Tail.E, Tail.E, Tail.E };
 	int[][] positionTails = new int[3][2]; // Position of the tails the user picked
 
-	private int endTurn = 1; // endTurn=1 -> keep going - endTurn=0 -> stop turn
-	private int nOfFreeSpaces = 0; // number of free spaces in Player's shelf
+	private int endTurn = 1; 	 	// endTurn=1 -> keep going - endTurn=0 -> stop turn
+	private int nOfFreeSpaces = 0;  // number of free spaces in Player's shelf
 	private boolean canPickTailsBoard = true; // Can user pick a Tail on the same row/col
-	private int nTailsPicked = 0; // number of tails the user picked
+	private int nTailsPicked = 0; 	// number of tails the user picked
 
 	private Board board;
 	private Player currentPlayer;

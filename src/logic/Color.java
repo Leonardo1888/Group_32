@@ -17,7 +17,7 @@ public enum Color {
 	BLUE("\033[0;34m"), // BLUE
 	MAGENTA("\033[0;35m"), // MAGENTA
 	CYAN("\033[0;36m"), // CYAN
-	WHITE("\033[0;37m"), // WHITE
+	WHITE("\033[1;37m"), // WHITE is \033[0;37m
 
 	// Bold
 	BLACK_BOLD("\033[1;30m"), // BLACK
