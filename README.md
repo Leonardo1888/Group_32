@@ -9,4 +9,3 @@
   Se, per esempio, si hanno le tails selezionabili 'A B C' si deve selezionare 'A B C' oppure 'C B A'. 
   Non è possibile selezionarle in questo ordine: 'B C A', 'A C B'.
   
--
