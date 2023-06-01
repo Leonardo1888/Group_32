@@ -187,7 +187,6 @@ public class Turn {
 			System.out.println("\n\nThis is " + currentPlayer.getUsername() + "'s shelf updated:");
 			shelf.printShelf(); // return 1->E in col < n Tails
 		}
-
 		checkCommonGoals();
 	}
 

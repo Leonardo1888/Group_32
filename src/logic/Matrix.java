@@ -34,16 +34,22 @@ public interface Matrix {
 					switch (rand) {
 					case 1:
 						System.out.print(Color.GREEN);
+						break;
 					case 2:
 						System.out.print(Color.BLUE);
+						break;
 					case 3:
 						System.out.print(Color.RED);
+						break;
 					case 4:
 						System.out.print(Color.YELLOW);
+						break;
 					case 5:
 						System.out.print(Color.WHITE);
+						break;
 					case 6:
 						System.out.print(Color.CYAN);
+						break;
 					}
 					System.out.print("D");
 					System.out.print(Color.RESET);

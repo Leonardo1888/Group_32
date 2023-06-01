@@ -1,6 +1,6 @@
 package logic;
-// This enumeration is used for the Tails in the game: on the Board, Bookshelf, common goal and persona goal card and everywhere a Tail is used
-// X = FILLABLE (IN BOOKSHELF), EMPTY, CAT, BOOK, GAME, FRAME, TROPHEY, PLANT, SAME, DIFFERENT
+// This enumeration is used for the Tails in the game: on the Board, Bookshelf, common goal and personal goal card and everywhere a Tail is used
+// X = FILLABLE (IN BOOKSHELF), EMPTY, CAT, BOOK, GAME, FRAME, TROPHEY, PLANT, SAME/SAMPLE, DIFFERENT
 
 public enum Tail {
 	X,	// 'X' means a Tail which is Fillable in Bookshelf
@@ -11,6 +11,6 @@ public enum Tail {
 	F,	// FRAME
 	T,	// TROPHEY
 	P,	// PLANT
-	S,	// SAME -> Used in CommonGoals
+	S,	// SAME/SAMPLE -> Used in CommonGoals
 	D	// DIFFERENT -> used in CommonGoals
 }

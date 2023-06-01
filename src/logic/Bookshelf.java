@@ -64,8 +64,9 @@ public class Bookshelf implements Matrix {
 				tailsToInsert2[1] = tails[second2 - 1];
 				return tailsToInsert2;
 			}
+			break;
 		case 3: // they are the same don't ask the user to order the tails
-			if (tails[0] != tails[1] && tails[0] != tails[1]) {
+			if (tails[0] != tails[1] || tails[0] != tails[2] || tails[1] != tails[2]) {
 				// Output explanation
 				System.out.print("Your Tails:\n1°: ");
 				printTail(tails[0]);
@@ -101,6 +102,7 @@ public class Bookshelf implements Matrix {
 				tailsToInsert3[2] = tails[third3 - 1];
 				return tailsToInsert3;
 			}
+			break;
 		}
 		return tails;
 	}
@@ -118,7 +120,7 @@ public class Bookshelf implements Matrix {
 			for (int i = 0; i < this.ROW; i++) {
 				if (this.shelf[i][col] == Tail.X) {
 					this.shelf[i][col] = tails[n]; // insert tail
-					if (i == 0) { // se la riga è 0 non devo scrivere la X sopra
+					if (i == 0) { // if the row is 0 don't write X (because is the upper row)
 						System.out.println("The column has been filled entirely");
 					} else {
 						this.shelf[i - 1][col] = Tail.X; // insert X one row up

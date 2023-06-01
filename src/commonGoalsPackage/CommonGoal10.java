@@ -5,11 +5,11 @@ import logic.*;
 public class CommonGoal10 extends CommonGoal {
 
 	/*
-	 * Two lines each formed by 5 different types of tiles. One line can show the
+	 * Two lines each formed by 5 different types of tiles. \nOne line can show the
 	 * same or a different combination of the other line.
 	 */
 	
-	private String msg = "Two lines each formed by 5 different types of tiles. One line can show the"
+	private String msg = "Two lines each formed by 5 different types of tiles. \nOne line can show the"
 			+ " same or a different combination of the other line.";
 
 	public CommonGoal10(int nPlayers) {
@@ -68,7 +68,6 @@ public class CommonGoal10 extends CommonGoal {
 			commonGoalCard[0][j] = Tail.D;
 		}
 		Matrix.printMatrixSimple(commonGoalCard, row, col);
-		System.out.println("\nx2");
-		// return commonGoalCard;
+		System.out.println("x2");
 	}
 }

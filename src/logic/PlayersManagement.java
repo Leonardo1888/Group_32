@@ -108,7 +108,6 @@ public class PlayersManagement {
 		if (p == null) {
 			throw new NullPointerException("Player is null");
 		}
-		System.out.println("test");
 		this.players.add(p);
 	}
 

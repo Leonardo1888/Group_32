@@ -23,9 +23,7 @@ public class Board implements Matrix {
 		fillBoard(board);
 	}
 
-	/*
-	 * Check if the user can pick the Tail he selected
-	 */
+	// Check if the user can pick the Tail he selected
 	public Tail selectTails(int row, int col, int index) {
 		// Check if the row and column values are within the valid range
 		if (row < 0 || row >= this.ROW) {
@@ -247,7 +245,7 @@ public class Board implements Matrix {
 
 			// from here 2 tails not in outer
 			if (align == 0) { // horizontal -> - 1 2 -
-				if (col1 < col2) {
+				if (col1 < col2) {// From left to right 
 					if (sideFreeTail(row1, col1 - 1) || sideFreeTail(row2, col2 + 1)) {
 						if (this.board[row1][col1 - 1] != Tail.E || this.board[row2][col2 + 1] != Tail.E) {
 							return true;
@@ -255,7 +253,7 @@ public class Board implements Matrix {
 					}
 					return false;
 				}
-				if (col2 > col1) {
+				if (col1 > col2) {// From right to left
 					if (sideFreeTail(row2, col2 - 1) || sideFreeTail(row1, col1 + 1)) {
 						if (this.board[row2][col2 - 1] != Tail.E || this.board[row1][col1 + 1] != Tail.E) {
 							return true;
@@ -265,8 +263,8 @@ public class Board implements Matrix {
 				}
 			}
 
-			if (align == 1) { // vertical
-				if (row1 < row2) {
+			if (align == 1) { // Vertical
+				if (row1 < row2) {// From up to down
 					if (sideFreeTail(row1 - 1, col1) || sideFreeTail(row2 + 1, col2)) {
 						if (this.board[row1 - 1][col1] != Tail.E || this.board[row2 + 1][col2] != Tail.E) {
 							return true;
@@ -274,7 +272,7 @@ public class Board implements Matrix {
 					}
 					return false;
 				}
-				if (row2 > row1) {
+				if (row1 > row2) {// From down to up
 					if (sideFreeTail(row2 - 1, col2) || sideFreeTail(row1 + 1, col1)) {
 						if (this.board[row2 - 1][col2] != Tail.E || this.board[row1 + 1][col1] != Tail.E) {
 							return true;

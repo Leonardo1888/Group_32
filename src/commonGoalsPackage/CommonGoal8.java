@@ -5,12 +5,12 @@ import logic.*;
 public class CommonGoal8 extends CommonGoal {
 
 	/*
-	 * Four lines each formed by 5 tiles of maximum three different types. One line
+	 * Four lines each formed by 5 tiles of maximum three different types. \nOne line
 	 * can show the same or a different combination of another line.
 	 */
 	
 	private String msg = "Four lines each formed by 5 tiles of maximum three different types. "
-			+ "One line can show the same or a different combination of another line.";
+			+ "\nOne line can show the same or a different combination of another line.";
 
 	public CommonGoal8(int nPlayers) {
 		super(nPlayers);
@@ -65,10 +65,9 @@ public class CommonGoal8 extends CommonGoal {
 		int col = 5;
 		Tail[][] commonGoalCard = new Tail[row][col];
 		for (int j = 0; j < col; j++) {
-			commonGoalCard[0][j] = Tail.X;
+			commonGoalCard[0][j] = Tail.S;
 		}
 		Matrix.printMatrixSimple(commonGoalCard, row, col);
-		System.out.println("\nx4, max 3 different");
-		// return commonGoalCard;
+		System.out.println("x4, max 3 different");
 	}
 }

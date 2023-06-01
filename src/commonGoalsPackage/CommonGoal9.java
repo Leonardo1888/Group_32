@@ -66,7 +66,6 @@ public class CommonGoal9 extends CommonGoal {
 			commonGoalCard[i][0] = Tail.D;
 		}
 		Matrix.printMatrixSimple(commonGoalCard, row, col);
-		System.out.println("\nx2");
-		// return commonGoalCard;
+		System.out.println("x2");
 	}
 }

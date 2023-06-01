@@ -4,12 +4,12 @@ import logic.*;
 
 public class CommonGoal4 extends CommonGoal {
 	/*
-	 * Two groups each containing 4 tiles of the same type in a 2x2 square. The
+	 * Two groups each containing 4 tiles of the same type in a 2x2 square. \nThe
 	 * tiles of one square can be different from those of the other square.
 	 */
 	
 	private String msg = "Two groups each containing 4 tiles of the same type in a 2x2 square. "
-			+ "The tiles of one square can be different from those of the other square.";
+			+ "\nThe tiles of one square can be different from those of the other square.";
 	
 	public CommonGoal4(int nPlayers) {
 		super(nPlayers);
@@ -58,7 +58,6 @@ public class CommonGoal4 extends CommonGoal {
 			}
 		}
 		Matrix.printMatrixSimple(commonGoalCard, row, col);
-		System.out.println("\nx2");
-		// return commonGoalCard;
+		System.out.println("x2");
 	}
 }

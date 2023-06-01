@@ -65,6 +65,5 @@ public class CommonGoal7 extends CommonGoal {
 			}
 		}
 		Matrix.printMatrixSimple(commonGoalCard, row, col);
-		// return commonGoalCard;
 	}
 }

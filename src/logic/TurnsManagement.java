@@ -128,10 +128,10 @@ public class TurnsManagement {
 		System.out.println("The common goal cards grant points the players who achieve the illustrated pattern.");
 		System.out.println(
 				"There are two common goals, and we will call them 'A' and 'B'. \nThose are the two common goals you have to achieve: ");
-		System.out.println("\nCommon goal A: \n");
+		System.out.println("\n--Common goal A: \n");
 		CommonGoalA.printCommonGoal();
 
-		System.out.println("\nCommon goal B: \n");
+		System.out.println("\n--Common goal B: \n");
 		CommonGoalB.printCommonGoal();
 	}
 

@@ -46,6 +46,5 @@ public class CommonGoal3 extends CommonGoal {
 		commonGoalCard[5][0] = Tail.S;
 		commonGoalCard[5][4] = Tail.S;
 		Matrix.printMatrixSimple(commonGoalCard, row, col);
-		// return commonGoalCard;
 	}
 }
