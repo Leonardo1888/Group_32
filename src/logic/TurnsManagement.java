@@ -28,7 +28,8 @@ public class TurnsManagement {
         this.gameOver = false;
         this.sc = sc;
         this.index = 0;
-        
+        this.turns = new ArrayList<>();
+
         startGame();
     }
     
@@ -50,7 +51,7 @@ public class TurnsManagement {
 			}
 			
 			t.playTurn();
-			// turns.add(t); TODO -> è necessario?
+			turns.add(t); 
 			
 			if(currentPlayerIndex == (players.size()-1))
 				currentPlayerIndex=0;
@@ -90,8 +91,8 @@ public class TurnsManagement {
     }
     
     private void initializeCommonGoals() {
-    	CommonGoalA = createCommonGoal(3);
-    	CommonGoalB = createCommonGoal(6);
+    	CommonGoalA = createCommonGoal();
+    	CommonGoalB = createCommonGoal();
     	
     	System.out.println("\n--- START GAME OF MY SHELFIE ---\n");
     	System.out.println("The common goal cards grant points the players who achieve the illustrated pattern.");
@@ -103,17 +104,13 @@ public class TurnsManagement {
     	CommonGoalB.printCommonGoal();
     }
     
-    // TODO controllo che siano dieversi i commongoal
-    private CommonGoal createCommonGoal(int index) {
-    	/*
+    private CommonGoal createCommonGoal() {
+    	
     	Random random = new Random();
     	int index = ThreadLocalRandom.current().nextInt(1, 12 + 1);
     	while(index == this.index)
         	index = ThreadLocalRandom.current().nextInt(1, 12 + 1);
-    	this.index = index;
-    	*/
-    	// TODO togliere i commenti e togliere index dai parametri d'ingresso
-    	
+    	this.index = index;	
     	
         switch (index) {
             case 1:
@@ -206,8 +203,7 @@ public class TurnsManagement {
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
-    
-
+   
     public CommonGoal getCommonGoalA() {
 		return CommonGoalA;
 	}

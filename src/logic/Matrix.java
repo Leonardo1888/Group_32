@@ -1,5 +1,6 @@
 package logic;
-
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 //matrix
 public interface Matrix {
 
@@ -14,20 +15,45 @@ public interface Matrix {
 	/*
 	 * (CAT, BOOK, GAME, FRAME, TROPHEY, PLANT) -> (GREEN, WHITE, YELLOW, BLUE, CYAN, RED)
 	 */
-
- 	static void printMatrixSimple(Tail matrix[][], int row, int col){
+	static void printMatrixSimple(Tail matrix[][], int row, int col){
+		 System.out.print("\n        ");
 		 for(int i = 0; i < row; i++){
 			 for (int j = 0; j < col; j++){
-				 if (matrix[i][j] == Tail.E || matrix[i][j] == Tail.X) {
+				if (matrix[i][j] == Tail.E || matrix[i][j] == Tail.X) {
 					System.out.print(Color.BLACK);
 					System.out.print("#");
 					System.out.print(Color.RESET);
-					}else{
-						System.out.println(matrix[i][j]);
+				}
+				if (matrix[i][j] == Tail.S){
+					System.out.print(Color.GREEN);
+					System.out.print("S");
+					System.out.print(Color.RESET);
+				}
+				if (matrix[i][j] == Tail.D){
+					Random random = new Random();
+					int rand = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+					switch(rand){
+						case 1:
+							System.out.print(Color.GREEN);
+						case 2:
+							System.out.print(Color.BLUE);
+						case 3:
+							System.out.print(Color.RED);
+						case 4:
+							System.out.print(Color.YELLOW);
+						case 5:
+							System.out.print(Color.WHITE);
+						case 6:
+							System.out.print(Color.CYAN);
 					}
-				 
+					System.out.print("D");
+					System.out.print(Color.RESET);
+				}
+				System.out.print(" ");
 			 }
+			 System.out.print("\n        ");
 		 }
+		 System.out.print("\n");
 	 }
 	 
 	static void printMatrix(Tail matrix[][], int row, int col) {

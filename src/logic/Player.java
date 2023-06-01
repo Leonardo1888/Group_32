@@ -9,10 +9,10 @@ public class Player {
 	private String username;
 	private Bookshelf shelf;
 	private PersonalGoalCard personalGoalCard;
-	private int points = 0;
+	private int points;
 	private boolean isFirstPlayer;
 	private boolean checkCommonGoalA;	// If true is checked
-	private boolean checkCommonGoalB;
+	private boolean checkCommonGoalB;	// If true is checked
 	/*
 	turnsmanagemente -> fine turno
 		if(checkCommonGoal1 == false)
@@ -29,6 +29,7 @@ public class Player {
 		this.isFirstPlayer = isFirstPlayer;
 		this.checkCommonGoalA = false;
 		this.checkCommonGoalB = false;
+		this.points = 0;
 	}
 
 	public void sumPoints(int addedPoints) {
@@ -82,4 +83,13 @@ public class Player {
 	public boolean getCommonGoalB(){
 		return this.checkCommonGoalB;
 	}
+	
+	public void setCommonGoalA(Boolean t){
+		this.checkCommonGoalA = t;
+	}
+	
+	public void setCommonGoalB(Boolean t){
+		this.checkCommonGoalB = t;
+	}
+	
 }

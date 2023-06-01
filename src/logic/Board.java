@@ -3,6 +3,7 @@ package logic;
 import java.lang.Math;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class Board implements Matrix {
 	private int nPlayers;
@@ -36,7 +37,7 @@ public class Board implements Matrix {
 			return Tail.E;
 		}
 		if (this.board[row][col] == Tail.E) {
-			System.out.println("Tail has to be different to E.");
+			System.out.println("You have to pick at least one Tail!");
 			return Tail.E;
 		}
 
@@ -80,7 +81,7 @@ public class Board implements Matrix {
 		return tail;
 	}
 
-	public void setTemp(int row, int col) {
+	private void setTemp(int row, int col) {
 		this.rowTemp = row;
 		this.colTemp = col;
 	}
@@ -565,6 +566,7 @@ public class Board implements Matrix {
 		}
 	}
 
+	// - Getter and setter -
 	public Tail[][] getBoard() {
 		return board;
 	}

@@ -14,6 +14,23 @@ public class Turn {
 
 	private Board board;
 	private Player currentPlayer;
+
+	public CommonGoal getCommonGoalA() {
+		return commonGoalA;
+	}
+
+	public void setCommonGoalA(CommonGoal commonGoalA) {
+		this.commonGoalA = commonGoalA;
+	}
+
+	public CommonGoal getCommonGoalB() {
+		return commonGoalB;
+	}
+
+	public void setCommonGoalB(CommonGoal commonGoalB) {
+		this.commonGoalB = commonGoalB;
+	}
+
 	private Bookshelf shelf;
 	private PersonalGoalCard pgc;
 	private Scanner sc;
@@ -56,11 +73,11 @@ public class Turn {
 		String testInput;
 		if (turnCounter == 0)
 			testInput = sc.nextLine();
-		System.out.println("\n-------------- NEXT TURN - PLAYER: [" + currentPlayer.getUsername() + "] --------------");
+		System.out.println(
+				"\n------------------------ NEXT TURN - PLAYER: [" + currentPlayer.getUsername() + "] ---------------------------");
 		printBoardAndShelfAndPgc();
 
-		System.out.println("\n\n--- Player turn: " + currentPlayer.getUsername() + ".");
-		System.out.println("Select the Tails you want to put into your Shelf.");
+		System.out.println("\n\n'" + currentPlayer.getUsername() + "' select the Tails you want to put into your Shelf.");
 
 		// Store the biggest number of free cells (for every column of the shelf)
 		nOfFreeSpaces = shelf.checkFreeSpaces();
@@ -122,8 +139,8 @@ public class Turn {
 		int COL = board.getCol();
 		char indexChar = 'a' - 1;
 
-		System.out.println("\nBoard:                       " + this.currentPlayer.getUsername()
-				+ "'s shelf & personal goal card.");
+		System.out.println("\nBoard:                       " + this.currentPlayer.getUsername() + "'s shelf:      "
+				+ this.currentPlayer.getUsername() + "'s personal goal card:");
 
 		// i = -1 prints the first row with numbers.
 		for (int i = -1; i < ROW; i++) {
@@ -137,7 +154,10 @@ public class Turn {
 			if (i < this.shelf.getRow())
 				this.shelf.printRowBookshelf(i);
 
-			System.out.print("        ");
+			for(int j = 0; j < currentPlayer.getUsername().length(); j++) {
+				System.out.print(" ");
+			}
+			System.out.print("     ");
 
 			// Print row personalGoalCard
 			if (i < this.shelf.getRow())
@@ -158,7 +178,7 @@ public class Turn {
 
 		int state = 1;
 		while (state == 1) {
-			int colInsert = selectColumn();
+			int colInsert = selectColumn(sc);
 			// Insert tail(s)
 			tails = shelf.orderTailsToInsert(this.sc, tails, nTailsPicked);
 			state = shelf.insertTail(tails, colInsert, nTailsPicked); // insertTail returns 0->success
@@ -170,28 +190,26 @@ public class Turn {
 	}
 
 	// check the common goal 1 and 2, sum the player's points
-	public void checkCommonGoals() {
+	private void checkCommonGoals() {
 
 		// If false check if the user achieved the commonGoal A in his shelf
-		if (this.currentPlayer.getCommonGoalA() == false) {
+		if (this.currentPlayer.getCommonGoalA() == false && this.commonGoalA.checkCommonGoal(this.shelf) != 0) {
 			currentPlayer.sumPoints(this.commonGoalA.checkCommonGoal(this.shelf));
-			if (this.commonGoalA.checkCommonGoal(this.shelf) != 0) {
-				System.out.println("You achieved the commongoal 'A' and you gained: "
-						+ this.commonGoalA.checkCommonGoal(this.shelf) + " points!");
-				System.out.println("Player: " + currentPlayer.getUsername() + " has now a total of "
-						+ currentPlayer.getPoints() + " points.");
-			}
+			currentPlayer.setCommonGoalA(true);
+			System.out.println("You achieved the commongoal 'A' and you gained: "
+					+ this.commonGoalA.checkCommonGoal(this.shelf) + " points!");
+			System.out.println("Player: " + currentPlayer.getUsername() + " has now a total of "
+					+ currentPlayer.getPoints() + " points.");
 		}
-
+		
 		// If false check if the user achieved the commonGoal B in his shelf
-		if (this.currentPlayer.getCommonGoalB() == false) {
+		if (this.currentPlayer.getCommonGoalB() == false && this.commonGoalB.checkCommonGoal(this.shelf) != 0) {
 			currentPlayer.sumPoints(this.commonGoalB.checkCommonGoal(this.shelf));
-			if (this.commonGoalB.checkCommonGoal(this.shelf) != 0) {
-				System.out.println("You achieved the commongoal 'B' and you gained: "
-						+ this.commonGoalA.checkCommonGoal(this.shelf) + " points!");
-				System.out.println("Player: " + currentPlayer.getUsername() + " has now a total of "
-						+ currentPlayer.getPoints() + " points.");
-			}
+			currentPlayer.setCommonGoalB(true);
+			System.out.println("You achieved the commongoal 'B' and you gained: "
+					+ this.commonGoalB.checkCommonGoal(this.shelf) + " points!");
+			System.out.println("Player: " + currentPlayer.getUsername() + " has now a total of "
+					+ currentPlayer.getPoints() + " points.");
 		}
 
 	}
@@ -215,7 +233,7 @@ public class Turn {
 
 	private int pickAgain(Scanner sc) {
 		int errorCount = 0;
-		while (errorCount++ < 10) {
+		while (errorCount++ < 30) {
 			System.out.println("\nEnter: 'no' to stop or 'yes' if you want to pick another tail.");
 			String input = sc.nextLine().toLowerCase().trim();
 			if (input.equals("y") || input.equals("yes")) {
@@ -226,7 +244,7 @@ public class Turn {
 			}
 			System.out.println("Error! Answer 'yes' or 'no'.");
 		}
-		throw new RuntimeException("Repeated invalid user input");
+		throw new RuntimeException("Repeated invalid user input. Restart the program.");
 	}
 
 	private void checkIfNotEmpty(Tail t) {
@@ -247,120 +265,81 @@ public class Turn {
 	// User enters ROW and COL
 	private void selectTail(Scanner sc) {
 		System.out.print("\n---Tail number: " + (nTailsPicked + 1) + ".");
-		this.tRow = insertRow();
-		this.tCol = insertCol();
+		this.tRow = insertRow(sc);
+		this.tCol = insertCol(sc);
 
 		// Set ROW and COL to numbers -> [0-6, 0-8]
 		this.row = (tRow - 97); // Convert from char to number (ASCII -97)
 		this.col = (tCol - 1);
 	}
 
-	private char insertRow() {
-		char row;
-		int testRow = 0;
-		String testInput = "a";
-		if (nTailsPicked != 0 && turnCounter == 0) {
-			testInput = sc.nextLine();
-		}
-		if (nTailsPicked >= 1 && turnCounter > 1)
-			testInput = sc.nextLine();
-
-		while (true) {
+	private char insertRow(Scanner sc) {
+		int errorCount = 0;
+		String input;
+		while (errorCount++ < 20) {
 			System.out.print("\n-Insert ROW [a-i]: ");
-			testInput = sc.nextLine();
-
-			if (testInput.isEmpty() && nTailsPicked == 0) {
-				System.out.println("Error: Please enter a character.");
-				continue;
+			input = sc.nextLine().toLowerCase().trim();
+			if (input.length() == 1 && input.charAt(0) >= 'a' && input.charAt(0) <= 'i') {
+				return input.charAt(0);
 			}
-
-			try {
-				testRow = Integer.parseInt(testInput); // Parse string into number
-				System.out.println("You have to enter a character for the row!");
-				continue;
-			} catch (NumberFormatException e) {
-				// Saves in row the char the user Entered
-				if (testInput.isEmpty()) {
-					System.out.println("Error: Please enter a character.");
-					continue;
-				}
-
-				row = testInput.charAt(0);
-			}
-
-			if (row >= 97 && row <= 105) {
-				break;
-			} else {
-				System.out.println("\nError: choose a row in the range [a-i].");
-			}
+			System.out.println("Error! You have to enter ROW in the range from 'a' to 'i'.");
 		}
-		return row;
+		System.out.println(
+				"A row is defined by a character. Restart the program and enter the ROW in the range from 'a' to 'i'.");
+		throw new RuntimeException("Restart the program.");
 	}
 
-	private int insertCol() {
-		int col = 0;
-		String testInput;
-
-		while (true) {
+	private int insertCol(Scanner sc) {
+		int errorCount = 0;
+		String input;
+		while (errorCount++ < 20) {
 			System.out.print("-Insert COL [1-9]: ");
-			testInput = sc.nextLine();
-
-			if (testInput.isEmpty()) {
-				System.out.println("Error: Please enter a value.");
-				continue;
+			input = sc.nextLine().toLowerCase().trim();
+			if (input.length() == 1 && input.charAt(0) >= '1' && input.charAt(0) <= '9') {
+				return Character.getNumericValue(input.charAt(0));
 			}
-
-			try {
-				col = Integer.parseInt(testInput); // Parse string into number
-			} catch (NumberFormatException e) {
-				System.out.println("You have to enter a number!");
-				continue;
-			}
-
-			if (col >= 1 && col <= 9) {
-				break;
-			} else {
-				System.out.print("-Insert COL [1-9]: ");
-			}
+			System.out.println("Error! You have to enter COLUMN in the range from '1' to '9'.");
 		}
-		return col;
+		throw new RuntimeException("Repeated invalid user input. Restart the program.");
 	}
 
-	// Insert in shelf the tails
-	private int selectColumn() {
-		int column = 0;
-		String testInput; // = sc.nextLine();
-
-		if (nTailsPicked == 1)
-			testInput = sc.nextLine();
-
-		while (true) {
-			System.out.print("\nChoose the column where to insert [1-5]: ");
-			testInput = sc.nextLine();
-
-			if (testInput.isEmpty()) {
-				System.out.println("Error: Please enter a value.");
-				continue;
+	// The user chooses where in his bookshelf he will put his tails.
+	private int selectColumn(Scanner sc) {
+		int errorCount = 0;
+		String input;
+		while (errorCount++ < 20) {
+			System.out.print("\nChoose the column where to insert the tails [1-5]: ");
+			input = sc.nextLine().trim();
+			if (input.length() == 1 && input.charAt(0) >= '1' && input.charAt(0) <= '5') {
+				return input.charAt(0) - '1';
 			}
-
-			try {
-				column = Integer.parseInt(testInput); // Parse string into number
-				column--;
-			} catch (NumberFormatException e) {
-				System.out.println("\nError: choose a column in the range [1-5].");
-				continue;
-			}
-
-			if (column >= 0 && column <= 4) {
-				break;
-			} else {
-				System.out.println("\nError: choose a column in the range [1-5].");
-			}
-			System.out.println("");
+			System.out.print("Error! You have to enter COLUMN in the range from '1' to '5'.");
 		}
-		return column;
+		throw new RuntimeException("Repeated invalid user input. Restart the program.");
 	}
 
+	/*
+	 * private int selectColumn() { int column = 0; String testInput; // =
+	 * sc.nextLine();
+	 * 
+	 * if (nTailsPicked == 1) testInput = sc.nextLine();
+	 * 
+	 * while (true) {
+	 * System.out.print("\nChoose the column where to insert [1-5]: "); testInput =
+	 * sc.nextLine();
+	 * 
+	 * if (testInput.isEmpty()) {
+	 * System.out.println("Error: Please enter a value."); continue; }
+	 * 
+	 * try { column = Integer.parseInt(testInput); // Parse string into number
+	 * column--; } catch (NumberFormatException e) {
+	 * System.out.println("\nError: choose a column in the range [1-5]."); continue;
+	 * }
+	 * 
+	 * if (column >= 0 && column <= 4) { break; } else {
+	 * System.out.println("\nError: choose a column in the range [1-5]."); }
+	 * System.out.println(""); } return column; }
+	 */
 	static public void printTail(Tail t) {
 		if (t == Tail.C) {
 			System.out.print(Color.GREEN);

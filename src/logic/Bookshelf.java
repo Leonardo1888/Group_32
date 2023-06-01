@@ -23,8 +23,6 @@ public class Bookshelf implements Matrix {
 	public void printShelf() {
 		Matrix.printMatrix(shelf, ROW, COL);
 	}
-
-	
 	
 	public Tail[] orderTailsToInsert(Scanner sc, Tail tails[], int numTails) {
 		switch (numTails) {
@@ -37,22 +35,20 @@ public class Bookshelf implements Matrix {
 			return tailsToInsert1;
 		case 2:	// If they are the same don't ask the user to order the tails
 			if (tails[0] != tails[1]) {
-				System.out.println("Your Tails: ");
-				System.out.println("1°: " + tails[0] + "\n2°: " + tails[1]);
-				System.out.print("\nChoose the order of the Tails to insert [1, " + numTails + "].");
-				System.out.print("Write the number: '1' for the tail '");
+				// Output explanation
+				System.out.print("Your Tails:\n1°: "); 
 				printTail(tails[0]);
-				System.out.print("' or '2' for the tail '");
+				System.out.print("\n2°: "); 
 				printTail(tails[1]);
-				System.out.println("' ");
-				System.out.print("Choose the tail that will go on the bottom: ");
+				
+				System.out.print("\n\nChoose the order of the Tails to insert [1, " + numTails + "]. "
+				+ "Write the number: '1' for the tail '");
 				printTail(tails[0]);
 				System.out.print("' or '2' for the tail '");
 				printTail(tails[1]);
 				System.out.println("'.");
 				
-				Tail[] tailsToInsert2 = new Tail[2];
-
+				// Choose order of tails
 				System.out.print("Choose the tail that will go on the bottom: ");
 				int first2 = sc.nextInt();
 				sc.nextLine();
@@ -60,17 +56,33 @@ public class Bookshelf implements Matrix {
 				int second2 = sc.nextInt();
 				sc.nextLine();
 
+				Tail[] tailsToInsert2 = new Tail[2];
+				
 				tailsToInsert2[0] = tails[first2 - 1];
 				tailsToInsert2[1] = tails[second2 - 1];
 				return tailsToInsert2;
 			}
 		case 3:	//  they are the same don't ask the user to order the tails
 			if (tails[0] != tails[1] && tails[0] != tails[1]) {
-				System.out.println("Your Tails:\n1°: " + tails[0] + "\n2°: " + tails[1] + "\n3°: " + tails[2]);
-				System.out.println("\nChoose the order of the Tails to insert [1, " + numTails + "]. ");
-				Tail[] tailsToInsert3 = new Tail[3];
+				// Output explanation
+				System.out.print("Your Tails:\n1°: "); 
+				printTail(tails[0]);
+				System.out.print("\n2°: "); 
+				printTail(tails[1]);
+				System.out.print("\n3°: ");
+				printTail(tails[2]);
 				
-				System.out.print("Choose the tail that will go on the bottom: ");
+				System.out.print("\n\nChoose the order of the Tails to insert [1, " + numTails + "]. "
+				+ "\nWrite the number: '1' for the tail '");
+				printTail(tails[0]);
+				System.out.print("' or '2' for the tail '");
+				printTail(tails[1]);
+				System.out.print("' or '3' for the tail '");
+				printTail(tails[2]);
+				System.out.print("'.");
+				
+				// Output explanation
+				System.out.print("\nChoose the tail that will go on the bottom: ");
 				int first3 = sc.nextInt();
 				sc.nextLine();
 				System.out.print("Choose the 2nd tail: ");
@@ -79,6 +91,8 @@ public class Bookshelf implements Matrix {
 				System.out.print("Choose the 3rd tail: ");
 				int third3 = sc.nextInt();
 				sc.nextLine();
+				
+				Tail[] tailsToInsert3 = new Tail[3];
 
 				tailsToInsert3[0] = tails[first3 - 1];
 				tailsToInsert3[1] = tails[second3 - 1];
