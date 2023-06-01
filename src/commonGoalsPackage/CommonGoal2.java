@@ -49,7 +49,6 @@ public class CommonGoal2 extends CommonGoal {
             }
         }
         
-        System.out.println("Numero di gruppi: " + groupCount[0]);
         return groupCount[0];
     }
     

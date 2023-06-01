@@ -1,7 +1,5 @@
 package logic;
 
-import java.util.*;
-
 public class Player {
 	private int PLAYER_COUNT = 1;
 	private final int id;
@@ -10,31 +8,27 @@ public class Player {
 	private Bookshelf shelf;
 	private PersonalGoalCard personalGoalCard;
 	private int points;
-	private boolean isFirstPlayer;
+	
 	private boolean checkCommonGoalA;	// If true is checked
 	private boolean checkCommonGoalB;	// If true is checked
-	/*
-	turnsmanagemente -> fine turno
-		if(checkCommonGoal1 == false)
-			player.checkCommonGoal1 = CommonGoal1.check();
-		if(checkCommonGoal2 == false)
-			player.checkCommonGoal2 = CommonGoal2.check();
-	 */
 	
-	public Player(String username, Bookshelf shelf, PersonalGoalCard personalGoal, boolean isFirstPlayer) {
+	public Player(String username, Bookshelf shelf, PersonalGoalCard personalGoal) {
 		this.id = PLAYER_COUNT++;
 		this.username = username;
 		this.shelf = shelf;
 		this.personalGoalCard = personalGoal;
-		this.isFirstPlayer = isFirstPlayer;
 		this.checkCommonGoalA = false;
 		this.checkCommonGoalB = false;
 		this.points = 0;
 	}
 
+	// Sum the points the user gained
 	public void sumPoints(int addedPoints) {
 		this.points = this.points + addedPoints;
 	}
+
+	
+	/* ---------- Getter and setter ---------- */
 	
 	public int getPoints() {
 		return this.points;

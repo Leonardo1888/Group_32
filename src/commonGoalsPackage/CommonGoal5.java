@@ -32,8 +32,7 @@ public class CommonGoal5 extends CommonGoal {
 		Tail[][] shelf = s;
 		int sameTailsPerCol = 0;
 		int numberOfCols = 0;
-		int max = 0;
-		Tail t = Tail.E;
+		Tail t;
 		// Columns 0,1,2,..4
 		for (int j = 0; j < 5; j++) {
 			// Element of col 0,1,2,..5
@@ -41,7 +40,9 @@ public class CommonGoal5 extends CommonGoal {
 				t = shelf[i][j];
 				sameTailsPerCol = 0;
 				for (int k = 0; k < 6; k++) {
-					if (t == shelf[k][j])
+					if(t == Tail.E || t == Tail.X)
+						break;
+					if (t == shelf[k][j] && shelf[k][j] != Tail.E && shelf[k][j] != Tail.X)
 						sameTailsPerCol++;
 				}
 				if(sameTailsPerCol >= 3) {

@@ -1,23 +1,17 @@
 package logic;
 
 import java.lang.Math;
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.Random;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class Board implements Matrix {
 	private int nPlayers;
-  
+
 	private final int ROW = 9;
 	private final int COL = 9;
 
 	private int rowTemp;
 	private int colTemp;
-	private int align; // 0 is horizontal, 1 is vertical 
+	private int align; // 0 is horizontal, 1 is vertical
 
 	private Tail[][] board;
 	private int[] tailCount;
@@ -129,7 +123,7 @@ public class Board implements Matrix {
 	}
 
 	// Return true if the second tail is aligned correctly
-	public boolean controlAlign(int row, int col) {
+	private boolean controlAlign(int row, int col) {
 		// If aligned horizontal check row
 		if (this.align == 0 && row == this.rowTemp) {
 			return true;
@@ -214,12 +208,12 @@ public class Board implements Matrix {
 			int outer1 = isInTheOuterSquare(row1, col1); // 1 -> true 0 -> false
 			int outer2 = isInTheOuterSquare(row2, col2);
 
+			// if both are in the Outer Square there are no more cases in which the user can pick a 3rd tail
 			if (outer1 != 0 && outer1 == outer2) {
-				return false; // se tutte e due sono nell outer allora non ci sono casi in cui si puo pickare
-								// una 3rd
+				return false; 
 			}
 
-			int addR = addR(row1, row2);	//used to find the tail we need to know if is pickable
+			int addR = addR(row1, row2); // used to find the tail we need to know if is pickable
 			int addC = addC(col1, col2);
 
 			switch (outer1) {
@@ -302,7 +296,7 @@ public class Board implements Matrix {
 		}
 	}
 
-	//// used for tail in outer square with 2 picked tails
+	// used for tail in outer square with 2 picked tails
 	private int addC(int col1, int col2) {
 		if (col1 < col2) {
 			return 2;
@@ -310,95 +304,6 @@ public class Board implements Matrix {
 			return 1;
 		}
 	}
-
-	/*
-	 * ----------- each case used when just 1 tail picked is in the outer square (to
-	 * avoid index out of bound) -----------
-	 */
-
-	private boolean upper1(int row, int col) {
-		if (sideFreeTail(row + 1, col) || sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)) {
-			if (this.board[row + 1][col] != Tail.E || this.board[row][col + 1] != Tail.E
-					|| this.board[row][col - 1] != Tail.E) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean left1(int row, int col) {
-		if (sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col) || sideFreeTail(row, col + 1)) {
-			if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E
-					|| this.board[row][col + 1] != Tail.E) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean bottom1(int row, int col) {
-		if (sideFreeTail(row - 1, col) || sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)) {
-			if (this.board[row - 1][col] != Tail.E || this.board[row][col + 1] != Tail.E
-					|| this.board[row][col - 1] != Tail.E) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean right1(int row, int col) {
-		if (sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col) || sideFreeTail(row, col - 1)) {
-			if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E
-					|| this.board[row][col - 1] != Tail.E) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/*
-	 * ----------- each case when 2 tail picked but just 1 is in the outer square
-	 * -----------
-	 */
-	// if in the row 0 and just 1 is in the outer then the align is obv vertical
-	// check
-	private boolean upper2(int row, int col, int add) {
-		if (sideFreeTail(row + add, col)) {
-			if (this.board[row + add][col] != Tail.E) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean left2(int row, int col, int add) {
-		if (sideFreeTail(row, col + add)) {
-			if (this.board[row][col + add] != Tail.E) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean bottom2(int row, int col, int add) {
-		if (sideFreeTail(row - add, col)) {
-			if (this.board[row - add][col] != Tail.E) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean right2(int row, int col, int add) {
-		if (sideFreeTail(row, col - add)) {
-			if (this.board[row][col - add] != Tail.E) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/* ---------------------- */
 
 	// Empty the board
 	public void emptyTheBoard(int matrix[][]) {
@@ -414,7 +319,8 @@ public class Board implements Matrix {
 		}
 	}
 
-	// Check if board is filled with 1 tails
+	// Check if board is filled with 1 single tails
+	// If the user can only pick one tail for his turn, refill the board
 	public void checkEndBoard() {
 		for (int i = 0; i < this.ROW; i++) {
 			for (int j = 0; j < this.COL; j++) {
@@ -433,7 +339,7 @@ public class Board implements Matrix {
 	 * Refills the board with new tails, keeping the old ones that weren't selected
 	 * on the same spot. This function doesn't override old tails.
 	 */
-	public void refillBoard(Tail board[][]) {
+	private void refillBoard(Tail board[][]) {
 		int[][] notFillable;
 		if (nPlayers == 2) {
 			notFillable = new int[][] { { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 }, { 0, 4 }, { 0, 5 }, { 0, 6 }, { 0, 7 },
@@ -469,12 +375,13 @@ public class Board implements Matrix {
 		 */
 
 		Random random = new Random();
+
+		int min = 2;
+		int max = 7;
+
 		for (int i = 0; i < this.ROW; i++) {
 			for (int j = 0; j < this.COL; j++) {
-				// int tailIndex = ThreadLocalRandom.current().nextInt(min, max + 1); -- >
-				// casual numbers from 2 to 7 (2 and 7 included)
-				int tailIndex = ThreadLocalRandom.current().nextInt(2, 7 + 1);
-
+				int tailIndex = random.nextInt(max - min + 1) + min;
 				Tail tail = Tail.values()[tailIndex];
 
 				// If is fillable and there are not any tails in that cell -> fill it
@@ -490,7 +397,8 @@ public class Board implements Matrix {
 		}
 	}
 
-	public void fillBoard(Tail board[][]) {
+	// Fill board randomly at the start of the game
+	private void fillBoard(Tail board[][]) {
 		int[][] notFillable;
 		if (nPlayers == 2) {
 			notFillable = new int[][] { { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 3 }, { 0, 4 }, { 0, 5 }, { 0, 6 }, { 0, 7 },
@@ -506,10 +414,10 @@ public class Board implements Matrix {
 					{ 6, 8 }, { 7, 0 }, { 7, 1 }, { 7, 2 }, { 7, 3 }, { 7, 6 }, { 7, 7 }, { 7, 8 }, { 8, 0 }, { 8, 1 },
 					{ 8, 2 }, { 8, 3 }, { 8, 4 }, { 8, 6 }, { 8, 7 }, { 8, 8 } };
 		} else {
-			notFillable = new int[][] { /* TODO { 0, 0 }, { 0, 1 }, { 0, 2 }, */ { 0, 5 }, { 0, 6 }, { 0, 7 }, { 0, 8 },
-					{ 1, 0 }, { 1, 1 }, { 1, 2 }, { 1, 6 }, { 1, 7 }, { 1, 8 }, { 2, 0 }, { 2, 1 }, { 2, 7 }, { 2, 8 },
-					{ 3, 0 }, { 5, 8 }, { 6, 0 }, { 6, 1 }, { 6, 7 }, { 6, 8 }, { 7, 0 }, { 7, 1 }, { 7, 2 }, { 7, 6 },
-					{ 7, 7 }, { 7, 8 }, { 8, 0 }, { 8, 1 }, { 8, 2 }, { 8, 3 }, { 8, 6 }, { 8, 7 }, { 8, 8 } };
+			notFillable = new int[][] { { 0, 0 }, { 0, 1 }, { 0, 2 }, { 0, 5 }, { 0, 6 }, { 0, 7 }, { 0, 8 }, { 1, 0 },
+					{ 1, 1 }, { 1, 2 }, { 1, 6 }, { 1, 7 }, { 1, 8 }, { 2, 0 }, { 2, 1 }, { 2, 7 }, { 2, 8 }, { 3, 0 },
+					{ 5, 8 }, { 6, 0 }, { 6, 1 }, { 6, 7 }, { 6, 8 }, { 7, 0 }, { 7, 1 }, { 7, 2 }, { 7, 6 }, { 7, 7 },
+					{ 7, 8 }, { 8, 0 }, { 8, 1 }, { 8, 2 }, { 8, 3 }, { 8, 6 }, { 8, 7 }, { 8, 8 } };
 
 		}
 
@@ -528,19 +436,11 @@ public class Board implements Matrix {
 
 		int min = 2;
 		int max = 7;
-		int[] numbers = new int[max - min + 1];
-		for (int i = min; i <= max; i++) {
-			numbers[i - min] = i;
-		}
 
 		for (int i = 0; i < this.ROW; i++) {
 			for (int j = 0; j < this.COL; j++) {
-				int index = random.nextInt(max - min + 1 - i) + i;
-
-		        int tailIndex = numbers[index];
-		        numbers[index] = numbers[i];
-
-		        Tail tail = Tail.values()[tailIndex];
+				int tailIndex = random.nextInt(max - min + 1) + min;
+				Tail tail = Tail.values()[tailIndex];
 
 				if (tail != Tail.E && this.tailCount[tailIndex] < 22) { // If fillable and count < 22 -> Fill
 					this.board[i][j] = tail;
@@ -554,11 +454,13 @@ public class Board implements Matrix {
 		}
 	}
 
+	// Output of the bord.
 	public void printBoard() {
 		System.out.println("\n---STATUS BOARD: ");
 		Matrix.printMatrix(board, ROW, COL);
 	}
 
+	// Print a single row of the Board, used in 'printBoardAndShelfAndPgc()' in Turn
 	public void printRowBoard(int row, char indexChar) {
 		if (row == -1) {
 			System.out.println();
@@ -611,7 +513,96 @@ public class Board implements Matrix {
 		}
 	}
 
-	// - Getter and setter -
+	/*
+	 * ----------- Each case is used when only one Tail picked is in the outer
+	 * square (to avoid index out of bound exception)
+	 */
+	private boolean upper1(int row, int col) {
+		if (sideFreeTail(row + 1, col) || sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)) {
+			if (this.board[row + 1][col] != Tail.E || this.board[row][col + 1] != Tail.E
+					|| this.board[row][col - 1] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean left1(int row, int col) {
+		if (sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col) || sideFreeTail(row, col + 1)) {
+			if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E
+					|| this.board[row][col + 1] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean bottom1(int row, int col) {
+		if (sideFreeTail(row - 1, col) || sideFreeTail(row, col + 1) || sideFreeTail(row, col - 1)) {
+			if (this.board[row - 1][col] != Tail.E || this.board[row][col + 1] != Tail.E
+					|| this.board[row][col - 1] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean right1(int row, int col) {
+		if (sideFreeTail(row + 1, col) || sideFreeTail(row - 1, col) || sideFreeTail(row, col - 1)) {
+			if (this.board[row + 1][col] != Tail.E || this.board[row - 1][col] != Tail.E
+					|| this.board[row][col - 1] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/*
+	 * ----- Each of the following case when 2 tail picked but only one tail is in
+	 * the outer square If in the row is 0 and just one Tail is in the outer, then
+	 * the align is obv vertical check
+	 */
+	private boolean upper2(int row, int col, int add) {
+		if (sideFreeTail(row + add, col)) {
+			if (this.board[row + add][col] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean left2(int row, int col, int add) {
+		if (sideFreeTail(row, col + add)) {
+			if (this.board[row][col + add] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean bottom2(int row, int col, int add) {
+		if (sideFreeTail(row - add, col)) {
+			if (this.board[row - add][col] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean right2(int row, int col, int add) {
+		if (sideFreeTail(row, col - add)) {
+			if (this.board[row][col - add] != Tail.E) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/* ---------------------- */
+
+	
+	/* ---------- Getter and setter ---------- */
+
 	public Tail[][] getBoard() {
 		return board;
 	}

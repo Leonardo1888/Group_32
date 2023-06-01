@@ -19,30 +19,30 @@ public abstract class CommonGoal {
 		// 8->6->4->2
 		if (nPlayers == 4) {
 			if (points == 2)
-				return 0;
+				points = 0;
 			else
 				points = points - 2;
 		}
 		// 8->6->4
 		if (nPlayers == 3) {
 			if (points == 4)
-				return 0;
+				points = 0;
 			else
 				points = points - 2;
 		}
 		// 8->4
 		if (nPlayers == 2) {
-			if (points == 8)
-				points = points - 4;
-			else
+			if (points == 10)
 				points = points - 2;
-			if (points == 4)
-				return 0;
+			else
+				points = points - 8;
+
 		}
 		return points;
 	}
 
-	// If commonGoal is respected return the points to add the user. If not returns 0
+	// If commonGoal is respected return the points to add the user. If not returns
+	// 0
 	public abstract boolean check(Bookshelf bs);
 
 	// Output of the CommonGoal

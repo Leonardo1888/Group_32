@@ -26,9 +26,10 @@ public class CommonGoal6 extends CommonGoal {
 	@Override
 	public boolean check(Bookshelf bs) {
 		Tail[][] shelf = bs.getShelf();
+		int cont = 0;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
-				int cont = 0;
+				
 				if (shelf[i][j] == Tail.C) {
 					cont++;
 				}
@@ -37,9 +38,10 @@ public class CommonGoal6 extends CommonGoal {
 				}
 			}
 		}
+		
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
-				int cont = 0;
+				
 				if (shelf[i][j] == Tail.B) {
 					cont++;
 				}
@@ -48,9 +50,9 @@ public class CommonGoal6 extends CommonGoal {
 				}
 			}
 		}
+		cont = 0;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
-				int cont = 0;
 				if (shelf[i][j] == Tail.G) {
 					cont++;
 				}
@@ -59,9 +61,9 @@ public class CommonGoal6 extends CommonGoal {
 				}
 			}
 		}
+		cont = 0;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
-				int cont = 0;
 				if (shelf[i][j] == Tail.F) {
 					cont++;
 				}
@@ -70,9 +72,9 @@ public class CommonGoal6 extends CommonGoal {
 				}
 			}
 		}
+		cont = 0;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
-				int cont = 0;
 				if (shelf[i][j] == Tail.T) {
 					cont++;
 				}
@@ -81,9 +83,9 @@ public class CommonGoal6 extends CommonGoal {
 				}
 			}
 		}
+		cont = 0;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
-				int cont = 0;
 				if (shelf[i][j] == Tail.P) {
 					cont++;
 				}

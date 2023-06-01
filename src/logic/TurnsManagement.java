@@ -2,7 +2,6 @@ package logic;
 
 import commonGoalsPackage.*;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class TurnsManagement {
     private List<Player> players;
@@ -33,7 +32,7 @@ public class TurnsManagement {
         startGame();
     }
     
-    // All the turns of the game
+    // manages all the turns of the game
     private void startGame() {
     	initializeCommonGoals();
     	
@@ -45,10 +44,10 @@ public class TurnsManagement {
 			
 			this.turnCounter++;
 					
-			// TODO REMOVE ME 
+			/* Used for testing 
 			if(turnCounter == 8) {
 				break;
-			}
+			} */
 			
 			t.playTurn();
 			turns.add(t); 
@@ -63,6 +62,7 @@ public class TurnsManagement {
     	gameOver();
     }
     
+    // Called when game is over
     private void gameOver() {
     	System.out.println(" --- Game is over ---");
     	
@@ -81,6 +81,37 @@ public class TurnsManagement {
     		int pointsADJ = currentPlayer.getShelf().AdjacentPoints();
     		System.out.println("Adjacent Group Tails points: " + pointsADJ);
     	}
+    	
+    	printWinner();
+    }
+    
+    // Print the winner of the game
+    private void printWinner() {
+    	System.out.println("-------------");
+    	int max = 0;
+    	String winner = "";
+    	
+    	Player currentPlayer;
+    	for(int i = 0; i < players.size(); i++) {
+    		currentPlayer = players.get(i);
+    
+    		if(currentPlayer.getPoints() > max) {
+    			max = currentPlayer.getPoints();
+    			winner = currentPlayer.getUsername();
+    		}
+    	}
+    	
+    	// TODO Check points in case of draw between the players
+    	for(int i = 0; i < players.size(); i++) {
+    		currentPlayer = players.get(i);
+    	    
+    		if(currentPlayer.getPoints() == max && !currentPlayer.getUsername().equals(winner)) {
+    			max = currentPlayer.getPoints();
+    			winner = currentPlayer.getUsername();
+    		}
+
+    	}	
+    	System.out.println("The winner is " + winner + " with " + max + "points.");
     }
     
     //count the personal goal card points
@@ -90,6 +121,7 @@ public class TurnsManagement {
         return points;
     }
     
+    // Initialize the common goals with explanation for the user
     private void initializeCommonGoals() {
     	CommonGoalA = createCommonGoal();
     	CommonGoalB = createCommonGoal();
@@ -104,12 +136,12 @@ public class TurnsManagement {
     	CommonGoalB.printCommonGoal();
     }
     
-    private CommonGoal createCommonGoal() {
-    	
+    // Create common a single common goal randomly
+    private CommonGoal createCommonGoal() { 	
     	Random random = new Random();
-    	int index = ThreadLocalRandom.current().nextInt(1, 12 + 1);
+    	int index = random.nextInt(12) + 1;
     	while(index == this.index)
-        	index = ThreadLocalRandom.current().nextInt(1, 12 + 1);
+        	index = random.nextInt(12) + 1;
     	this.index = index;	
     	
         switch (index) {
@@ -158,44 +190,17 @@ public class TurnsManagement {
 		System.out.println("\n" + getInCommonGoal2al2));*/
     }
     
-    public void addPlayer(Turn t) {
+    // Add the turn to the list of turns, although it is not really used
+    public void addTurn(Turn t) {
 		if (t == null) {
 			throw new NullPointerException("Turn is null");
 		}
 		this.turns.add(t);
 	}
     
-    private void printWinner() {
-    	System.out.println("-------------");
-    	int max = 0;
-    	String winner = "";
-    	
-    	Player currentPlayer;
-    	for(int i = 0; i < players.size(); i++) {
-    		currentPlayer = players.get(i);
     
-    		if(currentPlayer.getPoints() > max) {
-    			max = currentPlayer.getPoints();
-    			winner = currentPlayer.getUsername();
-    		}
-    	}
-    	
-    	for(int i = 0; i < players.size(); i++) {
-    		currentPlayer = players.get(i);
-    	    
-    		if(currentPlayer.getPoints() == max && !currentPlayer.equals(winner)) {
-    			max = currentPlayer.getPoints();
-    			winner = currentPlayer.getUsername();
-    		}
-
-    	}	
-    	
-    	
-    	System.out.println("The winner is " + winner + " with " + max + "points.");
-    	
-    }
-
-    // --- Setter and Getter --- 
+	/* ---------- Getter and setter ---------- */
+    
 	public boolean isGameOver() {
 		return gameOver;
 	}

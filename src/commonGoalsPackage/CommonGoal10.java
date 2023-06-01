@@ -25,23 +25,37 @@ public class CommonGoal10 extends CommonGoal {
 	}
 
 	@Override
-	public boolean check(Bookshelf bs) {
-		Tail[][] shelf = bs.getShelf();
-		int cont = 0;
-		for (int i = 0; i < 6; i++) {
-			Tail[] tails = new Tail[5];
-			for (int j = 0; j < 5; j++) {
-				tails[j] = shelf[i][j];
-			}
-			if (Matrix.EinRow(shelf, i) == false && Matrix.differentArray(tails, 5) == true) {
-				cont++;
-			}
-		}
-		if (cont >= 2) {
-			return true;
-		}
-		return false;
-	}
+    public boolean check(Bookshelf bs) {
+        Tail[][] shelf = bs.getShelf();
+        int cont = 0;
+        boolean checkX = false;
+        for (int i = 0; i < 6; i++) {
+            Tail[] tails = new Tail[5];
+            for (int j = 0; j < 5; j++) {
+                tails[j] = shelf[i][j];
+                if(shelf[i][j] == Tail.X) {
+                    checkX = true;
+                }
+            }
+            if (Matrix.EinRow(shelf, i) == false && differentArray(tails, 5) == true && checkX == false) {
+                cont++;
+            }
+            checkX = false;
+        }
+        if (cont >= 2) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean differentArray(Tail tails[], int cont) {
+        for(int i = 1; i  < cont; i++) {
+            if(tails[i] == tails[i-1]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 	@Override
 	public void printCommonGoal() {

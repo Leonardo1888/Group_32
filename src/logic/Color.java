@@ -2,6 +2,8 @@ package logic;
 
 public enum Color {
 
+	// This class is used for the colors in the output of the Tails in the console. Not all colors are used.
+	
 	// CAT,   BOOK,  GAME,   FRAME, TROPHEY, PLANT
 	// GREEN, WHITE, YELLOW, BLUE,  CYAN,    RED
 	// Color end string, color reset

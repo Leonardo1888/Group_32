@@ -32,7 +32,7 @@ public class CommonGoal4 extends CommonGoal {
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 4; j++) {
-				if (shelf[i][j] != Tail.E && shelf[i][j] == shelf[i][j + 1] && shelf[i][j] == shelf[i + 1][j]
+				if (shelf[i][j] != Tail.E && shelf[i][j] != Tail.X && shelf[i][j] == shelf[i][j + 1] && shelf[i][j] == shelf[i + 1][j]
 						&& shelf[i][j] == shelf[i + 1][j + 1]) {
 					shelf[i][j] = shelf[i][j + 1] = shelf[i + 1][j] = shelf[i + 1][j + 1] = Tail.E;
 					cont++;

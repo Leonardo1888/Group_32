@@ -1,7 +1,6 @@
 package logic;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class PersonalGoalCard implements Matrix {
 
@@ -11,7 +10,8 @@ public class PersonalGoalCard implements Matrix {
 	private Tail[][] personalGoalCard;
 	private boolean[] controlTail = new boolean[8];
 
-	public PersonalGoalCard() { // fills matrix with E(mpty) and controlTail cells with false
+	// Fills matrix with E(mpty) and control Tail cells with false
+	public PersonalGoalCard() { 
 		this.personalGoalCard = new Tail[ROW][COL];
 		for (int i = 0; i < ROW; i++) {
 			for (int j = 0; j < COL; j++) {
@@ -21,26 +21,29 @@ public class PersonalGoalCard implements Matrix {
 		for (int i = 0; i < 8; i++) {
 			this.controlTail[i] = false;
 		}
-
+ 
 		generateRandom();
-	}
+	} 
 
+	// Generates a random personal goal card
 	public void generateRandom() {
-		Random random = new Random(); // TODO useless?
-
+		Random random = new Random();
+		
 		while (controlTail[2] == false || controlTail[3] == false || controlTail[4] == false || controlTail[5] == false
 				|| controlTail[6] == false || controlTail[7] == false) {
 
-			int tailIndex = ThreadLocalRandom.current().nextInt(2, 7 + 1); 
+			int tailIndex = random.nextInt(6) + 2;
 			// Random val from 2 to 7 inclusive (e.c. , only tails, not empty(E) or fillable(X))
 			Tail tail = Tail.values()[tailIndex];
 
 			if (this.controlTail[tailIndex] == false) {
-				int row = ThreadLocalRandom.current().nextInt(0, 5 + 1);
-				int col = ThreadLocalRandom.current().nextInt(0, 4 + 1);
+				// Row = random number between 0 and 5(inclusive)
+				int row = random.nextInt(6);
+				// Col = random number between 0 and 4(inclusive)
+				int col = random.nextInt(5);
 
 				if (personalGoalCard[row][col] == Tail.E) {
-					this.personalGoalCard[row][col] = tail; // insert
+					this.personalGoalCard[row][col] = tail; // insert the Tail
 					this.controlTail[tailIndex] = true;
 				}
 			}
@@ -84,10 +87,12 @@ public class PersonalGoalCard implements Matrix {
 		return 0;
 	}	
 	
+	// Print board
 	public void printBoard() {
 		Matrix.printMatrix(personalGoalCard, ROW, COL);
 	}
 	
+	// Print a single row of the personalGoalCard, used in 'printBoardAndShelfAndPgc()' in Turn
 	public void printRowPersonalGoalCard(int row) {
 		if (row == -1) {
 			for (int a = 1; a <= this.COL; a++) {
@@ -135,6 +140,9 @@ public class PersonalGoalCard implements Matrix {
 			}
 		}
 	}
+	
+	
+	/* ---------- Getter and setter ---------- */
 	
 	public Tail[][] getPersonalGoalCard() {
 		return personalGoalCard;

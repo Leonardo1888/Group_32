@@ -8,8 +8,6 @@ public class PlayersManagement {
 	private int nPlayers;
 
 	private List<Player> players;
-	private int currentPlayerIndex;
-
 	Scanner sc;
 
 	public PlayersManagement(Scanner sc) {
@@ -18,7 +16,10 @@ public class PlayersManagement {
 
 	}
 
-	// Enter players and saves them in "players"
+	/*
+	 * The user enters the number of players. The user enters a username for each
+	 * player, and saves them in "players"
+	 */
 	public void enterPlayers() {
 
 		nPlayers = 0;
@@ -50,7 +51,7 @@ public class PlayersManagement {
 		String playerUsername = "";
 		boolean correctUsername = false;
 
-		// username checks
+		// Username checks
 		for (int i = 0; i < nPlayers; i++) {
 			while (!correctUsername) {
 				System.out.print("-Enter " + (i + 1) + "° player's name: ");
@@ -69,32 +70,29 @@ public class PlayersManagement {
 				}
 			}
 
-			// Keep for testing 
 			/*
-			Tail[][] s = {
-		            {Tail.C, Tail.T, Tail.P, Tail.E, Tail.C},
-		            {Tail.C, Tail.T, Tail.P, Tail.P, Tail.P},
-		            {Tail.T, Tail.P, Tail.P, Tail.P, Tail.P},
-		            {Tail.T, Tail.P, Tail.P, Tail.T, Tail.P},
-		            {Tail.T, Tail.T, Tail.P, Tail.P, Tail.P},
-		            {Tail.C, Tail.T, Tail.P, Tail.P, Tail.C}
-	    		};
-	    		Bookshelf bs = new Bookshelf();
-	    		bs.setShelf(s);
-			*/
+			 * This piece of comment is used for testing common goals. Keep for testing. If
+			 * you want to test when creating a new user at line 88 substitute
+			 * "new Booshelf()" with "bs"
+			 * 
+			 * Tail[][] s = { {Tail.C, Tail.T, Tail.P, Tail.E, Tail.C}, {Tail.C, Tail.T,
+			 * Tail.P, Tail.P, Tail.P}, {Tail.T, Tail.P, Tail.P, Tail.P, Tail.P}, {Tail.T,
+			 * Tail.P, Tail.P, Tail.T, Tail.P}, {Tail.T, Tail.T, Tail.P, Tail.P, Tail.P},
+			 * {Tail.C, Tail.T, Tail.P, Tail.P, Tail.C} }; Bookshelf bs = new Bookshelf();
+			 * bs.setShelf(s);
+			 */
+
 			Player p;
-			// TODO invece di 'bs' mettere 'new Bookshelf()'
-			p = new Player(playerUsername, new Bookshelf(), new PersonalGoalCard(), true);
+			// The first user entered is the first player
+			p = new Player(playerUsername, new Bookshelf(), new PersonalGoalCard());
 			addPlayer(p);
 
 			System.out.println("Added " + (i + 1) + "° player, named: " + playerUsername);
 			correctUsername = false;
-			
-			
 		}
 	}
 
-	// Return true if username has already been taken
+	// @Return true if username has already been taken
 	private boolean checkUsernameAlreadyTaken(String playerName) {
 		for (int i = 0; i < players.size(); i++) {
 			Player currentPlayer = players.get(i);
@@ -105,14 +103,17 @@ public class PlayersManagement {
 		return false;
 	}
 
-	public void addPlayer(Player p) {
+	// Add the player to the list of players
+	private void addPlayer(Player p) {
 		if (p == null) {
 			throw new NullPointerException("Player is null");
 		}
+		System.out.println("test");
 		this.players.add(p);
 	}
 
-	// Getter and setter
+	
+	/* ---------- Getter and setter ---------- */
 
 	public List<Player> getPlayers() {
 		return players;
