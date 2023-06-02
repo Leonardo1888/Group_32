@@ -52,10 +52,11 @@ public class PlayersManagement {
 		boolean correctUsername = false;
 
 		// Username checks
+		System.out.println("You can enter all the usernames at once, separating them with spaces.");
 		for (int i = 0; i < nPlayers; i++) {
 			while (!correctUsername) {
 				System.out.print("-Enter " + (i + 1) + "° player's name: ");
-				playerUsername = sc.next();
+				playerUsername = sc.next().trim();
 
 				if (playerUsername == null || playerUsername.isEmpty()) {
 					System.out.println("Player name can't be null or empty. Please try again.");

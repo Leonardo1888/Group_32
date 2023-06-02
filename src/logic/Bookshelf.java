@@ -37,12 +37,13 @@ public class Bookshelf implements Matrix {
 			return tailsToInsert1;
 		case 2: // If they are the same don't ask the user to order the tails
 			if (tails[0] != tails[1]) {
-				// Output explanation
+				// Output tails the user selected
 				System.out.print("Your Tails:\n1°: ");
 				printTail(tails[0]);
 				System.out.print("\n2°: ");
 				printTail(tails[1]);
 
+				// Output explanation
 				System.out.print("\n\nChoose the order of the Tails to insert [1, " + numTails + "]. "
 						+ "Write the number: '1' for the tail '");
 				printTail(tails[0]);
@@ -50,13 +51,25 @@ public class Bookshelf implements Matrix {
 				printTail(tails[1]);
 				System.out.println("'.");
 
+				int first2 = 0;
+				int second2 = 0;
 				// Choose order of tails
-				System.out.print("Choose the tail that will go on the bottom: ");
-				int first2 = sc.nextInt();
-				sc.nextLine();
-				System.out.print("Choose the 2nd tail: ");
-				int second2 = sc.nextInt();
-				sc.nextLine();
+				while (true) {
+					System.out.print("\nChoose the tail that will go on the bottom: ");
+					first2 = sc.nextInt();
+					sc.nextLine();
+					if (first2 == '1' || first2 == '2' || first2 == '3') {
+						// If is 1, 2 or 3 exit the while loop
+						break;
+					}
+					System.out.print("Error! You have to enter a number from '1' to '3'.");
+				}
+				
+				// Don't ask for the second tail, it's obvious
+				if(first2 == 2)
+					second2 = 1;
+				if(first2 == 1)
+					second2 = 2;
 
 				Tail[] tailsToInsert2 = new Tail[2];
 
@@ -67,7 +80,7 @@ public class Bookshelf implements Matrix {
 			break;
 		case 3: // they are the same don't ask the user to order the tails
 			if (tails[0] != tails[1] || tails[0] != tails[2] || tails[1] != tails[2]) {
-				// Output explanation
+				// Output tails the user selected
 				System.out.print("Your Tails:\n1°: ");
 				printTail(tails[0]);
 				System.out.print("\n2°: ");
@@ -75,6 +88,7 @@ public class Bookshelf implements Matrix {
 				System.out.print("\n3°: ");
 				printTail(tails[2]);
 
+				// Output explanation
 				System.out.print("\n\nChoose the order of the Tails to insert [1, " + numTails + "]. "
 						+ "\nWrite the number: '1' for the tail '");
 				printTail(tails[0]);
@@ -84,17 +98,51 @@ public class Bookshelf implements Matrix {
 				printTail(tails[2]);
 				System.out.print("'.");
 
-				// Output explanation
-				System.out.print("\nChoose the tail that will go on the bottom: ");
-				int first3 = sc.nextInt();
-				sc.nextLine();
-				System.out.print("Choose the 2nd tail: ");
-				int second3 = sc.nextInt();
-				sc.nextLine();
-				System.out.print("Choose the 3rd tail: ");
-				int third3 = sc.nextInt();
-				sc.nextLine();
-
+				int first3 = 0;
+				int second3 = 0;
+				int third3 = 0;
+				// Choose order of tails
+				while (true) {
+					System.out.print("\nChoose the tail that will go on the bottom: ");
+					first3 = sc.nextInt();
+					sc.nextLine();
+					if (first3 == '1' || first3 == '2' || first3 == '3') {
+						// If is 1, 2 or 3 exit the while loop
+						break;
+					}
+					System.out.print("Error! You have to enter a number from '1' to '3'.");
+				}
+				
+				if((first3 == 1) && (tails[1] == tails[2])) {
+					second3 = 2;
+					third3 = 3;
+				} else if((first3 == 2) && (tails[0] == tails[2])) {
+					second3 = 1;
+					third3 = 3;
+				} else if((first3 == 3) && (tails[0] == tails[1])) {
+					second3 = 1;
+					third3 = 2;
+				} else {
+					while (true) {
+						System.out.print("Choose the 2nd tail: ");
+						second3 = sc.nextInt();
+						sc.nextLine();
+						if (second3 == '1' || second3 == '2' || second3 == '3') {
+							// If is 1, 2 or 3 exit the while loop
+							break;
+						}
+						System.out.print("Error! You have to enter a number from '1' to '3'.");
+					}
+				}
+				
+				// Don't ask for the third tail, it's obvious
+				if((first3 == 1 && second3 == 2) || (first3 == 2 && second3 == 1))
+					third3 = 3;
+				else if((first3 == 2 && second3 == 3) || (first3 == 3 && second3 == 2))
+					third3 = 1;
+				else if((first3 == 1 && second3 == 3) || (first3 == 3 && second3 == 1))
+					third3 = 2;
+				
 				Tail[] tailsToInsert3 = new Tail[3];
 
 				tailsToInsert3[0] = tails[first3 - 1];
@@ -106,7 +154,7 @@ public class Bookshelf implements Matrix {
 		}
 		return tails;
 	}
-
+	
 	// Insert Tails in column
 	// @Return 0 if success, @Return 1 if failure, @Return
 	public int insertTail(Tail[] tails, int col, int numTail) {

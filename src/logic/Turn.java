@@ -15,25 +15,10 @@ public class Turn {
 	private Board board;
 	private Player currentPlayer;
 
-	public CommonGoal getCommonGoalA() {
-		return commonGoalA;
-	}
 
-	public void setCommonGoalA(CommonGoal commonGoalA) {
-		this.commonGoalA = commonGoalA;
-	}
-
-	public CommonGoal getCommonGoalB() {
-		return commonGoalB;
-	}
-
-	public void setCommonGoalB(CommonGoal commonGoalB) {
-		this.commonGoalB = commonGoalB;
-	}
-
-	private Bookshelf shelf;
-	private PersonalGoalCard pgc;
-	private Scanner sc;
+	private Bookshelf shelf;		// Bookshelf
+	private PersonalGoalCard pgc;	// persona goal card
+	private Scanner sc;				// scanner for inputs from keyboard
 	private CommonGoal commonGoalA;
 	private CommonGoal commonGoalB;
 
@@ -43,7 +28,7 @@ public class Turn {
 
 	// row and column selected
 	private char tRow; // [a-g]
-	private int tCol; // [1-9]
+	private int tCol;  // [1-9]
 
 	private int turnCounter;
 
@@ -363,6 +348,7 @@ public class Turn {
 		}
 	}
 
+	
 	/* ---------- Getter and setter ---------- */
 
 	public Tail[] getTails() {
@@ -421,4 +407,19 @@ public class Turn {
 		this.currentPlayer = currentPlayer;
 	}
 
+	public CommonGoal getCommonGoalA() {
+		return commonGoalA;
+	}
+
+	public void setCommonGoalA(CommonGoal commonGoalA) {
+		this.commonGoalA = commonGoalA;
+	}
+
+	public CommonGoal getCommonGoalB() {
+		return commonGoalB;
+	}
+
+	public void setCommonGoalB(CommonGoal commonGoalB) {
+		this.commonGoalB = commonGoalB;
+	}
 }

@@ -34,6 +34,7 @@ public class TurnsManagement {
 
 	// manages all the turns of the game
 	private void startGame() {
+		System.out.println("\n ----------- START GAME OF MY SHELFIE ----------- \n");
 		initializeCommonGoals();
 
 		while (!gameOver) {
@@ -62,7 +63,7 @@ public class TurnsManagement {
 
 	// Called when game is over
 	private void gameOver() {
-		System.out.println(" --- Game is over ---");
+		System.out.println(" ---------- GAME OVER ---------- ");
 
 		// Call personal goal card points
 		for (int i = 0; i < players.size(); i++) {
@@ -124,7 +125,6 @@ public class TurnsManagement {
 		CommonGoalA = createCommonGoal();
 		CommonGoalB = createCommonGoal();
 
-		System.out.println("\n--- START GAME OF MY SHELFIE ---\n");
 		System.out.println("The common goal cards grant points the players who achieve the illustrated pattern.");
 		System.out.println(
 				"There are two common goals, and we will call them 'A' and 'B'. \nThose are the two common goals you have to achieve: ");
