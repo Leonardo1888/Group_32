@@ -34,7 +34,7 @@ public class TurnsManagement {
 
 	// manages all the turns of the game
 	private void startGame() {
-		System.out.println("\n ----------- START GAME OF MY SHELFIE ----------- \n");
+		System.out.println("\n------------------------ START GAME OF MY SHELFIE ---------------------------\n");
 		initializeCommonGoals();
 
 		while (!gameOver) {
@@ -59,7 +59,7 @@ public class TurnsManagement {
 
 	// Called when game is over
 	private void gameOver() {
-		System.out.println(" ---------- GAME OVER ---------- ");
+		System.out.println("\n------------------------ GAME OVER ---------------------------");
 
 		// Call personal goal card points
 		for (int i = 0; i < players.size(); i++) {

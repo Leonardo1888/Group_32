@@ -1,6 +1,7 @@
 package commonGoalsPackage;
 
 import logic.*;
+import java.util.Random;
 
 public class CommonGoal12 extends CommonGoal {
 
@@ -12,7 +13,7 @@ public class CommonGoal12 extends CommonGoal {
 
 	private String msg = "Five columns of increasing or decreasing height. "
 			+ "\nStarting from the first column on the left or on the right, each next column must be made of exactly "
-			+ "one more tile. \nTiles can be of any type.";
+			+ "one more tile. \nTiles can be of any type. Here an example: ";
 
 	public CommonGoal12(int nPlayers) {
 		super(nPlayers);
@@ -31,16 +32,16 @@ public class CommonGoal12 extends CommonGoal {
 		Tail[][] s = bs.getShelf();
 		boolean upperRightE = true;
 		boolean lowerLeftT = true;
-		
+
 		boolean upperRightSE = true;
 		boolean lowerLeftST = true;
 
 		boolean upperLeftSE = true;
 		boolean lowerRightST = true;
-		
+
 		boolean upperLeftE = true;
 		boolean lowerRightT = true;
-		
+
 		/* First check */
 		// Upper right empty
 		for (int i = 0; i < 4; i++) {
@@ -53,7 +54,7 @@ public class CommonGoal12 extends CommonGoal {
 
 		// Lower left full of tails
 		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j <= i; j++) {
+			for (int j = 0; j < i; j++) {
 				if (s[i][j] == Tail.E || s[i][j] == Tail.X) {
 					lowerLeftT = false;
 				}
@@ -61,9 +62,9 @@ public class CommonGoal12 extends CommonGoal {
 		}
 
 		/* Second check */
-		// Upper right empty shifted
-		for (int i = 0; i < 5; i++) {
-			for (int j = i; j < 5; j++) {
+		// Upper left empty shifted
+			for (int i = 0; i < 5; i++) {
+				for (int j = i; j < 5; j++) {
 				if (s[i][j] != Tail.E || s[i][j] != Tail.X) {
 					upperRightSE = false;
 				}
@@ -102,9 +103,8 @@ public class CommonGoal12 extends CommonGoal {
 			}
 		}
 
-		
 		/* Forth check */
-		// Upper left empty 
+		// Upper left empty
 		cont = 4;
 		for (int i = 0; i < 4; i++) {
 			cont--;
@@ -125,7 +125,7 @@ public class CommonGoal12 extends CommonGoal {
 				}
 			}
 		}
-		
+
 		if (upperRightE && lowerLeftT)
 			return true;
 		else if (upperRightSE && lowerLeftST)
@@ -141,18 +141,29 @@ public class CommonGoal12 extends CommonGoal {
 	@Override
 	public void printCommonGoal() {
 		System.out.println(msg);
-
-		int row = 5;
+		Random random = new Random();
+		int row = 6;
 		int col = 5;
 		Tail[][] commonGoalCard = new Tail[row][col];
 		commonGoalCard = Matrix.FillWithE(commonGoalCard, row, col);
-		for (int i = row - 1; i >= 0; i--) {
-			for (int j = 0; j < col; j++) {
-				commonGoalCard[i][j] = Tail.X;
+
+		if (random.nextInt(1) == 0) {
+			int cont = 5;
+			for (int i = 0; i < 5; i++) {
+				cont--;
+				for (int j = cont; j >= 0; j--) {
+					commonGoalCard[i][j] = Tail.D;
+				}
 			}
-			col--;
+		} else {
+			int cont = -1;
+			for (int i = 5; i > 0; i--) {
+				cont++;
+				for (int j = cont; j < 5; j++) {
+					commonGoalCard[i][j] = Tail.D;
+				}
+			}
 		}
-		col = 5;
 		Matrix.printMatrixSimple(commonGoalCard, row, col);
 	}
 }

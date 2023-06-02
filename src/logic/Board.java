@@ -206,9 +206,10 @@ public class Board implements Matrix {
 			int outer1 = isInTheOuterSquare(row1, col1); // 1 -> true 0 -> false
 			int outer2 = isInTheOuterSquare(row2, col2);
 
-			// if both are in the Outer Square there are no more cases in which the user can pick a 3rd tail
+			// if both are in the Outer Square there are no more cases in which the user can
+			// pick a 3rd tail
 			if (outer1 != 0 && outer1 == outer2) {
-				return false; 
+				return false;
 			}
 
 			int addR = addR(row1, row2); // used to find the tail we need to know if is pickable
@@ -245,7 +246,7 @@ public class Board implements Matrix {
 
 			// from here 2 tails not in outer
 			if (align == 0) { // horizontal -> - 1 2 -
-				if (col1 < col2) {// From left to right 
+				if (col1 < col2) {// From left to right
 					if (sideFreeTail(row1, col1 - 1) || sideFreeTail(row2, col2 + 1)) {
 						if (this.board[row1][col1 - 1] != Tail.E || this.board[row2][col2 + 1] != Tail.E) {
 							return true;
@@ -329,7 +330,7 @@ public class Board implements Matrix {
 				}
 			}
 		}
-		System.out.println("--- Board has to be refilled ---");
+		System.out.println("------------ Board was refilled ------------");
 		refillBoard(board);
 	}
 
@@ -361,17 +362,22 @@ public class Board implements Matrix {
 		}
 
 		boolean[][] fillable = new boolean[ROW][COL];
+		// Fill the matrix with true elements
+		for (int i = 0; i < this.ROW; i++) {
+			for (int j = 0; j < this.COL; j++) {
+				fillable[i][j] = true;
+			}
+		}
 
 		// set false cells you can't fill
 		for (int i = 0; i < notFillable.length; i++) {
-			fillable[(notFillable[i][0])][(notFillable[i][1])] = true;
+			fillable[(notFillable[i][0])][(notFillable[i][1])] = false;
 		}
 
 		/*
 		 * Takes random Tails from ENUM Tail (EMPTY(E) is excluded) and fills the board,
 		 * and counts in array tailIndex how many tails have been filled with that type
 		 */
-
 		Random random = new Random();
 
 		int min = 2;
@@ -383,10 +389,12 @@ public class Board implements Matrix {
 				Tail tail = Tail.values()[tailIndex];
 
 				// If is fillable and there are not any tails in that cell -> fill it
-				if (fillable[i][j] == false && board[i][j] != Tail.E && tail != Tail.E
-						&& this.tailCount[tailIndex] < 22) {
-					this.board[i][j] = tail;
-					this.tailCount[tailIndex]++;
+				if (fillable[i][j] == true && tail != Tail.E && this.tailCount[tailIndex] < 22) {
+					if (board[i][j] != Tail.C && board[i][j] != Tail.B && board[i][j] != Tail.G && board[i][j] != Tail.F
+							&& board[i][j] != Tail.T && board[i][j] != Tail.P) {
+						this.board[i][j] = tail;
+						this.tailCount[tailIndex]++;
+					}
 				}
 				if (fillable[i][j] == true) { // If not fillable -> Set Empy
 					this.board[i][j] = Tail.E;
@@ -598,7 +606,6 @@ public class Board implements Matrix {
 
 	/* ---------------------- */
 
-	
 	/* ---------- Getter and setter ---------- */
 
 	public Tail[][] getBoard() {

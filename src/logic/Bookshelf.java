@@ -58,7 +58,7 @@ public class Bookshelf implements Matrix {
 					System.out.print("\nChoose the tail that will go on the bottom: ");
 					first2 = sc.nextInt();
 					sc.nextLine();
-					if (first2 == '1' || first2 == '2' || first2 == '3') {
+					if (first2 == 1 || first2 == 2 || first2 == 3) {
 						// If is 1, 2 or 3 exit the while loop
 						break;
 					}
@@ -106,7 +106,7 @@ public class Bookshelf implements Matrix {
 					System.out.print("\nChoose the tail that will go on the bottom: ");
 					first3 = sc.nextInt();
 					sc.nextLine();
-					if (first3 == '1' || first3 == '2' || first3 == '3') {
+					if (first3 == 1 || first3 == 2 || first3 == 3) {
 						// If is 1, 2 or 3 exit the while loop
 						break;
 					}
@@ -127,7 +127,7 @@ public class Bookshelf implements Matrix {
 						System.out.print("Choose the 2nd tail: ");
 						second3 = sc.nextInt();
 						sc.nextLine();
-						if (second3 == '1' || second3 == '2' || second3 == '3') {
+						if (second3 == 1 || second3 == 2 || second3 == 3) {
 							// If is 1, 2 or 3 exit the while loop
 							break;
 						}

@@ -173,6 +173,24 @@ public class Turn {
 			shelf.printShelf(); // return 1->E in col < n Tails
 		}
 		checkCommonGoals();
+		
+		// Every two turns remind the users the common goals
+		if(turnCounter % 2 == 0)
+			reminderCommonGoals();
+		board.checkEndBoard();
+	}
+	
+	private void reminderCommonGoals() {
+		System.out.println("\n/*----*----*----*----*----*----*----* Common Goals Reminder *----*----*----*----*----*----*----*/");
+		System.out.println("The common goal cards grant points the players who achieve the illustrated pattern.");
+		System.out.println(
+				"There are two common goals, and we will call them 'A' and 'B'. \nThose are the two common goals you have to achieve: ");
+		System.out.println("\n--Common goal A: \n");
+		this.commonGoalA.printCommonGoal();
+
+		System.out.println("\n--Common goal B: \n");
+		this.commonGoalB.printCommonGoal();
+		System.out.println("\n/*----*----*----*----*----*----*----* Common Goals Reminder *----*----*----*----*----*----*----*/");
 	}
 
 	// Check the common goal 1 and 2, if they are achieved sum the player's points
