@@ -329,37 +329,36 @@ public class Board implements Matrix {
 	 */
 
 	public void checkEndBoard() {
-	    for (int i = 0; i < this.ROW; i++) {
-	        for (int j = 0; j < this.COL; j++) {
-	            if (this.board[i][j] != Tail.E && !hasFourAdjacentE(i, j)) {
-	                return; // Exit the method as soon as a non-empty cell without four adjacent empty cells is found
-	            }
-	        }
-	    }
-	    // If we reach here, it means all cells passed the condition
-	    System.out.println("------------ Board was refilled ------------");
-	    refillBoard(board);
+		for (int i = 0; i < this.ROW; i++) {
+			for (int j = 0; j < this.COL; j++) {
+				if (this.board[i][j] != Tail.E && !hasFourAdjacentE(i, j)) {
+					return; // Exit the method as soon as a non-empty cell without four adjacent empty cells
+							// is found
+				}
+			}
+		}
+		// If we reach here, it means all cells passed the condition
+		System.out.println("------------ Board was refilled ------------");
+		refillBoard(board);
 	}
 
 	private boolean hasFourAdjacentE(int row, int col) {
-	    // Check top, bottom, left, and right cells
-	    if (row > 0 && board[row - 1][col] != Tail.E) {
-	        return false;
-	    }
-	    if (row < ROW - 1 && board[row + 1][col] != Tail.E) {
-	        return false;
-	    }
-	    if (col > 0 && board[row][col - 1] != Tail.E) {
-	        return false;
-	    }
-	    if (col < COL - 1 && board[row][col + 1] != Tail.E) {
-	        return false;
-	    }
+		// Check top, bottom, left, and right cells
+		if (row > 0 && board[row - 1][col] != Tail.E) {
+			return false;
+		}
+		if (row < ROW - 1 && board[row + 1][col] != Tail.E) {
+			return false;
+		}
+		if (col > 0 && board[row][col - 1] != Tail.E) {
+			return false;
+		}
+		if (col < COL - 1 && board[row][col + 1] != Tail.E) {
+			return false;
+		}
 
-	    return true;
+		return true;
 	}
-
-
 
 	/*
 	 * Refills the board with new tails, keeping the old ones that weren't selected
@@ -398,36 +397,36 @@ public class Board implements Matrix {
 
 		// set false cells you can't fill
 		for (int i = 0; i < notFillable.length; i++) {
-			fillable[(notFillable[i][0])][(notFillable[i][1])] = false;
+			int row = notFillable[i][0];
+			int col = notFillable[i][1];
+			fillable[row][col] = false;
 		}
 
 		/*
 		 * Takes random Tails from ENUM Tail (EMPTY(E) is excluded) and fills the board,
 		 * and counts in array tailIndex how many tails have been filled with that type
 		 */
+
 		Random random = new Random();
 
-		int min = 2;
-		int max = 7;
+	    int min = 2;
+	    int max = 7;
 
-		for (int i = 0; i < this.ROW; i++) {
-			for (int j = 0; j < this.COL; j++) {
-				int tailIndex = random.nextInt(max - min + 1) + min;
-				Tail tail = Tail.values()[tailIndex];
-
-				// If is fillable and there are not any tails in that cell -> fill it
-				if (fillable[i][j] == true && tail != Tail.E && this.tailCount[tailIndex] < 22) {
-					if (board[i][j] != Tail.C && board[i][j] != Tail.B && board[i][j] != Tail.G && board[i][j] != Tail.F
-							&& board[i][j] != Tail.T && board[i][j] != Tail.P) {
-						this.board[i][j] = tail;
-						this.tailCount[tailIndex]++;
-					}
-				}
-				if (fillable[i][j] == true) { // If not fillable -> Set Empy
-					this.board[i][j] = Tail.E;
-				}
-			}
-		}
+	    for (int row = 0; row < this.ROW; row++) {
+	        for (int col = 0; col < this.COL; col++) {
+	            if (fillable[row][col]) {
+	                if (board[row][col] != Tail.C && board[row][col] != Tail.B && board[row][col] != Tail.G &&
+	                    board[row][col] != Tail.F && board[row][col] != Tail.T && board[row][col] != Tail.P) {
+	                    int tailIndex = random.nextInt(max - min + 1) + min;
+	                    Tail tail = Tail.values()[tailIndex];
+	                    this.board[row][col] = tail;
+	                    this.tailCount[tailIndex]++;
+	                } else {
+	                    this.board[row][col] = Tail.E;
+	                }
+	            }
+	        }
+	    }
 	}
 
 	// Fill board randomly at the start of the game
