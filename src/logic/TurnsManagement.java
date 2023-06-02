@@ -44,10 +44,6 @@ public class TurnsManagement {
 
 			this.turnCounter++;
 
-			/*
-			 * Used for testing if(turnCounter == 8) { break; }
-			 */
-
 			t.playTurn();
 			turns.add(t);
 
