@@ -320,19 +320,46 @@ public class Board implements Matrix {
 
 	// Check if board is filled with 1 single tails
 	// If the user can only pick one tail for his turn, refill the board
+	/*
+	 * int rows = matrix.length; int cols = matrix[0].length;
+	 * 
+	 * for (int i = 0; i < rows; i++) { for (int j = 0; j < cols; j++) { if
+	 * (matrix[i][j] != 0 || !hasFourAdjacentZeroes(matrix, i, j)) { return false; }
+	 * }
+	 */
+
 	public void checkEndBoard() {
-		for (int i = 0; i < this.ROW; i++) {
-			for (int j = 0; j < this.COL; j++) {
-				if (board[i][j] != Tail.E) {
-					if (!sideFreeTail(i, j)) {
-						return;
-					}
-				}
-			}
-		}
-		System.out.println("------------ Board was refilled ------------");
-		refillBoard(board);
+	    for (int i = 0; i < this.ROW; i++) {
+	        for (int j = 0; j < this.COL; j++) {
+	            if (this.board[i][j] != Tail.E && !hasFourAdjacentE(i, j)) {
+	                return; // Exit the method as soon as a non-empty cell without four adjacent empty cells is found
+	            }
+	        }
+	    }
+	    // If we reach here, it means all cells passed the condition
+	    System.out.println("------------ Board was refilled ------------");
+	    refillBoard(board);
 	}
+
+	private boolean hasFourAdjacentE(int row, int col) {
+	    // Check top, bottom, left, and right cells
+	    if (row > 0 && board[row - 1][col] != Tail.E) {
+	        return false;
+	    }
+	    if (row < ROW - 1 && board[row + 1][col] != Tail.E) {
+	        return false;
+	    }
+	    if (col > 0 && board[row][col - 1] != Tail.E) {
+	        return false;
+	    }
+	    if (col < COL - 1 && board[row][col + 1] != Tail.E) {
+	        return false;
+	    }
+
+	    return true;
+	}
+
+
 
 	/*
 	 * Refills the board with new tails, keeping the old ones that weren't selected
