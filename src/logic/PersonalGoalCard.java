@@ -11,7 +11,7 @@ public class PersonalGoalCard implements Matrix {
 	private boolean[] controlTail = new boolean[8];
 
 	// Fills matrix with E(mpty) and control Tail cells with false
-	public PersonalGoalCard() { 
+	public PersonalGoalCard() {
 		this.personalGoalCard = new Tail[ROW][COL];
 		for (int i = 0; i < ROW; i++) {
 			for (int j = 0; j < COL; j++) {
@@ -21,19 +21,20 @@ public class PersonalGoalCard implements Matrix {
 		for (int i = 0; i < 8; i++) {
 			this.controlTail[i] = false;
 		}
- 
+
 		generateRandom();
-	} 
+	}
 
 	// Generates a random personal goal card
 	public void generateRandom() {
 		Random random = new Random();
-		
+
 		while (controlTail[2] == false || controlTail[3] == false || controlTail[4] == false || controlTail[5] == false
 				|| controlTail[6] == false || controlTail[7] == false) {
 
 			int tailIndex = random.nextInt(6) + 2;
-			// Random val from 2 to 7 inclusive (e.c. , only tails, not empty(E) or fillable(X))
+			// Random val from 2 to 7 inclusive (e.c. , only tails, not empty(E) or
+			// fillable(X))
 			Tail tail = Tail.values()[tailIndex];
 
 			if (this.controlTail[tailIndex] == false) {
@@ -50,49 +51,50 @@ public class PersonalGoalCard implements Matrix {
 
 		}
 	}
-	
+
 	// @Returns the number of tails matched with the personal card
-	public int tailsMatched(Tail shelf[][]){	
+	public int tailsMatched(Tail shelf[][]) {
 		int cont = 0;
-		
-		for(int i = 0; i < ROW; i++){
-			for(int j = 0; j < COL; j++){
-				if(shelf[i][j] == this.personalGoalCard[i][j] && this.personalGoalCard[i][j] != Tail.E ){
+
+		for (int i = 0; i < ROW; i++) {
+			for (int j = 0; j < COL; j++) {
+				if (shelf[i][j] == this.personalGoalCard[i][j] && shelf[i][j] != Tail.E && shelf[i][j] != Tail.X) {
 					cont++;
 				}
 			}
 		}
 		return cont;
 	}
-	
+
 	// @Return the points
-	public int countPoints(int cont){
-		switch(cont){
-			case 0:
-				return 0;
-			case 1:
-				return 1;
-			case 2:
-				return 2;
-			case 3:
-				return 4;
-			case 4:
-				return 6;
-			case 5:
-				return 9;
-			case 6:
-				return 12;
+	public int countPoints(int cont) {
+		switch (cont) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		case 3:
+			return 4;
+		case 4:
+			return 6;
+		case 5:
+			return 9;
+		case 6:
+			return 12;
 		}
-		System.out.println("Error countPoints <0 || >6");
+		System.out.println("Error countPoints < 0 || > 6");
 		return 0;
-	}	
-	
+	}
+
 	// Print board
 	public void printBoard() {
 		Matrix.printMatrix(personalGoalCard, ROW, COL);
 	}
-	
-	// Print a single row of the personalGoalCard, used in 'printBoardAndShelfAndPgc()' in Turn
+
+	// Print a single row of the personalGoalCard, used in
+	// 'printBoardAndShelfAndPgc()' in Turn
 	public void printRowPersonalGoalCard(int row) {
 		if (row == -1) {
 			for (int a = 1; a <= this.COL; a++) {
@@ -140,10 +142,9 @@ public class PersonalGoalCard implements Matrix {
 			}
 		}
 	}
-	
-	
+
 	/* ---------- Getter and setter ---------- */
-	
+
 	public Tail[][] getPersonalGoalCard() {
 		return personalGoalCard;
 	}

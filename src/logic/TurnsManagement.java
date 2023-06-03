@@ -39,6 +39,7 @@ public class TurnsManagement {
 
 		while (!gameOver) {
 			Player currentPlayer = players.get(currentPlayerIndex);
+
 			Turn t = new Turn(board, currentPlayer, currentPlayer.getShelf(), currentPlayer.getPersonalGoalCard(),
 					this.sc, this.turnCounter, this.CommonGoalA, this.CommonGoalB);
 
@@ -59,7 +60,7 @@ public class TurnsManagement {
 
 	// Called when game is over
 	private void gameOver() {
-		System.out.println("\n------------------------ GAME OVER ---------------------------");
+		System.out.println("\n------------------------ GAME OVER ---------------------------\n");
 
 		// Call personal goal card points
 		for (int i = 0; i < players.size(); i++) {
@@ -70,43 +71,75 @@ public class TurnsManagement {
 
 			// call adjacent tails groups points
 			int pointsPGC = countPersonalGoalPoints(shelfMatrix, pgc);
-			System.out.println("Personal Goal Card points: " + pointsPGC);
 
 			// print each group and total points of adjacent groups
 			int pointsADJ = currentPlayer.getShelf().AdjacentPoints();
-			System.out.println("Adjacent Group Tails points: " + pointsADJ);
-		}
 
+			currentPlayer.sumPoints(pointsPGC);
+			currentPlayer.sumPoints(pointsADJ);
+
+			System.out.println("-Player " + currentPlayer.getUsername() + " has a total of: "
+					+ currentPlayer.getPoints() + " points.");
+		}
 		printWinner();
 	}
 
 	// Print the winner of the game
 	private void printWinner() {
-		System.out.println("-------------");
-		int max = 0;
+		System.out.println("\n------------------------ WINNER ---------------------------\n");
+
+		int[] listPoints = new int[nPlayers];
+		String[] listUsernames = new String[nPlayers];
+
+		String usernameWinner = "";
+		boolean drawn = false;
 		List<String> winners = new ArrayList<>();
 
-		for (Player currentPlayer : players) {
-			int currentPlayerPoints = currentPlayer.getPoints();
+		int indexInList = 0;
 
-			if (currentPlayerPoints > max) {
-				max = currentPlayerPoints;
-				winners.clear();
-				winners.add(currentPlayer.getUsername());
-			} else if (currentPlayerPoints == max) {
-				winners.add(currentPlayer.getUsername());
+		for (int i = 0; i < nPlayers; i++) {
+			Player currentPlayer = players.get(i);
+			listPoints[i] = currentPlayer.getPoints();
+			listUsernames[i] = currentPlayer.getUsername();
+		}
+
+		int maxPoints = listPoints[0]; // Initialize maxPoints with the first element
+
+		// Look for the biggest number of points
+		for (int i = 1; i < listPoints.length; i++) {
+			if (listPoints[i] > maxPoints) {
+				maxPoints = listPoints[i];
+				indexInList = i;
 			}
 		}
 
-		if (winners.size() == 1) {
-			System.out.println("The winner is " + winners.get(0) + " with " + max + " points.");
-		} else {
-			System.out.println("It's a draw between the following players:");
+		// Look for drawn
+		for (int i = 0; i < nPlayers; i++) {
+			if (i != indexInList && listPoints[i] == maxPoints) {
+				drawn = true;
+				winners.add(listUsernames[i]);
+			}
+		}
+
+		if (drawn) {
+			// Handle the drawn scenario
+			StringBuilder drawnPlayers = new StringBuilder();
+			drawnPlayers.append("There is a draw between players ");
+			drawnPlayers.append(listUsernames[indexInList]);
 			for (String winner : winners) {
-				System.out.println("- " + winner);
+				drawnPlayers.append(" and ");
+				drawnPlayers.append(winner);
 			}
-			System.out.println("Each player has " + max + " points.");
+			drawnPlayers.append(". They have ");
+			drawnPlayers.append(maxPoints);
+			drawnPlayers.append(" points.");
+			System.out.println(drawnPlayers.toString());
+		} else {
+			// Handle the single winner scenario
+			usernameWinner = listUsernames[indexInList];
+			System.out.println("Player " + usernameWinner + " has won with " + maxPoints + " points.");
 		}
+
 	}
 
 	// Count the personal goal card points

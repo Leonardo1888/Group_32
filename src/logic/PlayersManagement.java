@@ -75,17 +75,19 @@ public class PlayersManagement {
 			 * This piece of comment is used for testing common goals. Keep for testing. If
 			 * you want to test when creating a new user at line 88 substitute
 			 * "new Booshelf()" with "bs"
-			 * 
-			 * Tail[][] s = { {Tail.C, Tail.T, Tail.P, Tail.E, Tail.C}, {Tail.C, Tail.T,
-			 * Tail.P, Tail.P, Tail.P}, {Tail.T, Tail.P, Tail.P, Tail.P, Tail.P}, {Tail.T,
-			 * Tail.P, Tail.P, Tail.T, Tail.P}, {Tail.T, Tail.T, Tail.P, Tail.P, Tail.P},
-			 * {Tail.C, Tail.T, Tail.P, Tail.P, Tail.C} }; Bookshelf bs = new Bookshelf();
-			 * bs.setShelf(s);
+			 */
+
+			/*
+			 * Tail[][] s = { { Tail.C, Tail.T, Tail.P, Tail.E, Tail.C }, { Tail.C, Tail.T,
+			 * Tail.P, Tail.P, Tail.P }, { Tail.T, Tail.P, Tail.P, Tail.P, Tail.P }, {
+			 * Tail.T, Tail.P, Tail.P, Tail.T, Tail.P }, { Tail.T, Tail.T, Tail.P, Tail.P,
+			 * Tail.P }, { Tail.C, Tail.T, Tail.P, Tail.P, Tail.C } }; Bookshelf bs = new
+			 * Bookshelf(); bs.setShelf(s);
 			 */
 
 			Player p;
 			// The first user entered is the first player
-			p = new Player(playerUsername, new Bookshelf(), new PersonalGoalCard());
+			p = new Player(playerUsername, new Bookshelf(), new PersonalGoalCard()); // insert "new Bookshelf()"
 			addPlayer(p);
 
 			System.out.println("Added " + (i + 1) + "° player, named: " + playerUsername);
@@ -112,7 +114,6 @@ public class PlayersManagement {
 		this.players.add(p);
 	}
 
-	
 	/* ---------- Getter and setter ---------- */
 
 	public List<Player> getPlayers() {

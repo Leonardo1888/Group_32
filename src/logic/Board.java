@@ -409,24 +409,21 @@ public class Board implements Matrix {
 
 		Random random = new Random();
 
-	    int min = 2;
-	    int max = 7;
+		int min = 2;
+		int max = 7;
 
-	    for (int row = 0; row < this.ROW; row++) {
-	        for (int col = 0; col < this.COL; col++) {
-	            if (fillable[row][col]) {
-	                if (board[row][col] != Tail.C && board[row][col] != Tail.B && board[row][col] != Tail.G &&
-	                    board[row][col] != Tail.F && board[row][col] != Tail.T && board[row][col] != Tail.P) {
-	                    int tailIndex = random.nextInt(max - min + 1) + min;
-	                    Tail tail = Tail.values()[tailIndex];
-	                    this.board[row][col] = tail;
-	                    this.tailCount[tailIndex]++;
-	                } else {
-	                    this.board[row][col] = Tail.E;
-	                }
-	            }
-	        }
-	    }
+		for (int row = 0; row < this.ROW; row++) {
+			for (int col = 0; col < this.COL; col++) {
+				if (fillable[row][col]) {
+					if (board[row][col] == Tail.E) {
+						int tailIndex = random.nextInt(max - min + 1) + min;
+						Tail tail = Tail.values()[tailIndex];
+						this.board[row][col] = tail;
+						this.tailCount[tailIndex]++;
+					}
+				}
+			}
+		}
 	}
 
 	// Fill board randomly at the start of the game

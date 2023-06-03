@@ -3,15 +3,15 @@ package logic;
 public class Player {
 	private int PLAYER_COUNT = 1;
 	private final int id;
-	
+
 	private String username;
 	private Bookshelf shelf;
 	private PersonalGoalCard personalGoalCard;
 	private int points;
-	
-	private boolean checkCommonGoalA;	// If true is checked
-	private boolean checkCommonGoalB;	// If true is checked
-	
+
+	private boolean checkCommonGoalA; // If true is checked
+	private boolean checkCommonGoalB; // If true is checked
+
 	public Player(String username, Bookshelf shelf, PersonalGoalCard personalGoal) {
 		this.id = PLAYER_COUNT++;
 		this.username = username;
@@ -27,13 +27,12 @@ public class Player {
 		this.points = this.points + addedPoints;
 	}
 
-	
 	/* ---------- Getter and setter ---------- */
-	
+
 	public int getPoints() {
 		return this.points;
 	}
-	
+
 	public int getPLAYER_COUNT() {
 		return PLAYER_COUNT;
 	}
@@ -69,21 +68,20 @@ public class Player {
 	public String getUsername() {
 		return this.username;
 	}
-	
-	public boolean getCommonGoalA(){
+
+	public boolean getCommonGoalA() {
 		return this.checkCommonGoalA;
 	}
-	
-	public boolean getCommonGoalB(){
+
+	public boolean getCommonGoalB() {
 		return this.checkCommonGoalB;
 	}
-	
-	public void setCommonGoalA(Boolean t){
+
+	public void setCommonGoalA(Boolean t) {
 		this.checkCommonGoalA = t;
 	}
-	
-	public void setCommonGoalB(Boolean t){
+
+	public void setCommonGoalB(Boolean t) {
 		this.checkCommonGoalB = t;
 	}
-	
 }

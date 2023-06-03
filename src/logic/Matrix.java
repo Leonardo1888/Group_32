@@ -5,14 +5,11 @@ import java.util.*;
 // Three classes inherit from Matrix: Board, Bookshelf and PersonalGoalCard
 public interface Matrix {
 
-	/* CAT -> GEEN
-	 * BOOK -> WHITE
-	 * GAME -> YELLOW
-	 * FRAME -> BLUE 
-	 * TROPHEY -> CYAN
-	 * PLANT -> RED
-	*/
-	
+	/*
+	 * CAT -> GEEN BOOK -> WHITE GAME -> YELLOW FRAME -> BLUE TROPHEY -> CYAN PLANT
+	 * -> RED
+	 */
+
 	// Print matrix for common goals
 	static void printMatrixSimple(Tail matrix[][], int row, int col) {
 		System.out.print("\n        ");
@@ -30,7 +27,7 @@ public interface Matrix {
 				}
 				if (matrix[i][j] == Tail.D) {
 					Random random = new Random();
-					int rand = random.nextInt(6) + 1;	// Random number between 1 and 6 (inclusive), 
+					int rand = random.nextInt(6) + 1; // Random number between 1 and 6 (inclusive),
 					switch (rand) {
 					case 1:
 						System.out.print(Color.GREEN);
@@ -176,5 +173,5 @@ public interface Matrix {
 		}
 		return count;
 	}
-	
+
 }

@@ -7,18 +7,17 @@ public class Turn {
 	Tail[] tails = new Tail[] { Tail.E, Tail.E, Tail.E };
 	int[][] positionTails = new int[3][2]; // Position of the tails the user picked
 
-	private int endTurn = 1; 	 	// endTurn=1 -> keep going - endTurn=0 -> stop turn
-	private int nOfFreeSpaces = 0;  // number of free spaces in Player's shelf
+	private int endTurn = 1; // endTurn=1 -> keep going - endTurn=0 -> stop turn
+	private int nOfFreeSpaces = 0; // number of free spaces in Player's shelf
 	private boolean canPickTailsBoard = true; // Can user pick a Tail on the same row/col
-	private int nTailsPicked = 0; 	// number of tails the user picked
+	private int nTailsPicked = 0; // number of tails the user picked
 
 	private Board board;
 	private Player currentPlayer;
 
-
-	private Bookshelf shelf;		// Bookshelf
-	private PersonalGoalCard pgc;	// persona goal card
-	private Scanner sc;				// scanner for inputs from keyboard
+	private Bookshelf shelf; // Bookshelf
+	private PersonalGoalCard pgc; // persona goal card
+	private Scanner sc; // scanner for inputs from keyboard
 	private CommonGoal commonGoalA;
 	private CommonGoal commonGoalB;
 
@@ -28,15 +27,10 @@ public class Turn {
 
 	// row and column selected
 	private char tRow; // [a-g]
-	private int tCol;  // [1-9]
+	private int tCol; // [1-9]
 
 	private int turnCounter;
-
 	private boolean gameOver = false;
-
-	public boolean isGameOver() {
-		return gameOver;
-	}
 
 	public Turn(Board board, Player currentPlayer, Bookshelf shelf, PersonalGoalCard pgc, Scanner sc, int turnCounter,
 			CommonGoal A, CommonGoal B) {
@@ -58,13 +52,12 @@ public class Turn {
 		String testInput;
 		if (turnCounter == 0)
 			testInput = sc.nextLine();
-		System.out.println("\n------------------------ "
-				+ "NEXT TURN - PLAYER: [" + currentPlayer.getUsername()
+		System.out.println("\n------------------------ " + "NEXT TURN - PLAYER: [" + currentPlayer.getUsername()
 				+ "] ---------------------------");
 		printBoardAndShelfAndPgc();
 
-		System.out.println("\n\n'" + currentPlayer.getUsername() 
-		+ "' select the Tails you want to put into your Shelf.");
+		System.out
+				.println("\n\n'" + currentPlayer.getUsername() + "' select the Tails you want to put into your Shelf.");
 
 		// Store the biggest number of free cells (for every column of the shelf)
 		nOfFreeSpaces = shelf.checkFreeSpaces();
@@ -173,15 +166,21 @@ public class Turn {
 			shelf.printShelf(); // return 1->E in col < n Tails
 		}
 		checkCommonGoals();
-		
-		// Every two turns remind the users the common goals
-		if(turnCounter % 2 == 0)
-			reminderCommonGoals();
-		board.checkEndBoard();
+		if (shelf.checkFreeSpaces() == 0) {
+			setGameOver(true);
+			// One points extra because he is the first to complete the bookshelf
+			currentPlayer.sumPoints(1);
+		} else {
+			// Every two turns remind the users the common goals
+			if (turnCounter % 2 == 0)
+				reminderCommonGoals();
+			board.checkEndBoard();
+		}
 	}
-	
+
 	private void reminderCommonGoals() {
-		System.out.println("\n/*----*----*----*----*----*----*----* Common Goals Reminder *----*----*----*----*----*----*----*/");
+		System.out.println(
+				"\n/*----*----*----*----*----*----*----* Common Goals Reminder *----*----*----*----*----*----*----*/");
 		System.out.println("The common goal cards grant points the players who achieve the illustrated pattern.");
 		System.out.println(
 				"There are two common goals, and we will call them 'A' and 'B'. \nThose are the two common goals you have to achieve: ");
@@ -190,7 +189,8 @@ public class Turn {
 
 		System.out.println("\n--Common goal B: \n");
 		this.commonGoalB.printCommonGoal();
-		System.out.println("\n/*----*----*----*----*----*----*----* Common Goals Reminder *----*----*----*----*----*----*----*/");
+		System.out.println(
+				"\n/*----*----*----*----*----*----*----* Common Goals Reminder *----*----*----*----*----*----*----*/");
 	}
 
 	// Check the common goal 1 and 2, if they are achieved sum the player's points
@@ -366,7 +366,6 @@ public class Turn {
 		}
 	}
 
-	
 	/* ---------- Getter and setter ---------- */
 
 	public Tail[] getTails() {
@@ -440,4 +439,13 @@ public class Turn {
 	public void setCommonGoalB(CommonGoal commonGoalB) {
 		this.commonGoalB = commonGoalB;
 	}
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean t) {
+		this.gameOver = t;
+	}
+
 }
