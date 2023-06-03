@@ -1,5 +1,5 @@
 package logic;
- 
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -54,21 +54,21 @@ public class Bookshelf implements Matrix {
 				int first2 = 0;
 				int second2 = 0;
 				// Choose order of tails
+				String input;
 				while (true) {
 					System.out.print("\nChoose the tail that will go on the bottom: ");
-					first2 = sc.nextInt();
-					sc.nextLine();
-					if (first2 == 1 || first2 == 2 || first2 == 3) {
-						// If is 1, 2 or 3 exit the while loop
+					input = sc.nextLine().trim();
+					if (input.length() == 1 && input.charAt(0) >= '1' && input.charAt(0) <= '3') {
+						first2 = Character.getNumericValue(input.charAt(0));
 						break;
 					}
-					System.out.print("Error! You have to enter a number from '1' to '3'.");
+					System.out.print("Error! You have to enter a number in the range from '1' to '3'.");
 				}
-				
+
 				// Don't ask for the second tail, it's obvious
-				if(first2 == 2)
+				if (first2 == 2)
 					second2 = 1;
-				if(first2 == 1)
+				if (first2 == 1)
 					second2 = 2;
 
 				Tail[] tailsToInsert2 = new Tail[2];
@@ -102,47 +102,48 @@ public class Bookshelf implements Matrix {
 				int second3 = 0;
 				int third3 = 0;
 				// Choose order of tails
+				String input;
 				while (true) {
 					System.out.print("\nChoose the tail that will go on the bottom: ");
-					first3 = sc.nextInt();
-					sc.nextLine();
-					if (first3 == 1 || first3 == 2 || first3 == 3) {
-						// If is 1, 2 or 3 exit the while loop
+					input = sc.nextLine().trim();
+					if (input.length() == 1 && input.charAt(0) >= '1' && input.charAt(0) <= '3') {
+						first3 = Character.getNumericValue(input.charAt(0));
 						break;
 					}
-					System.out.print("Error! You have to enter a number from '1' to '3'.");
+					System.out.print("Error! You have to enter a number in the range from '1' to '3'.");
 				}
-				
-				if((first3 == 1) && (tails[1] == tails[2])) {
+
+				if ((first3 == 1) && (tails[1] == tails[2])) {
 					second3 = 2;
 					third3 = 3;
-				} else if((first3 == 2) && (tails[0] == tails[2])) {
+				} else if ((first3 == 2) && (tails[0] == tails[2])) {
 					second3 = 1;
 					third3 = 3;
-				} else if((first3 == 3) && (tails[0] == tails[1])) {
+				} else if ((first3 == 3) && (tails[0] == tails[1])) {
 					second3 = 1;
 					third3 = 2;
 				} else {
+					// Choose order of tails
+					input = "";
 					while (true) {
 						System.out.print("Choose the 2nd tail: ");
-						second3 = sc.nextInt();
-						sc.nextLine();
-						if (second3 == 1 || second3 == 2 || second3 == 3) {
-							// If is 1, 2 or 3 exit the while loop
+						input = sc.nextLine().trim();
+						if (input.length() == 1 && input.charAt(0) >= '1' && input.charAt(0) <= '3') {
+							second3 = Character.getNumericValue(input.charAt(0));
 							break;
 						}
-						System.out.print("Error! You have to enter a number from '1' to '3'.");
+						System.out.print("Error! You have to enter a number in the range from '1' to '3'.");
 					}
 				}
-				
+
 				// Don't ask for the third tail, it's obvious
-				if((first3 == 1 && second3 == 2) || (first3 == 2 && second3 == 1))
+				if ((first3 == 1 && second3 == 2) || (first3 == 2 && second3 == 1))
 					third3 = 3;
-				else if((first3 == 2 && second3 == 3) || (first3 == 3 && second3 == 2))
+				else if ((first3 == 2 && second3 == 3) || (first3 == 3 && second3 == 2))
 					third3 = 1;
-				else if((first3 == 1 && second3 == 3) || (first3 == 3 && second3 == 1))
+				else if ((first3 == 1 && second3 == 3) || (first3 == 3 && second3 == 1))
 					third3 = 2;
-				
+
 				Tail[] tailsToInsert3 = new Tail[3];
 
 				tailsToInsert3[0] = tails[first3 - 1];
@@ -154,7 +155,7 @@ public class Bookshelf implements Matrix {
 		}
 		return tails;
 	}
-	
+
 	// Insert Tails in column
 	// @Return 0 if success, @Return 1 if failure, @Return
 	public int insertTail(Tail[] tails, int col, int numTail) {
@@ -200,11 +201,6 @@ public class Bookshelf implements Matrix {
 		int group5 = groupCounts[2] - groupCounts[3];
 		int group6plus = groupCounts[3];
 		int group3 = groupCounts[0] - group4 - group5 - group6plus;
-		// stampa il numero di gruppi per ogni dimensione
-		System.out.println("Numero di gruppi di dimensione 3: " + group3);
-		System.out.println("Numero di gruppi di dimensione 4: " + group4);
-		System.out.println("Numero di gruppi di dimensione 5: " + group5);
-		System.out.println("Numero di gruppi di dimensione 6 e superiori: " + group6plus);
 
 		return returnPoints(group3, group4, group5, group6plus);
 	}
@@ -325,8 +321,8 @@ public class Bookshelf implements Matrix {
 	}
 
 	/*
-	 * @Return the largest number of free cells (for every column). 
-	 * If 0 -> the user can't pick any Tail
+	 * @Return the largest number of free cells (for every column). If 0 -> the user
+	 * can't pick any Tail
 	 */
 	public int checkFreeSpaces() {
 		int[] count = new int[this.COL];
@@ -335,10 +331,9 @@ public class Bookshelf implements Matrix {
 		}
 		return Arrays.stream(count).max().orElse(0);
 	}
-	
 
 	/* ---------- Getter and setter ---------- */
-	
+
 	public int getRow() {
 		return this.ROW;
 	}
